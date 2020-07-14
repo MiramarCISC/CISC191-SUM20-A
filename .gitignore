@@ -24,5 +24,8 @@ hs_err_pid*
 
 
 ##### Mark's gitignore #####
+# Eclipse dotfiles
 .classpath
 .project
+# ignore all bin files including images
+/bin/**

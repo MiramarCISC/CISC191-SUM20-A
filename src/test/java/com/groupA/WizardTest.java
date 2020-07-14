@@ -2,6 +2,10 @@ package com.groupA;
 
 import org.junit.jupiter.api.BeforeAll;
 
+/**
+ * @author Mark Lucernas
+ * Date: 2020-07-14
+ */
 class WizardTest {
 
   private static Wizard wizard;
