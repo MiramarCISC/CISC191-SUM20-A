@@ -28,4 +28,4 @@ hs_err_pid*
 .classpath
 .project
 # ignore all bin files including images
-/bin/**
+/bin/
