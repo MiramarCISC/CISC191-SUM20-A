@@ -1,5 +1,3 @@
-package com.groupA;
-
 public class Camera {
 
     private float x, y;

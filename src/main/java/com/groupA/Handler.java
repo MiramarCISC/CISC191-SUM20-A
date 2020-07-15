@@ -1,5 +1,3 @@
-package com.groupA;
-
 import java.awt.Graphics;
 import java.util.LinkedList;
 

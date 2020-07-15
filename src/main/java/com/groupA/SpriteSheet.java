@@ -1,5 +1,3 @@
-package com.groupA;
-
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 

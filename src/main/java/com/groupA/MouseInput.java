@@ -1,5 +1,3 @@
-package com.groupA;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -72,6 +70,10 @@ public class MouseInput extends MouseAdapter {
                 Game.State = Game.STATE.GAME;
             }
 
+            else if(helpButton.contains(x, y)) {
+                Game.State = Game.STATE.HELP;
+            }
+
             else if(quitButton.contains(x,y)) {
                 Window.quitGame();
             }
@@ -85,6 +87,12 @@ public class MouseInput extends MouseAdapter {
             else if(quitButton.contains(x,y)) {
                 Window.quitGame();
             }
-        }// end else if (needs refactoring). (possibly a switch statement)
+        }// end PAUSE else if (needs refactoring). (possibly a switch statement)
+
+        else if (Game.State == Game.STATE.HELP) {
+            if(quitButton.contains(x,y)) {
+                Game.State = Game.STATE.MENU;
+            }
+        } // End HELP else if
     }
-}
+} // end class

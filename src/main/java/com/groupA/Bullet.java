@@ -1,5 +1,3 @@
-package com.groupA;
-
 import java.awt.*;
 
 public class Bullet extends GameObject {

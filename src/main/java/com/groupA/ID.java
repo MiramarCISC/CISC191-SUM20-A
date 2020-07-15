@@ -1,5 +1,3 @@
-package com.groupA;
-
 public enum ID {
     Player(),
     Block(),
