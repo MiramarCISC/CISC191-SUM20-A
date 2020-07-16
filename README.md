@@ -52,9 +52,9 @@ To clean and remove maven build from project
 
 ```sh
 mvn clean
-```
+``
 
-**NOTE:** If unit tests fails some reason after new changes that prevents
+**NOTE:** If unit tests fail for some reason after new changes that prevents
 from building the `.jar` file, simply skip unit testing from build by running
 
 ```sh
@@ -130,7 +130,7 @@ Then run `Game` class
 java -cp build com.groupA.Game
 ```
 
-### Recompiling
+#### Recompiling
 
 ```sh
 javac -Xlint -sourcepath src -d build src/main/**/*.java
