@@ -57,8 +57,8 @@ public class Game extends Canvas implements Runnable {
 
         BufferedImageLoader loader = new BufferedImageLoader();
 
-        sprite_sheet = loader.loadImage("../../../resources/com/groupA/main_sheet.png");
-        char_sheet = loader.loadImage("../../../resources/com/groupA/wizard_sheet.png"); //char sheet
+        sprite_sheet = loader.loadImage("/main_sheet.png");
+        char_sheet = loader.loadImage("/wizard_sheet.png"); //char sheet
 
         ss = new SpriteSheet(sprite_sheet);
 
@@ -68,13 +68,13 @@ public class Game extends Canvas implements Runnable {
 
         // level_numb parameter determines which level is loaded.
         if (current_level == 1) {
-            level = loader.loadImage("../../../resources/com/groupA/level_one.png"); // load level
+            level = loader.loadImage("/level_one.png"); // load level
             floor = ss.grabImage(6, 6, 32, 32); // load floor tiles
             level_numb = current_level;
         }
 
         else if (current_level > 1) {
-            level = loader.loadImage("../../../resources/com/groupA/level_two.png"); // load level 2
+            level = loader.loadImage("/level_two.png"); // load level 2
             floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
             level_numb = current_level;
         }

@@ -20,7 +20,7 @@ public class Pause {
 
         // Load background for menu as a buffered Image
         BufferedImageLoader loader = new BufferedImageLoader();
-        background = loader.loadImage("../../../resources/com/groupA/pause.jpg");
+        background = loader.loadImage("/pause.jpg");
 
         // Now draw it full size in center of screen (background).
         g.drawImage(background, 0, 0, null);
