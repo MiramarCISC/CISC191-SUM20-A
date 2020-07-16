@@ -74,7 +74,18 @@ public class Game extends Canvas implements Runnable {
                 level = loader.loadImage("/level_two.png"); // load level 2
                 floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
                 level_numb = current_level;
-
+                break;
+            case 3:
+                level = loader.loadImage("/level_two.png"); // load level 2
+                floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
+                level_numb = current_level;
+                break;
+            case 4:
+                // If you go past level 4 will switch to white screen of death.
+                level = loader.loadImage("/level_two.png"); // load level 2
+                floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
+                level_numb = current_level;
+                break;
         }
 
         this.addMouseListener(new MouseInput(handler, camera, this, ss, cs));
@@ -274,6 +285,7 @@ public class Game extends Canvas implements Runnable {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
+                // Color map determines which sprites render to the map.
                 if(red == 255 && green == 0 && blue == 0) // pure red
                     handler.addObject(new Block(xx*32, yy*32, ID.Block, ss, this));
 
@@ -292,8 +304,11 @@ public class Game extends Canvas implements Runnable {
                 if(red == 255 && green == 0 && blue == 255) //pure magenta
                     handler.addObject(new Knight(xx*32, yy*32, ID.Knight, handler, this, cs));
 
-                if(red == 0 && green == 153 && blue == 102) //pure magenta
-                    handler.addObject(new Ent(xx*32, yy*32, ID.Ent, handler, this, cs)); // # 009966 green
+                if(red == 0 && green == 153 && blue == 102) // # 009966 green
+                    handler.addObject(new Ent(xx*32, yy*32, ID.Ent, handler, this, cs)); // 
+
+                if(red == 255 && green == 153 && blue == 51) // # ff9933 vivid orange
+                    handler.addObject(new Hound(xx*32, yy*32, ID.Hound, handler, cs));
             }
         }
     }
