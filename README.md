@@ -10,6 +10,7 @@
     * [Ant Installation](#ant-installation)
     * [Ant Usage](#ant-usage)
   * [Building Manually in Terminal (Does not include project unit tests)](#building-manually-in-terminal-does-not-include-project-unit-tests)
+    * [Building and Running](#building-and-running)
     * [Recompiling](#recompiling)
     * [Simple Shortcut](#simple-shortcut)
     * [Cleaning Up](#cleaning-up)
@@ -113,6 +114,8 @@ ant clean
 ```
 
 ### Building Manually in Terminal (Does not include project unit tests)
+
+#### Building and Running
 
 From root project directory. Create `build` directory.
 
