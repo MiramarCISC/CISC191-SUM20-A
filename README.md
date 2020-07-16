@@ -28,7 +28,7 @@ following to compile and install all dependencies
 mvn install
 ```
 
-Then execute `.jar` file to run
+Then execute `.jar` file to run project
 
 ```sh
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
@@ -44,6 +44,19 @@ To run test suite
 
 ```sh
 mvn test
+```
+
+To clean and remove maven build from project
+
+```sh
+mvn clean
+```
+
+**NOTE:** If unit tests fails some reason after new changes that prevents
+from building the `.jar` file, simply skip unit testing from build by running
+
+```sh
+mvn clean install -Dmaven.test.skip
 ```
 
 ---
