@@ -92,15 +92,9 @@ public class Wizard extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Minion) {
+            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
                 if(getBounds().intersects(tempObject.getBounds())) {
                    game.hp--; //Debug line
-                }
-            }
-
-            if(tempObject.getId() == ID.Knight) {
-                if(getBounds().intersects(tempObject.getBounds())) {
-                    //type
                 }
             }
         }

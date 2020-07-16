@@ -57,7 +57,7 @@ public class Knight extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Bullet) {
+            else if(tempObject.getId() == ID.Bullet) {
                 // Shoot and remove health point.
                 if (getBounds().intersects(tempObject.getBounds())) {
                     x += (velX*25) * -1; // Change velX/Y*int to change bounce level

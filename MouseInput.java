@@ -35,19 +35,21 @@ public class MouseInput extends MouseAdapter {
     }
 
     public void mousePressed(MouseEvent e) {
+        // Current mouse click and camera location (players location)
         int mx = (int) (e.getX() + camera.getX());
         int my = (int) (e.getY() + camera.getY());
 
+        // Raw coordinates no camera, use for menu, buttons etc.
         int x = e.getX();
         int y = e.getY();
 
-        //Remember camera origins also control button clicks, but camera is mapped to player. Always reset.
         if (Game.State == Game.STATE.GAME) {
 
             for(int i = 0; i < handler.object.size(); i++) {
                 GameObject tempObject = handler.object.get(i);
 
                 if(tempObject.getId() == ID.Player && game.ammo >= 1) {
+                    // Fire bullet from player location
                     handler.addObject(new Bullet(tempObject.getX()+16, tempObject.getY()+24, ID.Bullet, handler, mx, my, ss));
                     game.ammo--;
                 }
@@ -59,7 +61,7 @@ public class MouseInput extends MouseAdapter {
             }
 
             if(escButton.contains(x, y)) {
-                // Res button if player has died but still has lives > 0.
+                // Pauses the game when pause button is clicked durinf game.
                 Game.State = Game.STATE.PAUSE;
             }
 
@@ -87,12 +89,12 @@ public class MouseInput extends MouseAdapter {
             else if(quitButton.contains(x,y)) {
                 Window.quitGame();
             }
-        }// end PAUSE else if (needs refactoring). (possibly a switch statement)
+        }// end PAUSE state (refactor)
 
         else if (Game.State == Game.STATE.HELP) {
             if(quitButton.contains(x,y)) {
                 Game.State = Game.STATE.MENU;
             }
-        } // End HELP else if
+        } // End HELP state
     }
 } // end class

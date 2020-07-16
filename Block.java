@@ -7,23 +7,17 @@ public class Block extends GameObject {
 
     private BufferedImage block_image;
 
-
     public Block(int x, int y, ID id, SpriteSheet ss, Game game) {
         super(x, y, id, ss);
 
         this.game = game;
 
-        // Depending on level, blocks will differ, possibly this could be a switch statement.
-        if(game.level_numb == 1) {
-            block_image = ss.grabImage(6, 9 ,32, 32);
+        // Changes block look for each new level.
+        switch (game.level_numb) {
+            case 1: block_image = ss.grabImage(6, 9 ,32, 32);
+                    break;
+            case 2: block_image = ss.grabImage(26, 11, 32, 32);
         }
-
-        else if(game.level_numb > 1) {
-            block_image = ss.grabImage(26, 11 ,32, 32);
-        }
-
-
-        //block_image = ss.grabImage(6, 9 ,32, 32);
     }
 
     public void tick() {

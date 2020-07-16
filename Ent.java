@@ -2,10 +2,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Minion extends GameObject {
+public class Ent extends GameObject {
 
     private Handler handler;
-    private BufferedImage[] minion_image = new BufferedImage[8];
+    private Game game;
+    private BufferedImage[] ent_image = new BufferedImage[8];
+    private SpriteSheet cs; // Used for spawning new minions.
     Animation anim;
 
     // Import random as enemies will roam around randomly.
@@ -13,22 +15,25 @@ public class Minion extends GameObject {
     int choose = 0;
     int hp = 100;
 
-    public Minion (int x, int y, ID id, Handler handler, SpriteSheet cs) {
+    public Ent(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
+        this.game = game;
+        this.cs = cs;
 
-        minion_image[0] = cs.grabImage(1, 11, 32, 32);
-        minion_image[1] = cs.grabImage(2, 11, 32, 32);
-        minion_image[2] = cs.grabImage(3, 11, 32, 32);
-        minion_image[3] = cs.grabImage(4, 11, 32, 32);
-        minion_image[4] = cs.grabImage(5, 11, 32, 32);
-        minion_image[5] = cs.grabImage(6, 11, 32, 32);
-        minion_image[6] = cs.grabImage(7, 11, 32, 32);
-        minion_image[7] = cs.grabImage(8, 11, 32, 32);
+        // Loading animations
+        ent_image[0] = cs.grabImage(1, 8, 32, 32);
+        ent_image[1] = cs.grabImage(2, 8, 32, 32);
+        ent_image[2] = cs.grabImage(3, 8, 32, 32);
+        ent_image[3] = cs.grabImage(4, 8, 32, 32);
+        ent_image[4] = cs.grabImage(5, 8, 32, 32);
+        ent_image[5] = cs.grabImage(6, 8, 32, 32);
+        ent_image[6] = cs.grabImage(7, 8, 32, 32);
+        ent_image[7] = cs.grabImage(8, 8, 32, 32);
 
 
-        anim = new Animation(minion_image, 150);
-    }
+        anim = new Animation(ent_image, 150);
+        }
 
     public void tick() {
         x += velX;
@@ -64,22 +69,35 @@ public class Minion extends GameObject {
                 }
             }
         }
-
         anim.tick();
-        // If hp at 0 delete.
-        if(hp <= 0) handler.removeObject(this);
+
+        if(hp <= 0) {
+            // HP handling.
+            handler.removeObject(this);
+
+            // Upon death spawns 3 minions.
+            handler.addObject(new Minion(this.getX(), this.getY(), ID.Minion, handler, cs));
+            handler.addObject(new Minion(this.getX(), this.getY(), ID.Minion, handler, cs));
+            handler.addObject(new Minion(this.getX(), this.getY(), ID.Minion, handler, cs));
+        }
+
     } //End tick method
 
-    public void render(Graphics g) {
-        anim.render(g, x, y, 32, 32);
+
+
+
+
+        public void render (Graphics g){
+            anim.render(g, x, y, 32, 32);
+        }
+
+        public Rectangle getBounds () {
+            return new Rectangle(x, y, 32, 32);
+        }
+
+        public Rectangle getBoundsBig () {
+            // Makes bounding box slightly bigger for colliding with walls as opposed to bullets (not so tight).
+            return new Rectangle(x - 16, y - 16, 64, 64);
+        }
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, 32, 32);
-    }
-
-    public Rectangle getBoundsBig() {
-        // Makes bounding box slightly bigger for colliding with walls as opposed to bullets (not so tight).
-        return new Rectangle (x-16, y-16, 64, 64);
-    }
-}

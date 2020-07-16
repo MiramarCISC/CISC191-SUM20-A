@@ -8,6 +8,7 @@ public class Animation {
     private long timer, now, lastTime;
 
     public Animation(BufferedImage[] images, int interval) {
+        // Takes a list of images and renders them in timing.
 
         this.images = images;
         this.interval = interval;

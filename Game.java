@@ -303,6 +303,9 @@ public class Game extends Canvas implements Runnable {
 
                 if(red == 255 && green == 0 && blue == 255) //pure magenta
                     handler.addObject(new Knight(xx*32, yy*32, ID.Knight, handler, this, cs));
+
+                if(red == 0 && green == 153 && blue == 102) //pure magenta
+                    handler.addObject(new Ent(xx*32, yy*32, ID.Ent, handler, this, cs)); // # 009966 green
             }
         }
     }

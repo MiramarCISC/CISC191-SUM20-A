@@ -5,5 +5,6 @@ public enum ID {
     Totem(),
     Bullet(),
     Minion(),
-    Knight();
+    Ent(),
+    Knight(),
 }
