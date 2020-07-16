@@ -99,26 +99,8 @@ public class Wizard extends GameObject {
             }
 
             if(tempObject.getId() == ID.Knight) {
-                // Dangerous?
                 if(getBounds().intersects(tempObject.getBounds())) {
-
-                    //int px = this.getX(); // Players x and y location
-                    //int py = this.getY();
-
-                    //int x = tempObject.getX(); // Knights location
-                    //int y = tempObject.getY();
-
-                    //velX = (px + x) / 100; // Knight will reverse from the player
-                    //velY = (py + y) / 100;
-
-                    //x += (velX*10); // Knight will jump forward back quick like a rubber band snap.
-                   // y += (velY*10);
-
-                   // x *= velX / 10; // Then continue reversing.
-                   // y *= velY / 10;
-
-                  //  tempObject.setX(x);
-                  //  tempObject.setY(y);
+                    //type
                 }
             }
         }

@@ -3,9 +3,7 @@ import java.awt.*;
 public class Bullet extends GameObject {
 
     private Handler handler;
-    private double direction;
-    private int speed = 10;
-
+    
     public Bullet(int x, int y, ID id, Handler handler, int mx, int my, SpriteSheet ss) {
         super(x, y, id, ss);
         this.handler = handler;

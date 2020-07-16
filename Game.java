@@ -302,7 +302,7 @@ public class Game extends Canvas implements Runnable {
                     handler.addObject(new Totem(xx*32, yy*32, ID.Totem, ss));
 
                 if(red == 255 && green == 0 && blue == 255) //pure magenta
-                    handler.addObject(new Knight(xx*32, yy*32, ID.Knight, handler, cs));
+                    handler.addObject(new Knight(xx*32, yy*32, ID.Knight, handler, this, cs));
             }
         }
     }

@@ -57,7 +57,7 @@ public class Minion extends GameObject {
             }
 
             if(tempObject.getId() == ID.Bullet) {
-                // If shooty shoot time take away health point.
+                // If bullet hits minion...
                 if(getBounds().intersects(tempObject.getBounds())) {
                     hp -= 50;
                     handler.removeObject(tempObject);
