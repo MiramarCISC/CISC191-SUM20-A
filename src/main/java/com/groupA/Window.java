@@ -10,7 +10,7 @@ public class Window {
     protected static GraphicsDevice device = GraphicsEnvironment // Used for fullscreen.
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
 
-    public Window(int width, int height, String title, Game game) {
+    public Window(int width, int height, String title) {
 
         frame = new JFrame(title);
 
@@ -18,12 +18,12 @@ public class Window {
         frame.setMaximumSize(new Dimension(width, height));
         frame.setMinimumSize(new Dimension(width, height));
 
-        frame.add(game);
+        //frame.add(game);
         frame.setResizable((false));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        device.setFullScreenWindow(frame); // Careful with this
+        //device.setFullScreenWindow(frame); // Careful with this
     }
 
     public static void quitGame(){
@@ -31,5 +31,12 @@ public class Window {
         frame.setVisible(false);
         frame.dispose();
         System.exit(0);
+    }
+
+    public static void changeLevel(Canvas game) {
+        // takes current game, current lives and current level and paints it to the window.
+        frame.getContentPane().removeAll();
+        frame.add(game);
+        frame.validate();
     }
 }

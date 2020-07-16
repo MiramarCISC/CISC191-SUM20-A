@@ -4,10 +4,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Minion extends GameObject {
+public class Hound extends GameObject {
 
     private Handler handler;
-    private BufferedImage[] minion_image = new BufferedImage[8];
+    private BufferedImage[] hound_image = new BufferedImage[8];
     Animation anim;
 
     // Import random as enemies will roam around randomly.
@@ -15,21 +15,21 @@ public class Minion extends GameObject {
     int choose = 0;
     int hp = 100;
 
-    public Minion (int x, int y, ID id, Handler handler, SpriteSheet cs) {
+    public Hound (int x, int y, ID id, Handler handler, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
 
-        minion_image[0] = cs.grabImage(1, 11, 32, 32);
-        minion_image[1] = cs.grabImage(2, 11, 32, 32);
-        minion_image[2] = cs.grabImage(3, 11, 32, 32);
-        minion_image[3] = cs.grabImage(4, 11, 32, 32);
-        minion_image[4] = cs.grabImage(5, 11, 32, 32);
-        minion_image[5] = cs.grabImage(6, 11, 32, 32);
-        minion_image[6] = cs.grabImage(7, 11, 32, 32);
-        minion_image[7] = cs.grabImage(8, 11, 32, 32);
+        hound_image[0] = cs.grabImage(9, 4, 32, 32);
+        hound_image[1] = cs.grabImage(10, 4, 32, 32);
+        hound_image[2] = cs.grabImage(11, 4, 32, 32);
+        hound_image[3] = cs.grabImage(12, 4, 32, 32);
+        hound_image[4] = cs.grabImage(13, 4, 32, 32);
+        hound_image[5] = cs.grabImage(14, 4, 32, 32);
+        hound_image[6] = cs.grabImage(15, 4, 32, 32);
+        hound_image[7] = cs.grabImage(16, 4, 32, 32);
 
 
-        anim = new Animation(minion_image, 150);
+        anim = new Animation(hound_image, 150);
     }
 
     public void tick() {

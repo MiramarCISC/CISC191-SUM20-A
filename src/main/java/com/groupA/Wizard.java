@@ -94,10 +94,9 @@ public class Wizard extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Knight) {
+            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
                 if(getBounds().intersects(tempObject.getBounds())) {
                    game.hp--; //Debug line
-
                 }
             }
         }
@@ -126,3 +125,4 @@ public class Wizard extends GameObject {
         return new Rectangle (x, y, 62, 62);
     }
 }
+

@@ -7,6 +7,7 @@ import java.util.Random;
 public class Knight extends GameObject {
 
     private Handler handler;
+    private Game game;
     private BufferedImage[] knight_image = new BufferedImage[8];
     Animation anim;
 
@@ -14,10 +15,15 @@ public class Knight extends GameObject {
     Random r = new Random();
     int choose = 0;
     int hp = 100;
+    int counter = 0; // Counter used to count amount of times block is hit
 
-    public Knight (int x, int y, ID id, Handler handler, SpriteSheet cs) {
+    int px; // players x and y location
+    int py;
+
+    public Knight(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
+        this.game = game;
 
         knight_image[0] = cs.grabImage(9, 5, 32, 32);
         knight_image[1] = cs.grabImage(10, 5, 32, 32);
@@ -36,52 +42,71 @@ public class Knight extends GameObject {
         x += velX;
         y += velY;
 
-        /* Constantly 'choose' is a random variable from 0-9.
-        If choose == 0, enemy moves in a different direction. */
-        choose = r.nextInt(10);
-
-        // If enemy collides, they automatically pick a new direction.
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
 
-            if(tempObject.getId() == ID.Block) {
-                // Play around with this to get a better enemy AI. Lil' glitchy...
+            if (tempObject.getId() == ID.Player) {
+                px = tempObject.getX(); // Players x and y location
+                py = tempObject.getY();
+
                 if(getBoundsBig().intersects(tempObject.getBounds())) {
-                    x += (velX*5) * -1;
-                    y += (velY*5) * -1; //Invert velocity and shoot it back (ricochet)
+                    x += (velX*25) * -1; // Change velX/Y*int to change bounce level
+                    y += (velY*25) * -1; //Invert velocity and shoot it back (ricochet)
                     velX *= -1;
                     velY *= -1;
-                } else if (choose == 0) {
-                    // Random between -4 and 4 algorithm.
-                    velX = (r.nextInt(2 - -2) + -2);
-                    velY = (r.nextInt(2 - -2) + -2);
+
+                    game.hp--;
                 }
             }
 
-            if(tempObject.getId() == ID.Bullet) {
-                // If shooty shoot time take away health point.
-                if(getBounds().intersects(tempObject.getBounds())) {
+            else if(tempObject.getId() == ID.Bullet) {
+                // Shoot and remove health point.
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    x += (velX*25) * -1; // Change velX/Y*int to change bounce level
+                    y += (velY*25) * -1; //Invert velocity and shoot it back (ricochet)
+                    velX *= -1;
+                    velY *= -1;
+
                     hp -= 50;
                     handler.removeObject(tempObject);
                 }
             }
+
+            else if (tempObject.getId() == ID.Block) {
+                if(getBoundsBig().intersects(tempObject.getBounds())) {
+                    x += (velX*12) * -1; // Change velX/Y*int to change bounce level
+                    y += (velY*12) * -1; //Invert velocity and shoot it back (ricochet)
+                    velX *= -1;
+                    velY *= -1;
+
+                    counter++; // Increment counter
+
+                    if(counter > 5) {
+                        //If counter greater than 5 destroy block.
+                        handler.removeObject(tempObject);
+                        counter = 0;
+                    }
+                }
+            }
         }
 
-        anim.tick();
-        // If no hp, bye bye.
-        if(hp <= 0) handler.removeObject(this);
-    } //End tick method
+        velX = (px - x) / 35; // Basically Knight will lock onto Player location and follow.
+        velY = (py - y) / 35; // until it reach certain point then stays there. Change division int to change speed (higher int = lower speed).
 
-    public void render(Graphics g) {
+        anim.tick(); // render animation
+        if(hp <= 0) handler.removeObject(this); // remove Knight if less than 0 hp.
+    }
+
+    public void render (Graphics g){
         anim.render(g, x, y, 32, 32);
     }
 
-    public Rectangle getBounds() {
+    public Rectangle getBounds () {
         return new Rectangle(x, y, 32, 32);
     }
 
-    public Rectangle getBoundsBig() {
+    public Rectangle getBoundsBig () {
         // Makes bounding box slightly bigger for colliding with walls as opposed to bullets (not so tight).
-        return new Rectangle (x-16, y-16, 64, 64);
+        return new Rectangle(x - 16, y - 16, 64, 64);
     }
 }
