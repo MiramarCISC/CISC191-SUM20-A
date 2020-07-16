@@ -36,8 +36,9 @@ hs_err_pid*
 /build/
 /dist/
 
-# Maven target directory
+# Maven target and eclipse .settings
 /target/
+.settings/
 
 # Misc
 source.txt
