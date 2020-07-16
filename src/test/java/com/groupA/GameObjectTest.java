@@ -25,7 +25,7 @@ class GameObjectTest {
   @BeforeAll
   static void init() {
     loader = new BufferedImageLoader();
-    spriteSheetImage = loader.loadImage("../../../../main/resources/com/groupA/main_sheet.png");
+    spriteSheetImage = loader.loadImage("/main_sheet.png");
     spriteSheet = new SpriteSheet(spriteSheetImage);
 
     game = new Game(1, 1);

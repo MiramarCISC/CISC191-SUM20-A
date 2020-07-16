@@ -1,21 +1,71 @@
 # CISC191-SUM20-A
 
-## Compiling and Running Project
+## Building and Running Project
 
-### Using Ant
+### Building Using Maven (Recommended)
 
-Ant installation (MacOS)
+#### Installation
+
+MacOS
+
+```sh
+brew install maven
+```
+
+Windows
+
+  - [How to install Maven on Windows](https://www.javatpoint.com/how-to-install-maven)
+
+
+#### Usage (Includes unit tests)
+
+First, Make sure you are in the project root directory.
+
+With the included `pom.xml` from the repo and Maven already installed, run the
+following to compile and install all dependencies
+
+```sh
+mvn install
+```
+
+Then execute `.jar` file to run
+
+```sh
+java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
+```
+
+To recompile project
+
+```sh
+mvn compile
+```
+
+To run test suite
+
+```sh
+mvn test
+```
+
+---
+
+### Building Using Ant
+
+#### Installation
+
+MacOS
 
 ```sh
 brew install ant
 ```
 
-Ant installation (Windows)
+Windows
 
   - [How to Install Apache Ant on Windows](https://mkyong.com/ant/how-to-install-apache-ant-on-windows/)
 
 
-#### Usage
+#### Usage (Does not include unit tests)
+
+First, Make sure you are in the project root directory.
 
 With the included `build.xml` from the repo and Ant installed, to compile and
 distribute `.jar` file, run
@@ -36,7 +86,9 @@ Finally, to clean all `build` and `dist` run
 ant clean
 ```
 
-### Manually in Terminal
+---
+
+### Building Manually in Terminal (Does not include unit test)
 
 From root project directory. Create `build` directory.
 
@@ -67,7 +119,7 @@ java -cp build com.groupA.Game
 
 ```sh
 javac -Xlint -sourcepath src -d build src/main/**/*.java
-find -name "*.java" -not -path "*/test/*" > source.txt
+find . -name "*.java" -not -path "*/test/*" > source.txt
 java -cp build com.groupA.Game
 ```
 

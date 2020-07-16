@@ -30,7 +30,7 @@ class BulletTest {
     rectangle = new Rectangle(x, y, 8, 8);
 
     BufferedImageLoader loader = new BufferedImageLoader();
-    BufferedImage spriteSheetImage = loader.loadImage("../../../../main/resources/com/groupA/main_sheet.png");
+    BufferedImage spriteSheetImage = loader.loadImage("/main_sheet.png");
     SpriteSheet spriteSheet = new SpriteSheet(spriteSheetImage);
     bullet = new Bullet(x, y, id, handler, mx, my, spriteSheet);
   }

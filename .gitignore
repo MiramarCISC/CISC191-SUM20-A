@@ -24,13 +24,21 @@ hs_err_pid*
 
 
 ##### Mark's gitignore #####
+
 # Eclipse dotfiles
 .classpath
 .project
+
 # ignore all bin files including images
 /bin/
+
 # Ant build and distributtion
 /build/
 /dist/
+
+# Maven target directory
+/target/
+
 # Misc
 source.txt
+

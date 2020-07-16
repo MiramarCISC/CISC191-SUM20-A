@@ -18,7 +18,7 @@ class BufferedImageLoaderTest {
   @Test
   void loadImageTest() {
     loader = new BufferedImageLoader();
-    image = loader.loadImage("../../../../main/resources/com/groupA/main_sheet.png");
+    image = loader.loadImage("/main_sheet.png");
     // Checks if image load successful
     assertNotNull(image);
   }

@@ -20,7 +20,7 @@ class SpriteSheetTest {
   @Test
   void grabImageTest() {
     loader = new BufferedImageLoader();
-    spriteSheetImage = loader.loadImage("../../../../main/resources/com/groupA/main_sheet.png");
+    spriteSheetImage = loader.loadImage("/main_sheet.png");
     spriteSheet = new SpriteSheet(spriteSheetImage);
 
     // Checks if image grab successful
