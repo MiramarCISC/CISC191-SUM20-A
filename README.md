@@ -2,7 +2,7 @@
 
 ## Building and Running Project
 
-### Building Using Maven (Recommended)
+### Building Using Maven (Recommended. Includes project unit tests)
 
 #### Installation
 
@@ -17,7 +17,7 @@ Windows
   - [How to install Maven on Windows](https://www.javatpoint.com/how-to-install-maven)
 
 
-#### Usage (Includes unit tests)
+#### Usage
 
 First, Make sure you are in the project root directory.
 
@@ -48,7 +48,7 @@ mvn test
 
 ---
 
-### Building Using Ant
+### Building Using Ant (Does not include project unit tests)
 
 #### Installation
 
@@ -63,7 +63,7 @@ Windows
   - [How to Install Apache Ant on Windows](https://mkyong.com/ant/how-to-install-apache-ant-on-windows/)
 
 
-#### Usage (Does not include unit tests)
+#### Usage
 
 First, Make sure you are in the project root directory.
 
@@ -88,7 +88,7 @@ ant clean
 
 ---
 
-### Building Manually in Terminal (Does not include unit test)
+### Building Manually in Terminal (Does not include project unit tests)
 
 From root project directory. Create `build` directory.
 
