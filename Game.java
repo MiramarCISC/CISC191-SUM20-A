@@ -14,19 +14,19 @@ public class Game extends Canvas implements Runnable {
     private Help help;
     private Pause pause;
     private Camera camera;
-    private SpriteSheet ss; // spritesheet
+    private SpriteSheet ss;
     private SpriteSheet cs; // character sheet
 
     private BufferedImage level = null;
     private BufferedImage sprite_sheet = null;
-    private BufferedImage char_sheet = null; //char sheet
+    private BufferedImage char_sheet = null;
     private BufferedImage floor = null;
     private BufferedImage lives_image;
 
     // Various public variables that are critical for display in the HUD, ammo, hp etc.
     public int ammo = 50;
     public int hp = 0; // Wizard fills the hp upon construction.
-    public int lives = 3;
+    public int lives; // Lives fed as argument in constructor.
     public int level_numb = 1;
     public boolean totem_flag = false;
 
@@ -40,12 +40,10 @@ public class Game extends Canvas implements Runnable {
 
     public Game(int current_level, int current_life) {
 
-        //new Window(1980,1080,"Wizard Game", this);
-
         Window.changeLevel(this); // Level one
 
         // Don't create a new instance of this handler again, could cause problems.
-        // Instead swap it into new classes, since the objects are inside this handler.
+        // Instead place original instance into new classes, since the game objects are inside this handler.
         handler = new Handler();
         menu = new Menu();
         help = new Help();
@@ -53,7 +51,6 @@ public class Game extends Canvas implements Runnable {
         camera = new Camera(0, 0);
         this.addKeyListener(new KeyInput(handler));
         lives = current_life;
-
 
         BufferedImageLoader loader = new BufferedImageLoader();
 
@@ -64,19 +61,20 @@ public class Game extends Canvas implements Runnable {
 
         cs = new SpriteSheet(char_sheet); // character sheet
 
-        lives_image = cs.grabImage(13, 8, 32, 32);
+        lives_image = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
 
-        // level_numb parameter determines which level is loaded.
-        if (current_level == 1) {
-            level = loader.loadImage("/level_one.png"); // load level
-            floor = ss.grabImage(6, 6, 32, 32); // load floor tiles
-            level_numb = current_level;
-        }
+        // current_level parameter determines which level is loaded.
+        switch (current_level) {
+            case 1:
+                level = loader.loadImage("/level_one.png"); // load level
+                floor = ss.grabImage(6, 6, 32, 32); // load floor tiles
+                level_numb = current_level;
+                break;
+            case 2:
+                level = loader.loadImage("/level_two.png"); // load level 2
+                floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
+                level_numb = current_level;
 
-        else if (current_level > 1) {
-            level = loader.loadImage("/level_two.png"); // load level 2
-            floor = ss.grabImage(7, 2, 32, 32); // load different floor tiles
-            level_numb = current_level;
         }
 
         this.addMouseListener(new MouseInput(handler, camera, this, ss, cs));
@@ -94,16 +92,10 @@ public class Game extends Canvas implements Runnable {
 
     private void stop() {
         isRunning = false;
-        /*try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }No need for thread join, rely on boolean*/
     }
 
     public void run() {
-        // Main gameloop thread.
-
+        // Main game loop thread.
 
         this.requestFocus();
         long lastTime = System.nanoTime();
@@ -135,14 +127,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick() {
-
+        // Moves objects to next position 60 times a second.
         if(State == STATE.GAME) {
             for(int i = 0; i < handler.object.size(); i++) {
                 if(handler.object.get(i).getId() == ID.Player) {
                     camera.tick(handler.object.get(i));
                 }
             }
-
             handler.tick();
         }
     } // end tick method
@@ -151,7 +142,7 @@ public class Game extends Canvas implements Runnable {
         // Renders everything in the game.
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null) {
-            // Three in the chamber strat, preloads 3 frames for each render.
+            // Three in the chamber preloads 3 frames for each render.
             this.createBufferStrategy(3);
             return;
         }
@@ -160,7 +151,7 @@ public class Game extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
 
         if(State == STATE.GAME) {
-            ///////////this is where we actually draw stuff to game///////////////////////
+            ///////////this is where we draw Objects and Background to game///////////////////////
 
 
             // Create background.
@@ -240,9 +231,6 @@ public class Game extends Canvas implements Runnable {
                 g.drawString("Game Over!", 400, 281);
 
                 Game.State = Game.STATE.MENU;
-
-                camera.setX(0); //If you forget to reset the camera, you're gonna have a bad time...
-                camera.setY(0);
 
                 // Brief explanation, basically this is refreshing lives so we don't end up back here,
                 // Starting a new game, then killing this thread. If you don't stop this thread.

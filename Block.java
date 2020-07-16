@@ -17,6 +17,7 @@ public class Block extends GameObject {
             case 1: block_image = ss.grabImage(6, 9 ,32, 32);
                     break;
             case 2: block_image = ss.grabImage(26, 11, 32, 32);
+                    break;
         }
     }
 
