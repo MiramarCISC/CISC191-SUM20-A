@@ -29,3 +29,8 @@ hs_err_pid*
 .project
 # ignore all bin files including images
 /bin/
+# Ant build and distributtion
+/build/
+/dist/
+# Misc
+source.txt
