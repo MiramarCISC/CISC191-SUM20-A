@@ -2,6 +2,8 @@
 
 ## Building and Running Project
 
+---
+
 ### Building Using Maven (Recommended. Includes project unit tests)
 
 #### Installation
@@ -141,7 +143,7 @@ java -cp build com.groupA.Game
 Assign an alias to recompile with just one command
 
 ```sh
-alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find -name "*.java" -not -path "*/test/*" > source.txt; java -cp build com.groupA.Game'
+alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build com.groupA.Game'
 ```
 
 Then simply run
@@ -150,6 +152,15 @@ Then simply run
 javarun
 ```
 
+#### Cleaning Up
+
+```sh
+rm -r build source.txt
+```
+
+---
+
 ## Setting Up Project Folder Structure in IntelliJ IDEA
 
   - [Java project folder structure in IntelliJ IDEA](https://stackoverflow.com/questions/41638654/java-project-folder-structure-in-intellij-idea)
+
