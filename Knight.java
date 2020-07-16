@@ -34,70 +34,40 @@ public class Knight extends GameObject {
     }
 
     public void tick() {
+        x += velX;
+        y += velY;
 
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
 
             if (tempObject.getId() == ID.Player) {
-                // If the player intersects with a knight they will get shot back.
-                // But we want it so if the knight comes close to the player they get shot back
                 px = tempObject.getX(); // Players x and y location
                 py = tempObject.getY();
 
-                if (getBoundsBig().intersects(tempObject.getBounds())) {
-                    // If the player intersects with a Knight
-                    velX = (px + x) / 100; // Knight will reverse from the player
-                    velY = (py + y) / 100;
-
-                    x += (velX*2); // Knight will jump forward back quick like a rubber band snap. // turned to 1-- just now
-                    y += (velY*2);
-
-                    x *= velX / 10; // Then continue reversing.
-                    y *= velY / 10;
-
-                } else {
-                    velX = (px - x) / 100; // Basically Knight will lock onto Player location and follow.
-                    velY = (py - y) / 100;
-
-                    x += velX;
-                    y += velY;
+                if(getBoundsBig().intersects(tempObject.getBounds())) {
+                    x += (velX*25) * -1; // Change velX/Y*int to change bounce level
+                    y += (velY*25) * -1; //Invert velocity and shoot it back (ricochet)
+                    velX *= -1;
+                    velY *= -1;
                 }
             }
         }
 
-        choose = r.nextInt(10);
+        velX = (px - x) / 35; // Basically Knight will lock onto Player location and follow.
+        velY = (py - y) / 35; // until it reach certain point then stays there. Change division int to change speed (higher int = lower speed).
 
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
-
-            if (tempObject.getId() == ID.Player) {
-                // Play around with this to get a better enemy AI. Lil' glitchy...
-                if (tempObject.getId() == ID.Bullet) {
-                    // If enemy collides with bullet, remove bullet/hp.
-                    if (getBounds().intersects(tempObject.getBounds())) {
-                        hp -= 50;
-                        handler.removeObject(tempObject);
-                    }
-                }
-            }
-
-
-            anim.tick();
-            // If no hp, bye bye.
-            if (hp <= 0) handler.removeObject(this);
-        }
-    } //End tick method
+    }
 
     public void render (Graphics g){
         anim.render(g, x, y, 32, 32);
     }
 
     public Rectangle getBounds () {
-        return new Rectangle(x, y, 62, 62);
+        return new Rectangle(x, y, 32, 32);
     }
 
     public Rectangle getBoundsBig () {
         // Makes bounding box slightly bigger for colliding with walls as opposed to bullets (not so tight).
-        return new Rectangle(x - 16, y - 16, 200, 200);
+        return new Rectangle(x - 16, y - 16, 64, 64);
     }
 }
