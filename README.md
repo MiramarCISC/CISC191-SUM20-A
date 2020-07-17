@@ -29,7 +29,12 @@
 
 ```bash
 mvn install
+
+# Running .jar
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
+
+# Running main class
+mvn exec:java
 ```
 
 #### Maven Installation
@@ -61,17 +66,29 @@ Then execute `.jar` file to run project
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 ```
 
-or simply run the main java `Game` class (specified in `pom.xml`)
-
-```bash
-mvn exec:java
-```
-
 To run specific class. (replace `<class>` with path to java file starting from
 `com.groupA` directory, using `.` as path separator).
 
 ```bash
+# Template
 mvn exec:java -Dexec.mainClass="com.groupA.<class>"
+
+# Running Game class
+mvn exec:java -Dexec.mainClass="com.groupA.Game"
+```
+
+> A `Game` class can be ran by default using `exec:java` by modifying `pom.xml`.
+> Just uncomment this section from the xml file. `<mainClass>` can be changed
+> to whatever default class to run.
+
+```xml
+<plugin>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>exec-maven-plugin</artifactId>
+  <configuration>
+    <mainClass>com.groupA.Game</mainClass>
+  </configuration>
+</plugin>
 ```
 
 To recompile project

@@ -21,13 +21,15 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>com.groupA.Game</mainClass>
-        </configuration>
-      </plugin>
+      <!-- Uncomment to run com.groupA.Game by default with "mvn exec:java" -->
+
+      <!-- <plugin>                                     -->
+      <!--   <groupId>org.codehaus.mojo</groupId>       -->
+      <!--   <artifactId>exec-maven-plugin</artifactId> -->
+      <!--   <configuration>                            -->
+      <!--     <mainClass>com.groupA.Game</mainClass>   -->
+      <!--   </configuration>                           -->
+      <!-- </plugin>                                    -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -48,8 +50,8 @@
           <!-- Uncomment to ignore test failures on build -->
 
           <!-- <configuration>                               -->
-            <!--   <testFailureIgnore>true</testFailureIgnore> -->
-              <!-- </configuration>                              -->
+          <!--   <testFailureIgnore>true</testFailureIgnore> -->
+          <!-- </configuration>                              -->
           </plugin>
         </plugins>
       </build>
