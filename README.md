@@ -34,7 +34,7 @@ mvn install
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 
 # Running main class
-mvn exec:java
+mvn exec:java -Dexec.mainClass="com.groupA.Game"
 ```
 
 #### Maven Installation
