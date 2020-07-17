@@ -4,12 +4,15 @@
 
 * [Building and Running Project](#building-and-running-project)
   * [Building Using Maven (Recommended. Includes project unit tests)](#building-using-maven-recommended-includes-project-unit-tests)
+    * [Tl;dr](#tldr)
     * [Maven Installation](#maven-installation)
     * [Maven Usage](#maven-usage)
   * [Building Using Ant (Does not include project unit tests)](#building-using-ant-does-not-include-project-unit-tests)
+    * [Tl:dr](#tldr-1)
     * [Ant Installation](#ant-installation)
     * [Ant Usage](#ant-usage)
   * [Building Manually in Terminal (Does not include project unit tests)](#building-manually-in-terminal-does-not-include-project-unit-tests)
+    * [Tl;dr](#tldr-2)
     * [Building and Running](#building-and-running)
     * [Recompiling](#recompiling)
     * [Simple Shortcut](#simple-shortcut)
@@ -21,6 +24,13 @@
 ## Building and Running Project
 
 ### Building Using Maven (Recommended. Includes project unit tests)
+
+#### Tl;dr
+
+```bash
+mvn install
+java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
+```
 
 #### Maven Installation
 
@@ -96,6 +106,13 @@ mvn package -Dmaven.test.skip
 
 ### Building Using Ant (Does not include project unit tests)
 
+#### Tl:dr
+
+```bash
+ant
+ant run
+```
+
 #### Ant Installation
 
 MacOS
@@ -132,6 +149,14 @@ ant clean
 ```
 
 ### Building Manually in Terminal (Does not include project unit tests)
+
+#### Tl;dr
+
+```bash
+mkdir -p build
+alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build com.groupA.Game'
+javarun
+```
 
 #### Building and Running
 
