@@ -51,10 +51,22 @@ Then execute `.jar` file to run project
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 ```
 
+or simply run the main java `Game` class
+
+```bash
+mvn exec:java -Dexec.mainClass="com.groupA.Game" -Dexec.classpathScope=runtime
+```
+
 To recompile project
 
 ```bash
 mvn compile
+```
+
+To package project into a JAR file
+
+```bash
+mvn package
 ```
 
 To run test suite
@@ -74,6 +86,12 @@ from building the `.jar` file, simply skip unit testing from build by running
 
 ```bash
 mvn clean install -Dmaven.test.skip
+```
+
+or to just compile and package into a JAR file without reinstalling dependencies
+
+```bash
+mvn package -Dmaven.test.skip
 ```
 
 ### Building Using Ant (Does not include project unit tests)
