@@ -61,10 +61,17 @@ Then execute `.jar` file to run project
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 ```
 
-or simply run the main java `Game` class
+or simply run the main java `Game` class (specified in `pom.xml`)
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.groupA.Game" -Dexec.classpathScope=runtime
+mvn exec:java
+```
+
+To run specific class. (replace `<class>` with path to java file starting from
+`com.groupA` directory, using `.` as path separator).
+
+```bash
+mvn exec:java -Dexec.mainClass="com.groupA.<class>"
 ```
 
 To recompile project
@@ -170,7 +177,7 @@ Then run the following to compile `.java` into `build` directory as classpath
 
 ```bash
 javac -Xlint -sourcepath src -d build src/main/**/*.java
-find -name "*.java" -not -path "*/test/*" > source.txt
+find . -name "*.java" -not -path "*/test/*" > source.txt
 ```
 
 Then copy all resource files into `build` directory
