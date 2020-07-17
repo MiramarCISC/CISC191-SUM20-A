@@ -77,9 +77,9 @@ mvn exec:java -Dexec.mainClass="com.groupA.<class>"
 mvn exec:java -Dexec.mainClass="com.groupA.Game"
 ```
 
-> A `Game` class can be ran by default using `exec:java` by modifying `pom.xml`.
-> Just uncomment this section from the xml file. `<mainClass>` can be changed
-> to whatever default class to run.
+> `Game` class can be ran by default using only `mvn exec:java` by modifying
+> `pom.xml`. Just uncomment this section from the xml file. `<mainClass>` can
+> be changed to whatever default class to run.
 
 ```xml
 <plugin>
