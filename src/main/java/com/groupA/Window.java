@@ -23,7 +23,7 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        //device.setFullScreenWindow(frame); // Careful with this
+        device.setFullScreenWindow(frame); // Careful with this
     }
 
     public static void quitGame(){
