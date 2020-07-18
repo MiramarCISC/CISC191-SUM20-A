@@ -134,7 +134,8 @@ public class GraphicsSplash extends JPanel implements ActionListener {
 
   /**
    * Draw background with tiled terrain
-   * @param g2d
+   * @param g2d Graphics 2D
+   * @param terrain Image to tile the terrain with
    */
   public void drawTerrain(Graphics2D g2d, Image terrain) {
     int terrainWidth = terrain.getWidth(null);
@@ -152,8 +153,9 @@ public class GraphicsSplash extends JPanel implements ActionListener {
 
   /**
    * Increment index to go to next sprite pose.
-   * @param spritImages
-   * @param index
+   * @param spriteImages Array of sprite images to render
+   * @param index Current index value to access sprite image
+   * @return Next index value
    */
   public int updateSpriteIndex(Image[] spriteImages, int index) {
     if (index < spriteImages.length - 1)

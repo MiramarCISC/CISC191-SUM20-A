@@ -12,9 +12,6 @@ public class SplashScreen extends JFrame {
 
   private GraphicsSplash splash = new GraphicsSplash();
 
-  /**
-   * Launch the application.
-   */
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
@@ -28,9 +25,6 @@ public class SplashScreen extends JFrame {
     });
   }
 
-  /**
-   * Create the frame.
-   */
   public SplashScreen() {
     setSize(800, 600);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
