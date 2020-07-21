@@ -31,7 +31,7 @@
     <!-- Create .jar file -->
     <jar destfile="${dist}/jar/WizardGame.jar">
       <manifest>
-        <attribute name="Main-Class" value="com.groupA.Game"/>
+        <attribute name="Main-Class" value="edu.sdccd.cisc191.wizardGame.Game"/>
       </manifest>
       <fileset dir="${build}"/>
       <fileset dir="${src}"/>

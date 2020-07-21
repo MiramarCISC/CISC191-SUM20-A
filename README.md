@@ -34,7 +34,7 @@ mvn install
 java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 
 # Running main class
-mvn exec:java -Dexec.mainClass="com.groupA.Game"
+mvn exec:java -Dexec.mainClass="edu.sdccd.cisc191.wizardGame.Game"
 ```
 
 #### Maven Installation
@@ -67,14 +67,14 @@ java -jar target/WizardGame-0.0.1-SNAPSHOT.jar
 ```
 
 To run specific class. (replace `<class>` with path to java file starting from
-`com.groupA` directory, using `.` as path separator).
+`edu.sdccd.cisc191.wizardGame` directory, using `.` as path separator).
 
 ```bash
 # Template
-mvn exec:java -Dexec.mainClass="com.groupA.<class>"
+mvn exec:java -Dexec.mainClass="edu.sdccd.cisc191.wizardGame.<class>"
 
 # Running Game class
-mvn exec:java -Dexec.mainClass="com.groupA.Game"
+mvn exec:java -Dexec.mainClass="edu.sdccd.cisc191.wizardGame.Game"
 ```
 
 > `Game` class can be ran by default using only `mvn exec:java` by modifying
@@ -86,7 +86,7 @@ mvn exec:java -Dexec.mainClass="com.groupA.Game"
   <groupId>org.codehaus.mojo</groupId>
   <artifactId>exec-maven-plugin</artifactId>
   <configuration>
-    <mainClass>com.groupA.Game</mainClass>
+    <mainClass>edu.sdccd.cisc191.wizardGame.Game</mainClass>
   </configuration>
 </plugin>
 ```
@@ -115,8 +115,9 @@ To clean and remove maven build from project
 mvn clean
 ```
 
-**NOTE:** If unit tests fail for some reason after new changes that prevents
-from building the `.jar` file, simply skip unit testing from build by running
+**NOTE:** If unit tests fail after new changes that prevents from building the
+`.jar` file, although not recommended, simply skip unit testing from build by
+running
 
 ```bash
 mvn clean install -Dmaven.test.skip
@@ -178,7 +179,7 @@ ant clean
 
 ```bash
 mkdir -p build
-alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build com.groupA.Game'
+alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build edu.sdccd.cisc191.wizardGame.Game'
 javarun
 ```
 
@@ -206,7 +207,7 @@ cp src/main/resources/*.png src/main/resources/*.jpg build
 Then run `Game` class
 
 ```bash
-java -cp build com.groupA.Game
+java -cp build edu.sdccd.cisc191.wizardGame.Game
 ```
 
 #### Recompiling
@@ -214,7 +215,7 @@ java -cp build com.groupA.Game
 ```bash
 javac -Xlint -sourcepath src -d build src/main/**/*.java
 find . -name "*.java" -not -path "*/test/*" > source.txt
-java -cp build com.groupA.Game
+java -cp build edu.sdccd.cisc191.wizardGame.Game
 ```
 
 #### Simple Shortcut
@@ -222,7 +223,7 @@ java -cp build com.groupA.Game
 Assign an alias to recompile with just one command
 
 ```bash
-alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build com.groupA.Game'
+alias javarun='javac -Xlint -sourcepath src -d build src/main/**/*.java; find . -name "*.java" -not -path "*/test/*" > source.txt; java -cp build edu.sdccd.cisc191.wizardGame.Game'
 ```
 
 Then simply run

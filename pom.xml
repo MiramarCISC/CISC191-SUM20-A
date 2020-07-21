@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.groupA</groupId>
+  <groupId>edu.sdccd.cisc191.wizardGame</groupId>
   <artifactId>WizardGame</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
@@ -33,13 +33,13 @@
               <target>${compile.java.version}</target>
           </configuration>
       </plugin>
-      <!-- Uncomment to run com.groupA.Game by default with "mvn exec:java" -->
+      <!-- Uncomment to run edu.sdccd.cisc191.wizardGame.Game by default with "mvn exec:java" -->
 
       <!-- <plugin>                                     -->
       <!--   <groupId>org.codehaus.mojo</groupId>       -->
       <!--   <artifactId>exec-maven-plugin</artifactId> -->
       <!--   <configuration>                            -->
-      <!--     <mainClass>com.groupA.Game</mainClass>   -->
+      <!--     <mainClass>edu.sdccd.cisc191.wizardGame.Game</mainClass>   -->
       <!--   </configuration>                           -->
       <!-- </plugin>                                    -->
       <plugin>
@@ -97,7 +97,7 @@
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addClasspath>true</addClasspath>
-              <mainClass>com.groupA.Game</mainClass>
+              <mainClass>edu.sdccd.cisc191.wizardGame.Game</mainClass>
             </manifest>
           </archive>
         </configuration>
