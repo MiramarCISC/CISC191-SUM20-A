@@ -1,14 +1,25 @@
-package edu.sdccd.cisc191.wizardGame.gui.screen;
+package edu.sdccd.cisc191.wizardGame.gui.screen.levels;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
-import edu.sdccd.cisc191.wizardGame.objects.*;
+import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
+import edu.sdccd.cisc191.wizardGame.objects.Block;
+import edu.sdccd.cisc191.wizardGame.objects.Crate;
+import edu.sdccd.cisc191.wizardGame.objects.Ent;
+import edu.sdccd.cisc191.wizardGame.objects.Handler;
+import edu.sdccd.cisc191.wizardGame.objects.Hound;
+import edu.sdccd.cisc191.wizardGame.objects.ID;
+import edu.sdccd.cisc191.wizardGame.objects.Knight;
+import edu.sdccd.cisc191.wizardGame.objects.Minion;
+import edu.sdccd.cisc191.wizardGame.objects.Totem;
+import edu.sdccd.cisc191.wizardGame.objects.Wizard;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 public abstract class AbstractLevel {
 

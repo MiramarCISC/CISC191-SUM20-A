@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
-import edu.sdccd.cisc191.wizardGame.gui.screen.AbstractLevel;
-import edu.sdccd.cisc191.wizardGame.gui.screen.LevelOne;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Wizard extends GameObject {
@@ -56,13 +56,13 @@ public class Wizard extends GameObject {
         if (handler.isUp()) velY = -5;
         else if(!handler.isDown()) velY = 0; // If down is being pushed and velocity gets set to zero. Lag may result
 
-        if(handler.isDown()) velY = 5;
+        if (handler.isDown()) velY = 5;
         else if(!handler.isUp()) velY = 0;
 
         if (handler.isRight()) velX = 5;
         else if(!handler.isLeft()) velX = 0;
 
-        if(handler.isLeft()) velX = -5;
+        if (handler.isLeft()) velX = -5;
         else if(!handler.isRight()) velX = 0;
 
         anim.tick();
@@ -114,8 +114,7 @@ public class Wizard extends GameObject {
         myRect.y = y;
         if(myRect.intersects(otherRect)) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

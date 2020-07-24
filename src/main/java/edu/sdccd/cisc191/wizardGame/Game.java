@@ -1,20 +1,6 @@
 package edu.sdccd.cisc191.wizardGame;
 
-import edu.sdccd.cisc191.wizardGame.events.KeyInput;
-import edu.sdccd.cisc191.wizardGame.events.MouseInput;
-import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
-import edu.sdccd.cisc191.wizardGame.gui.screen.*;
-import edu.sdccd.cisc191.wizardGame.objects.Bullet;
-import edu.sdccd.cisc191.wizardGame.objects.GameObject;
-import edu.sdccd.cisc191.wizardGame.objects.Handler;
-import edu.sdccd.cisc191.wizardGame.objects.ID;
-import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
-import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 public class Game {
 
@@ -85,9 +71,9 @@ public class Game {
         this.lives = lives;
     }
 
-    // // Main method starts one Game instance and thus one GameController thread.
-    // public static void main(String[] args) {
-    //     // TODO: Run game
-    //     new Game();
-    // }
+    // Main method starts one Game instance and thus one GameController thread.
+    public static void main(String[] args) {
+        Window window = new Window(new Game(), 1980, 1080, "Wizard Game");
+        window.init();
+    }
 }

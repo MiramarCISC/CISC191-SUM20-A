@@ -9,6 +9,8 @@ import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
@@ -16,6 +18,16 @@ import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+/**
+ * The Game panel for {@code Window} class.
+ * Overrides {@code GeneralPanel} paintComponent to paint its own with
+ * {@code Canvas}.
+ *
+ * @author Mark Lucernas
+ * @author Jordan Tobin
+ *
+ * Date: 2020-07-24
+ */
 public class GamePanel extends GeneralPanel implements Runnable {
 
     /** Reference to the Game class */
@@ -123,6 +135,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Obtain the current frame from the buffer
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
+        // TODO: Delete these and implement state changes in Window class
         // // Decide what to render depending on level.
         // switch (this.game.getGameState()) {
         //     case MENU: menu.render(g);
@@ -203,8 +216,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     /**
-     * Nullifies parent {@code GeneralPanel} paintComponent to have GamePanel 
-     * paint its own content with Canvas.
+     * Nullifies parent {@code GeneralPanel} paintComponent method to have
+     * this GamePanel paint its own contents with Canvas.
      */
     @Override
     protected void paintComponent(Graphics g) {}

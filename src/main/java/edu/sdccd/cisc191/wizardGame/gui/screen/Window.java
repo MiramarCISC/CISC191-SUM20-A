@@ -17,7 +17,7 @@ import edu.sdccd.cisc191.wizardGame.Game;
  *
  * @author Jordan Tobin
  * @author Mark Lucernas
-
+ *
  * Date: 2020-07-23
  */
 public class Window {
@@ -116,12 +116,14 @@ public class Window {
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
         gamePanels.get(getCurrOpenPanel()).setVisible(false);
+        // TODO: Fix loading screen
         // this.showLoadScreen();
         // System.out.println("Loading done");
 
         // Change panel
         gamePanels.get(panelName).setVisible(true);
 
+        // Starts the game only if not already
         if (panelName.equals("game")) {
             GamePanel gamePanel = (GamePanel) gamePanels.get("game");
             if (!gamePanel.isGameRunning())

@@ -13,7 +13,7 @@ import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 
 /**
  * General panel template for {@code Window} class.
- * Uses paintComponent() to render background image.
+ * Uses paintComponent method to render background image.
  *
  * @author Mark Lucernas
  *

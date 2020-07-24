@@ -1,6 +1,7 @@
-package edu.sdccd.cisc191.wizardGame.gui.screen;
+package edu.sdccd.cisc191.wizardGame.gui.screen.levels;
 
 import edu.sdccd.cisc191.wizardGame.Game;
+import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 
 
 public class LevelOne extends AbstractLevel {
