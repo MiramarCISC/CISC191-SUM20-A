@@ -34,14 +34,17 @@ public class Game {
 
     /** Initialize game */
     public void init() {
+        // Initialize Wizard stats
         ammo = 50;
         hp = 100;
         lives = 3;
+        // Initialize frame
         frame.init();
     }
 
     /** Accessors methods */
     public STATE getGameState()           { return State; }
+    public Window getFrame()                 { return frame; }
     public int getAmmo()                  { return ammo; }
     public int getLives()                 { return lives; }
     public int getHp()                    { return hp; }

@@ -32,7 +32,7 @@ public class Window {
     private JLayeredPane layeredPane;
 
     /** Game panels Map */
-    private Map<String, GeneralPanel> gamePanels
+    private Map<String, GeneralPanel> allPanels
         = new HashMap<String, GeneralPanel>();
 
     /** Last opened panel name */
@@ -78,11 +78,11 @@ public class Window {
         loadPanel.setBounds(0, 0, frameWidth, frameHeight);
 
         // Store panels into gamePanels
-        gamePanels.put("menu", menuPanel);
-        gamePanels.put("game", gamePanel);
-        gamePanels.put("help", helpPanel);
-        gamePanels.put("pause", pausePanel);
-        gamePanels.put("load", loadPanel);
+        allPanels.put("menu", menuPanel);
+        allPanels.put("game", gamePanel);
+        allPanels.put("help", helpPanel);
+        allPanels.put("pause", pausePanel);
+        allPanels.put("load", loadPanel);
 
         // Add all panels into layers
         layeredPane.add(menuPanel, new Integer(1));
@@ -115,17 +115,17 @@ public class Window {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
-        gamePanels.get(getCurrOpenPanel()).setVisible(false);
+        allPanels.get(getCurrOpenPanel()).setVisible(false);
         // TODO: Fix loading screen
         // this.showLoadScreen();
         // System.out.println("Loading done");
 
         // Change panel
-        gamePanels.get(panelName).setVisible(true);
+        allPanels.get(panelName).setVisible(true);
 
         // Starts the game only if not already
         if (panelName.equals("game")) {
-            GamePanel gamePanel = (GamePanel) gamePanels.get("game");
+            GamePanel gamePanel = (GamePanel) allPanels.get("game");
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
         }
@@ -138,10 +138,10 @@ public class Window {
     protected void showLoadScreen() {
         // Hide current panel
         if (getCurrOpenPanel() != null)
-            if (gamePanels.get(getCurrOpenPanel()).isVisible())
-                gamePanels.get(getCurrOpenPanel()).setVisible(false);
+            if (allPanels.get(getCurrOpenPanel()).isVisible())
+                allPanels.get(getCurrOpenPanel()).setVisible(false);
 
-        LoadPanel load = (LoadPanel) gamePanels.get("load");
+        LoadPanel load = (LoadPanel) allPanels.get("load");
         Thread t1 = new Thread(new Runnable(){
 
             @Override
@@ -158,33 +158,15 @@ public class Window {
         t1.start();
     }
 
-    /**
-     * Quit game.
-     */
-    public void quitGame(){
-        // If quit game is activated, the window will close and the program will exit.
-        frame.setVisible(false);
-        frame.dispose();
-        System.exit(0);
+    /** Quit game */
+    public void quitGame() {
+        frame.setVisible(false); frame.dispose(); System.exit(0);
     }
 
-    public Game getGame() {
-        return this.game;
-    }
-
-    /**
-     * Get last opened panel name.
-     * @return Name of {@code lastOpenPanel}, else null
-     */
-    public String getLastOpenPanel() {
-        if (lastOpenPanel != null) { return lastOpenPanel; } else { return null; }
-    }
-
-    /**
-     * Get currently open panel name.
-     * @return Name of {@code lastOpenPanel}, else null
-     */
-    public String getCurrOpenPanel() {
-        if (currOpenPanel != null) { return currOpenPanel; } else { return null; }
-    }
+    /** Accessor methods */
+    public Game getGame()                           { return this.game; }
+    public Map<String, GeneralPanel> getAllPanels() { return allPanels; }
+    public GeneralPanel getPanel(String panelName)  { return allPanels.get(panelName); }
+    public String getLastOpenPanel()                { if (lastOpenPanel != null) { return lastOpenPanel; } else { return null; } }
+    public String getCurrOpenPanel()                { if (currOpenPanel != null) { return currOpenPanel; } else { return null; } }
 }

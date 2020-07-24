@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
+import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
-import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Wizard extends GameObject {
@@ -92,13 +92,14 @@ public class Wizard extends GameObject {
                 }
             }
 
-            // if(tempObject.getId() == ID.Totem) {
-            //
-            //     if(getBounds().intersects(tempObject.getBounds())) {
-            //         handler.removeObject(tempObject);
-            //         game.setLevel(2);
-            //     }
-            // }
+            if(tempObject.getId() == ID.Totem) {
+
+                if(getBounds().intersects(tempObject.getBounds())) {
+                    handler.removeObject(tempObject);
+                    GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
+                    gamePanel.setLevel(2);
+                }
+            }
 
             if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
                 if(getBounds().intersects(tempObject.getBounds())) {
