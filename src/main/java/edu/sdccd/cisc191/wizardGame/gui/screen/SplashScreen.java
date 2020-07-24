@@ -10,7 +10,7 @@ import javax.swing.JFrame;
  */
 public class SplashScreen extends JFrame {
 
-  private GraphicsSplash splash = new GraphicsSplash();
+  private LoadPanel splash = new LoadPanel(null);
 
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
@@ -26,9 +26,10 @@ public class SplashScreen extends JFrame {
   }
 
   public SplashScreen() {
-    setSize(800, 600);
+    setSize(1980, 1080);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     add(splash);
+    splash.start();
     setVisible(true);
   }
 }

@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
-import edu.sdccd.cisc191.wizardGame.gui.screen.Help;
-import edu.sdccd.cisc191.wizardGame.gui.screen.Menu;
-import edu.sdccd.cisc191.wizardGame.gui.screen.Pause;
+import edu.sdccd.cisc191.wizardGame.gui.screen.HelpPanel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.MenuPanel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.PausePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 import edu.sdccd.cisc191.wizardGame.objects.Block;
 import edu.sdccd.cisc191.wizardGame.objects.Crate;
@@ -36,9 +36,9 @@ public class Game extends Canvas implements Runnable {
     private boolean isRunning = false;
     private Thread thread;
     private Handler handler;
-    private Menu menu;
-    private Help help;
-    private Pause pause;
+    private MenuPanel menu;
+    private HelpPanel help;
+    private PausePanel pause;
     private Camera camera;
     private SpriteSheet ss;
     private SpriteSheet cs; // character sheet
@@ -71,9 +71,9 @@ public class Game extends Canvas implements Runnable {
         // Don't create a new instance of this handler again, could cause problems.
         // Instead place original instance into new classes, since the game objects are inside this handler.
         handler = new Handler();
-        menu = new Menu();
-        help = new Help();
-        pause = new Pause();
+        menu = new MenuPanel();
+        help = new HelpPanel();
+        pause = new PausePanel();
         camera = new Camera(0, 0);
         this.addKeyListener(new KeyInput(handler));
         lives = current_life;
