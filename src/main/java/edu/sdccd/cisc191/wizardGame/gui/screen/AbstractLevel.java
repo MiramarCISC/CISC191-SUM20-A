@@ -14,6 +14,7 @@ public abstract class AbstractLevel {
 
     // Several utility variables.
     protected Game game;
+    protected GamePanel gamePanel;
     protected int levelNumb;
     protected BufferedImageLoader loader = new BufferedImageLoader();
 
@@ -47,8 +48,9 @@ public abstract class AbstractLevel {
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
 
     // Constructor
-    public AbstractLevel(Game game) {
+    public AbstractLevel(Game game, GamePanel gamePanel) {
         this.game = game;
+        this.gamePanel = gamePanel;
         camera = new Camera(0, 0); // and the camera
         handler = new Handler(); // make sure the handler is started from new.
     }
@@ -211,7 +213,7 @@ public abstract class AbstractLevel {
             g.drawString("Game Over!", 400, 281);
 
             game.setGameState(Game.STATE.MENU); // this is how it's done.
-            game.resetGame(); // call reset level
+            gamePanel.resetGame(); // call reset level
             // Go back to the menu.
         }
     } // end render
@@ -220,10 +222,10 @@ public abstract class AbstractLevel {
         // Resets hp, lives and resets entire game back to level One. Really should be called resetGame()?
         game.setHp(1); // debug
         game.setLives(3);
-        game.setLevel(1);
+        gamePanel.setLevel(1);
         handler.clearHandler();
         loadLevel(currentMap);
-        game.Update();
+        gamePanel.update();
     }
 
     /*getters and setters.*/

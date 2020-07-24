@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import edu.sdccd.cisc191.wizardGame.Game;
+
 /**
  * The main frame of the game.
  * Stacks JPanels on top of each other for fast switching using JLayeredPane.
@@ -19,6 +21,9 @@ import javax.swing.JLayeredPane;
  * Date: 2020-07-23
  */
 public class Window {
+
+    /** Game class reference */
+    private Game game;
 
     /** Frame components */
     private JFrame frame = new JFrame();
@@ -46,7 +51,8 @@ public class Window {
      * @param height    Height of the window
      * @param title     Title of the window
      */
-    public Window(int width, int height, String title) {
+    public Window(Game game, int width, int height, String title) {
+        this.game = game;
         frame.setTitle(title);
         frameWidth = width;
         frameHeight = height;
@@ -58,26 +64,30 @@ public class Window {
         layeredPane.setBounds(0, 0, frameWidth, frameHeight);
 
         // Init panels
-        HelpPanel helpPanel = new HelpPanel(this);
         MenuPanel menuPanel = new MenuPanel(this);
+        GamePanel gamePanel = new GamePanel(this);
+        HelpPanel helpPanel = new HelpPanel(this);
         PausePanel pausePanel = new PausePanel(this);
         LoadPanel loadPanel = new LoadPanel(this);
 
         // Set panel bounds
-        helpPanel.setBounds(0, 0, frameWidth, frameHeight);
         menuPanel.setBounds(0, 0, frameWidth, frameHeight);
+        gamePanel.setBounds(0, 0, frameWidth, frameHeight);
+        helpPanel.setBounds(0, 0, frameWidth, frameHeight);
         pausePanel.setBounds(0, 0, frameWidth, frameHeight);
         loadPanel.setBounds(0, 0, frameWidth, frameHeight);
 
         // Store panels into gamePanels
-        gamePanels.put("help", helpPanel);
         gamePanels.put("menu", menuPanel);
+        gamePanels.put("game", gamePanel);
+        gamePanels.put("help", helpPanel);
         gamePanels.put("pause", pausePanel);
         gamePanels.put("load", loadPanel);
 
         // Add all panels into layers
-        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(menuPanel, new Integer(1));
+        layeredPane.add(gamePanel, new Integer(1));
+        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(pausePanel, new Integer(1));
         layeredPane.add(loadPanel, new Integer(1));
 
@@ -106,12 +116,18 @@ public class Window {
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
         gamePanels.get(getCurrOpenPanel()).setVisible(false);
-        this.showLoadScreen();
-
-        System.out.println("Loading done");
+        // this.showLoadScreen();
+        // System.out.println("Loading done");
 
         // Change panel
         gamePanels.get(panelName).setVisible(true);
+
+        if (panelName.equals("game")) {
+            GamePanel gamePanel = (GamePanel) gamePanels.get("game");
+            if (!gamePanel.isGameRunning())
+                gamePanel.start();
+        }
+
         this.lastOpenPanel = getCurrOpenPanel();
         this.currOpenPanel = panelName;
     }
@@ -148,6 +164,10 @@ public class Window {
         frame.setVisible(false);
         frame.dispose();
         System.exit(0);
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 
     /**

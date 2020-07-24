@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.Game.STATE;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
+import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.objects.Bullet;
 import edu.sdccd.cisc191.wizardGame.objects.GameObject;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
@@ -30,6 +31,7 @@ public class MouseInput extends MouseAdapter {
     private Handler handler;
     private Camera camera;
     private Game game;
+    private GamePanel gamePanel;
     private SpriteSheet ss;
     private SpriteSheet cs; //Needs two sprite sheets, that's the reason I would like to just have one big sprite sheet.
 
@@ -39,10 +41,11 @@ public class MouseInput extends MouseAdapter {
     private int x;
     private int y;
 
-    public MouseInput(Handler handler, Camera camera, Game game, SpriteSheet ss, SpriteSheet cs) {
+    public MouseInput(Handler handler, Camera camera, Game game, GamePanel gamePanel, SpriteSheet ss, SpriteSheet cs) {
         this.handler = handler;
         this.camera = camera;
         this.game = game;
+        this.gamePanel = gamePanel;
         this.ss = ss;
         this.cs = cs;
     }
@@ -92,7 +95,7 @@ public class MouseInput extends MouseAdapter {
         if (resButton.contains(mx, my) && game.getHp() <= 0) {
             // Reset button.
             game.setHp(100);
-            game.respawn();
+            gamePanel.respawn();
         }
 
         else if (escButton.contains(x, y)) {
@@ -112,7 +115,7 @@ public class MouseInput extends MouseAdapter {
         }
 
         if (quitButton.contains(x, y)) {
-            game.quit();
+            // gamePanel.quit();
         }
     }
 
@@ -123,7 +126,7 @@ public class MouseInput extends MouseAdapter {
 
         if (quitButton.contains(x, y)) {
 
-            game.quit();
+            // gamePanel.quit();
         }
     }
 

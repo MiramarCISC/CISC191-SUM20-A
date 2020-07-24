@@ -92,13 +92,13 @@ public class Wizard extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Totem) {
-
-                if(getBounds().intersects(tempObject.getBounds())) {
-                    handler.removeObject(tempObject);
-                    game.setLevel(2);
-                }
-            }
+            // if(tempObject.getId() == ID.Totem) {
+            //
+            //     if(getBounds().intersects(tempObject.getBounds())) {
+            //         handler.removeObject(tempObject);
+            //         game.setLevel(2);
+            //     }
+            // }
 
             if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
                 if(getBounds().intersects(tempObject.getBounds())) {

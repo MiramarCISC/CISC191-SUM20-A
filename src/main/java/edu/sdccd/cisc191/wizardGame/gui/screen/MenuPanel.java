@@ -77,7 +77,9 @@ public class MenuPanel extends GeneralPanel {
         /** Play button mouse listener */
         playBtn.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+                frame.changePanel("game");
+            }
             @Override
             public void mousePressed(MouseEvent e) {}
             @Override
