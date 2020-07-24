@@ -7,12 +7,14 @@ import java.util.Random;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
+import edu.sdccd.cisc191.wizardGame.gui.screen.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.LevelOne;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Knight extends GameObject {
 
     private Handler handler;
-    private Game game;
+    private AbstractLevel level;
     private BufferedImage[] knight_image = new BufferedImage[8];
     Animation anim;
 
@@ -25,10 +27,10 @@ public class Knight extends GameObject {
     int px; // players x and y location
     int py;
 
-    public Knight(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs) {
+    public Knight(int x, int y, ID id, Handler handler, AbstractLevel level, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
-        this.game = game;
+        this.level = level;
 
         knight_image[0] = cs.grabImage(9, 5, 32, 32);
         knight_image[1] = cs.grabImage(10, 5, 32, 32);
@@ -60,7 +62,7 @@ public class Knight extends GameObject {
                     velX *= -1;
                     velY *= -1;
 
-                    game.hp--;
+                    //level.hp--; figure out hp later
                 }
             }
 

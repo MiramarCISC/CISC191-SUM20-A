@@ -6,22 +6,25 @@ import java.awt.image.BufferedImage;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
+import edu.sdccd.cisc191.wizardGame.gui.screen.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.screen.LevelOne;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Wizard extends GameObject {
 
     Handler handler;
+    AbstractLevel level;
     Game game;
 
     private BufferedImage[] wizard_image = new BufferedImage[4];
 
     Animation anim;
 
-    public Wizard(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs) {
+    public Wizard(int x, int y, ID id, Handler handler, Game game, AbstractLevel level, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
+        this.level = level;
         this.game = game;
-        game.hp += 100;
 
         wizard_image[0] = cs.grabImage(13, 8, 32, 32);
         wizard_image[1] = cs.grabImage(14, 8, 32, 32);
@@ -40,12 +43,12 @@ public class Wizard extends GameObject {
         y += velY;
 
         // Check for game over
-        if(game.lives <= 0) {
+        if(level.getLives() <= 0) {
             handler.removeObject(this);
         }
 
-        if(game.hp <= 0) {
-            game.lives--;
+        if(level.getHp() <= 0) {
+            level.decLives();
             handler.removeObject(this);
         }
 
@@ -84,7 +87,7 @@ public class Wizard extends GameObject {
             if(tempObject.getId() == ID.Crate) {
 
                 if(getBounds().intersects(tempObject.getBounds())) {
-                    game.ammo += 10;
+                    level.incAmmo(10);
                     handler.removeObject(tempObject);
                 }
             }
@@ -92,15 +95,14 @@ public class Wizard extends GameObject {
             if(tempObject.getId() == ID.Totem) {
 
                 if(getBounds().intersects(tempObject.getBounds())) {
-                    game.totem_flag = true;
-                    game.level_numb++;
                     handler.removeObject(tempObject);
+                    game.setLevel(2);
                 }
             }
 
             if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
                 if(getBounds().intersects(tempObject.getBounds())) {
-                   game.hp--; //Debug line
+                   level.decHp(); //Debug line
                 }
             }
         }
