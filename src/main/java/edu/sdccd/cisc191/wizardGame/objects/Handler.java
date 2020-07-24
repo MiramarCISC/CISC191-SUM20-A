@@ -4,12 +4,16 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 public class Handler {
+    LinkedList<GameObject> object = new LinkedList<GameObject>();
     /* The purpose of the handler class is to update
         every GameObject in the application at one time, in one place.
         As opposed to doing that separately, in the child class for example */
 
     // Essentially - This is an array of every object in the game.
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+   // public Handler() {
+       // object = new LinkedList<GameObject>(); // Everytime a new level is made we get a new handler.
+  //  }
+
 
     private boolean up = false, down = false, right = false, left = false, pause = false;
 
@@ -29,6 +33,13 @@ public class Handler {
 
             tempObject.render(g);
         }
+    }
+
+    public void clearHandler()
+            // Empties the linked list.
+            // Will be used to clear the list upon starting a new level or state.
+    {
+        object.clear();
     }
 
     public void addObject(GameObject tempObject) {
