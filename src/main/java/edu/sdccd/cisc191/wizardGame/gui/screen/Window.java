@@ -1,7 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
@@ -19,9 +18,10 @@ import javax.swing.JLayeredPane;
 
  * Date: 2020-07-23
  */
-public class Window extends JFrame {
+public class Window {
 
     /** Frame components */
+    private JFrame frame = new JFrame();
     private int frameWidth;
     private int frameHeight;
     private JLayeredPane layeredPane;
@@ -47,7 +47,7 @@ public class Window extends JFrame {
      * @param title     Title of the window
      */
     public Window(int width, int height, String title) {
-        super(title);
+        frame.setTitle(title);
         frameWidth = width;
         frameHeight = height;
     }
@@ -61,36 +61,40 @@ public class Window extends JFrame {
         HelpPanel helpPanel = new HelpPanel(this);
         MenuPanel menuPanel = new MenuPanel(this);
         PausePanel pausePanel = new PausePanel(this);
+        LoadPanel loadPanel = new LoadPanel(this);
 
         // Set panel bounds
         helpPanel.setBounds(0, 0, frameWidth, frameHeight);
         menuPanel.setBounds(0, 0, frameWidth, frameHeight);
         pausePanel.setBounds(0, 0, frameWidth, frameHeight);
+        loadPanel.setBounds(0, 0, frameWidth, frameHeight);
 
         // Store panels into gamePanels
         gamePanels.put("help", helpPanel);
         gamePanels.put("menu", menuPanel);
         gamePanels.put("pause", pausePanel);
+        gamePanels.put("load", loadPanel);
 
         // Add all panels into layers
         layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(menuPanel, new Integer(1));
         layeredPane.add(pausePanel, new Integer(1));
+        layeredPane.add(loadPanel, new Integer(1));
 
         // Start with menu panel
         menuPanel.setVisible(true);
         this.currOpenPanel = "menu";
 
         // Frame configs
-        this.setSize(new Dimension(frameWidth, frameHeight));
-        this.add(layeredPane);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(frameWidth, frameHeight));
-        this.setLayout(null);
-        this.setResizable((false));
-        this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this);
+        frame.setSize(new Dimension(frameWidth, frameHeight));
+        frame.add(layeredPane);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(new Dimension(frameWidth, frameHeight));
+        frame.setLayout(null);
+        frame.setResizable((false));
+        frame.setLocationRelativeTo(null);
+        device.setFullScreenWindow(frame);
     }
 
     /**
@@ -101,30 +105,39 @@ public class Window extends JFrame {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
+        gamePanels.get(getCurrOpenPanel()).setVisible(false);
+        this.showLoadScreen();
+
+        System.out.println("Loading done");
+
         // Change panel
-        for (Map.Entry<String, GeneralPanel> entry : gamePanels.entrySet()) {
-            String key = entry.getKey();
-            GeneralPanel panel = entry.getValue();
-
-            // Save last opened panel
-            if (panel.isVisible()) { lastOpenPanel = key; }
-
-            // Switch panel
-            if (key.equals(panelName)) {
-                // TODO: this.showLoadScreen();
-                panel.setVisible(true);
-                currOpenPanel = panelName;
-            } else {
-                panel.setVisible(false);
-            }
-        }
+        gamePanels.get(panelName).setVisible(true);
+        this.lastOpenPanel = getCurrOpenPanel();
+        this.currOpenPanel = panelName;
     }
 
-    // TODO: Implement
+    // TODO: Fix with multi-threading
     protected void showLoadScreen() {
+        // Hide current panel
         if (getCurrOpenPanel() != null)
             if (gamePanels.get(getCurrOpenPanel()).isVisible())
                 gamePanels.get(getCurrOpenPanel()).setVisible(false);
+
+        LoadPanel load = (LoadPanel) gamePanels.get("load");
+        Thread t1 = new Thread(new Runnable(){
+
+            @Override
+            public void run() {
+                load.start();
+                try {
+                    Thread.sleep(2000);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+                load.stop();
+            }
+        });
+        t1.start();
     }
 
     /**
@@ -132,8 +145,8 @@ public class Window extends JFrame {
      */
     public void quitGame(){
         // If quit game is activated, the window will close and the program will exit.
-        this.setVisible(false);
-        this.dispose();
+        frame.setVisible(false);
+        frame.dispose();
         System.exit(0);
     }
 

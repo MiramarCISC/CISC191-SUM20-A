@@ -17,6 +17,8 @@ import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 /**
+ * Load screen panel for {@code Window} class.
+ *
  * @author Mark Lucernas
  * Date: 2020-07-16
  *
@@ -81,6 +83,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     public void start() {
         this.setVisible(true);
         timer.start();
+        System.out.println("Starting");
     }
 
     public void stop() {

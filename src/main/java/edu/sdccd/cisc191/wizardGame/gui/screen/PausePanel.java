@@ -64,6 +64,8 @@ public class PausePanel extends GeneralPanel {
         gbc.gridy = 1;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
+
+        this.addButtonListeners();
     }
 
     /**
