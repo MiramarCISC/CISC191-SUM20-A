@@ -11,6 +11,7 @@ import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
+import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelTwo;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
@@ -70,6 +71,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     public synchronized void start() {
+        this.update();
+
         if (!isRunning) {
             isRunning = true;
             gameThread = new Thread(this, "GameController");
@@ -158,8 +161,9 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Useful when changing to a new level or refreshing game.
         handler = getHandler();
         camera = getCamera();
-        this.addMouseListener(new MouseInput(handler, camera, this.game, this, ss, cs));
-        this.addKeyListener(new KeyInput(handler)); // is getting null for some reason?
+
+        canvas.addMouseListener(new MouseInput(handler, camera, this.game, this, ss, cs));
+        canvas.addKeyListener(new KeyInput(handler)); // is getting null for some reason?
     }
 
     public void resetGame() {
@@ -192,10 +196,9 @@ public class GamePanel extends GeneralPanel implements Runnable {
         switch (levelNumb){
             case 1: level = new LevelOne(this.game, this);
                     break;
-            // TODO:
-            // case 2: level = new LevelTwo(this.game, this);
-            //         update();
-            //         break;
+            case 2: level = new LevelTwo(this.game, this);
+                    update();
+                    break;
         }
     }
 

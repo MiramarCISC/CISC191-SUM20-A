@@ -2,78 +2,64 @@ package edu.sdccd.cisc191.wizardGame;
 
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
+/**
+ * Controller class controls GameObject properties and behaviors.
+ *
+ * @author Jordan Tobin
+ * @author Mark Lucernas
+ * Date: 2020-07-24
+ */
 public class Game {
+
+    private Window frame;
 
     // Set first state to the main menu.
     private static STATE State = STATE.MENU;
 
     // Variables that are critical for controlling the Game.
-    private int ammo = 50;
-    private int hp = 100;
-    private int lives = 3;
+    private int ammo, hp, lives;
 
     // List of all states in the game.
     public enum STATE{
-        MAIN_MENU,
-        MENU,
-        GAME,
-        HELP,
-        PAUSE,
+        MAIN_MENU, MENU, GAME, HELP, PAUSE,
     };
 
-    public Game() {}
-
-    /* Setters and getters for private variables. */
-    public STATE getGameState(){
-        return State;
+    /**
+     * Game constructor.
+     * Creates new instance of {@code Window} class to set up the view.
+     */
+    public Game() {
+        this.frame = new Window(this, 1980, 1080, "Wizard Game");
     }
 
-    public void setGameState(STATE State){
-        this.State = State;
-    }
-    public int getAmmo(){
-        return ammo;
-    }
-
-    public void setAmmo (int ammo){
-        this.ammo = ammo;
+    /** Initialize game */
+    public void init() {
+        ammo = 50;
+        hp = 100;
+        lives = 3;
+        frame.init();
     }
 
-    public void incAmmo(int inc){
-        ammo += inc;
-    }
+    /** Accessors methods */
+    public STATE getGameState()           { return State; }
+    public int getAmmo()                  { return ammo; }
+    public int getLives()                 { return lives; }
+    public int getHp()                    { return hp; }
 
-    public void decAmmo() {
-        ammo-= 1;
-    }
+    /** Modifiers methods */
+    public void setGameState(STATE State) { this.State = State; }
+    public void setHp(int hp)             { this.hp = hp; }
+    public void setAmmo (int ammo)        { this.ammo = ammo; }
+    public void setLives(int lives)       { this.lives = lives; }
+    public void incAmmo(int inc)          { ammo += inc; }
+    public void decAmmo()                 { ammo-= 1; }
+    public void decHp()                   { hp--; }
+    public void decLives()                { lives--; }
 
-    public int getHp(){
-        return hp;
-    }
-
-    public void setHp(int hp){
-        this.hp = hp;
-    }
-
-    public void decHp(){
-        hp--;
-    }
-
-    public int getLives(){
-        return lives;
-    }
-
-    public void decLives(){
-        lives--;
-    }
-
-    public void setLives(int lives){
-        this.lives = lives;
-    }
-
-    // Main method starts one Game instance and thus one GameController thread.
+    /**
+     * Main method to instantiate and initialize this Game class.
+     */
     public static void main(String[] args) {
-        Window window = new Window(new Game(), 1980, 1080, "Wizard Game");
-        window.init();
+        new Game().init();
     }
 }

@@ -16,7 +16,6 @@ public class LevelOne extends AbstractLevel {
         levelNumb = 1;
         // Load level.
         loadLevel(levelOneImage);
-
     }
 }
 
