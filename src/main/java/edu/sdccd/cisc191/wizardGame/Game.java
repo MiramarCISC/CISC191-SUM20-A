@@ -17,6 +17,9 @@ public class Game {
     /** Variables that are critical for controlling the Game */
     private int ammo, hp, lives;
 
+    /** Game states */
+    private boolean isWizardDead = false;
+
     /**
      * Game constructor.
      * Creates new instance of {@code Window} class to set up the view.
@@ -34,10 +37,11 @@ public class Game {
     }
 
     /** Accessors methods */
-    public Window getFrame()        { return frame; }
-    public int getAmmo()            { return ammo; }
-    public int getLives()           { return lives; }
-    public int getHp()              { return hp; }
+    public Window getFrame()        { return this.frame; }
+    public int getAmmo()            { return this.ammo; }
+    public int getLives()           { return this.lives; }
+    public int getHp()              { return this.hp; }
+    public boolean hasWizardDied()  { return this.isWizardDead; }
 
     /** Modifiers methods */
     public void setHp(int hp)       { this.hp = hp; }
@@ -47,6 +51,8 @@ public class Game {
     public void decAmmo()           { this.ammo-= 1; }
     public void decHp()             { this.hp--; }
     public void decLives()          { this.lives--; }
+    public void wizardDied()        { this.isWizardDead = true; }
+    public void wizardRespawn()     { this.isWizardDead = false; }
 
     /**
      * Main method to instantiate and initialize this Game class.

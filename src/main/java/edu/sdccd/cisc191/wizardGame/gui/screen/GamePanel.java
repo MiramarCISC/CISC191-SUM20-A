@@ -57,7 +57,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private SpriteSheet cs; // Character sheet
 
     /** Buttons */
-    private JButton pauseBtn;
+    private JButton pauseBtn, respawnBtn;
 
     /**
      * GamePanel constructor.
@@ -80,14 +80,18 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         // Create buttons
         this.pauseBtn = new JButton("PAUSE");
+        this.respawnBtn = new JButton("TRY AGAIN?");
+        this.respawnBtn.setVisible(false);
 
         // Add canvas
         layeredPane.add(canvas, new Integer(1));
         // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
         layeredPane.add(pauseBtn, new Integer(2));
+        layeredPane.add(respawnBtn, new Integer(2));
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         pauseBtn.setBounds(frame.getWidth() - 100, 0, 100, 50);  // Top right corner
+        respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
         this.addButtonListeners();
@@ -167,6 +171,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         g.dispose();
         bs.show();
+
     } // end render method
 
     public void update(){
@@ -185,6 +190,11 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.game.setLives(3);
         setLevel(1);
         handler.clearHandler();
+    }
+
+    public void showRespawn() {
+        game.wizardDied();
+        respawnBtn.setVisible(true);
     }
 
     public void respawn() {
@@ -220,6 +230,24 @@ public class GamePanel extends GeneralPanel implements Runnable {
             public void mouseClicked(MouseEvent e) {}
             @Override
             public void mousePressed(MouseEvent e) { frame.changePanel("pause"); }
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+
+        /** Respawn button mouse listener */
+        respawnBtn.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {
+                respawn();
+                frame.getGame().wizardRespawn();
+                respawnBtn.setVisible(false);
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override

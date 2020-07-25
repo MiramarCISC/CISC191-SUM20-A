@@ -195,13 +195,7 @@ public abstract class AbstractLevel {
 
         // Handle player death event. (See wizard class)
         if(this.getHp() <= 0) {
-            // The player has died, loses a life and the player is removed from game, then....
-            g.setColor(Color.white);
-            g.drawString("You have died!", 400, 281);
-            g.drawString("Click to respawn", 810, 150);
-
-            Rectangle resButton = new Rectangle(810, 150, 150, 75); //reset button.
-            g.draw(resButton);
+            gamePanel.showRespawn(); // Show respawn button.
 
             camera.setX(0); //reset camera so button coordinates don't glitch.
             camera.setY(0);
