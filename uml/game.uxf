@@ -1,0 +1,1452 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>808</x>
+      <y>500</y>
+      <w>168</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame::Game
+--
+-serialVersionUID = 1L: long
+#State = STATE.MENU: STATE
+-isRunning = false: boolean
+-thread: Thread
+-handler: Handler
+-menu: Menu
+-help: Help
+-pause: Pause
+-camera: Camera
+-ss: SpriteSheet
+-cs: SpriteSheet
+-level = null: BufferedImage
+-sprite_sheet = null: BufferedImage
+-char_sheet = null: BufferedImage
+-floor = null: BufferedImage
+-lives_image: BufferedImage
++ammo = 50: int
++hp = 0: int
++lives: int
++level_numb = 1: int
++totem_flag = false: boolean
+--
++Game(int current_level, int current_life): ctor
+-start(): void
+-stop(): void
++run(): void
++getGameState(): STATE
++setGameState(STATE newState): void
++tick(): void
++render(): void
+-loadLevel(BufferedImage image): void
++main(String[] args): void
+--
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>116</x>
+      <y>532</y>
+      <w>320</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.events::MouseInput
+--
++resButton = new Rectangle(810, 150, 150, 75): Rectangle
++playButton = new Rectangle(810, 150, 150, 75): Rectangle
++helpButton = new Rectangle(810, 450, 150, 75): Rectangle
++quitButton = new Rectangle(810, 750, 150, 75): Rectangle
++escButton = new Rectangle(250, 5, 75, 25): Rectangle
+-handler: Handler
+-camera: Camera
+-game: Game
+-ss: SpriteSheet
+-cs: SpriteSheet
+--
++MouseInput(Handler handler, Camera camera, Game game, SpriteSheet ss, SpriteSheet cs): ctor
++mousePressed(MouseEvent e): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>356</x>
+      <y>656</y>
+      <w>160</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.events::KeyInput
+--
+~handler: Handler
+--
++KeyInput(Handler handler): ctor
++keyPressed(KeyEvent e): void
++keyReleased(KeyEvent e): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>616</y>
+      <w>172</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>410.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>1196</y>
+      <w>160</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.anim::Camera
+--
+-x, y: float
+--
++Camera(float x, float y): ctor
++tick(GameObject object): void
++getX(): float
++setX(float x): void
++getY(): float
++setY(float y): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>1280</y>
+      <w>216</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.anim::Animation
+--
+-images: BufferedImage[]
+-interval, index: int
+-timer, now, lastTime: long
+--
++Animation(BufferedImage[] images, int interval): ctor
++tick(): void
++render(Graphics g, int x, int y, int width, int height): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>1160</y>
+      <w>116</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>270.0;10.0;10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>1168</y>
+      <w>16</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>656</x>
+      <y>1408</y>
+      <w>352</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::GraphicsSplash
+--
+~timer = new Timer(50, this): Timer
+~rand = new Random(): Random
+~x = 0: int
+~y = 0: int
+~xCenter = this.getWidth() / 2: double
+~yCenter = this.getHeight() / 2: double
+~furthestDistance = (int) Math.sqrt(Math.pow(xCenter - 0, 2) + Math.pow(yCenter - 0, 2)): int
+~scene: int
+~coverage = 0: int
+~isShrinking = false: boolean
+~label: JLabel
+-charSheet: SpriteSheet
+-mainSheet: SpriteSheet
+-wizardImages = new Image[4]: Image[]
+-mushroomImages = new Image[8]: Image[]
+-knightImages = new Image[8]: Image[]
+-rotateFireImages = new Image[4]: Image[]
+-terrain: Image
+~wizardIndex = 0: int
+~mushroomIndex = 0: int
+~knightIndex = 0: int
+~rotateFireIndex = 0: int
+--
++GraphicsSplash(): ctor
++fillSpriteImage(Image[] imageArr, int startLoc, int row, int width, int height, SpriteSheet ss): void
++vignette(Color color, Graphics2D g2d, int coverage): void
++drawScene(Graphics2D g2d, int scene): void
++drawTerrain(Graphics2D g2d, Image terrain): void
++updateSpriteIndex(Image[] spriteImages, int index): int
++paintComponent(Graphics g): void
++actionPerformed(ActionEvent e): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1180</x>
+      <y>1216</y>
+      <w>300</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::Window
+--
+#frame: JFrame
+#device = // Used for fullscreen.
+GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0]: GraphicsDevice
+--
++Window(int width, int height, String title): ctor
++quitGame(): void
++changeLevel(Canvas game): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>1296</y>
+      <w>200</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::Menu
+--
++playButton = new Rectangle(810, 150, 150, 75): Rectangle
++helpButton = new Rectangle(810, 450, 150, 75): Rectangle
++quitButton = new Rectangle(810, 750, 150, 75): Rectangle
+-background: BufferedImage
+--
++render(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1052</x>
+      <y>1372</y>
+      <w>200</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::Pause
+--
++playButton = new Rectangle(810, 150, 150, 75): Rectangle
++quitButton = new Rectangle(810, 750, 150, 75): Rectangle
+-background: BufferedImage
+--
++render(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>852</x>
+      <y>1192</y>
+      <w>200</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::Help
+--
++menuButton = new Rectangle(810, 750, 150, 75): Rectangle
+-background: BufferedImage
+--
++render(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>832</x>
+      <y>1292</y>
+      <w>188</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.gui.screen::SplashScreen
+--
+-splash = new GraphicsSplash(): GraphicsSplash
+--
++SplashScreen(): ctor
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>944</x>
+      <y>1128</y>
+      <w>16</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>964</x>
+      <y>1128</y>
+      <w>128</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;290.0;100.0;290.0;610.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>892</x>
+      <y>736</y>
+      <w>16</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;560.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>984</y>
+      <w>216</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>520.0;10.0;10.0;400.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>984</y>
+      <w>68</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;150.0;300.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>988</x>
+      <y>1128</y>
+      <w>180</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;420.0;60.0;420.0;420.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1012</x>
+      <y>1124</y>
+      <w>216</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;510.0;10.0;510.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>888</x>
+      <y>1332</y>
+      <w>16</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>828</x>
+      <y>1124</y>
+      <w>116</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>m2=1</panel_attributes>
+    <additional_attributes>270.0;10.0;10.0;10.0;10.0;340.0;240.0;340.0;240.0;420.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1332</x>
+      <y>524</y>
+      <w>196</w>
+      <h>148</h>
+    </coordinates>
+    <panel_attributes>/edu.sdccd.cisc191.wizardGame.objects::GameObject/
+--
+#x, y: int
+#velX = 0, velY = 0: float
+#id: ID
+#ss: SpriteSheet
+--
++GameObject(int x, int y, ID id, SpriteSheet ss): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getId(): ID
++setId(ID id): void
++getX(): int
++setX(int x): void
++getY(): int
++setY(int y): void
++getVelX(): float
++setVelX(float velX): void
++getVelY(): float
++setVelY(float velY): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1152</x>
+      <y>304</y>
+      <w>272</w>
+      <h>124</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Handler
+--
+~object = new LinkedList&lt;GameObject&gt;(): LinkedList&lt;GameObject&gt;
+-up = false, down = false, right = false, left = false, pause = false: boolean
+--
++tick(): void
++render(Graphics g): void
++addObject(GameObject tempObject): void
++removeObject(GameObject tempObject): void
++getObject(): LinkedList&lt;GameObject&gt;
++isUp(): boolean
++setUp(boolean up): void
++isDown(): boolean
++setDown(boolean down): void
++isRight(): boolean
++setRight(boolean right): void
++isLeft(): boolean
++setLeft(boolean left): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1284</x>
+      <y>816</y>
+      <w>272</w>
+      <h>124</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Knight
+--
+-handler: Handler
+-game: Game
+-knight_image = new BufferedImage[8]: BufferedImage[]
+~anim: Animation
+~r = new Random(): Random
+~choose = 0: int
+~hp = 100: int
+~counter = 0: int
+~px: int
+~py: int
+--
++Knight(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getBoundsBig(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1940</x>
+      <y>632</y>
+      <w>260</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Ent
+--
+-handler: Handler
+-game: Game
+-ent_image = new BufferedImage[8]: BufferedImage[]
+-cs: SpriteSheet
+~anim: Animation
+~r = new Random(): Random
+~choose = 0: int
+~hp = 100: int
+--
++Ent(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getBoundsBig(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1604</x>
+      <y>712</y>
+      <w>232</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Enemy
+--
+-handler: Handler
+-enemy_image = new BufferedImage[8]: BufferedImage[]
+~anim: Animation
+~r = new Random(): Random
+~choose = 0: int
+~hp = 100: int
+--
++Enemy(int x, int y, ID id, Handler handler, SpriteSheet cs): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getBoundsBig(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1872</x>
+      <y>764</y>
+      <w>232</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Hound
+--
+-handler: Handler
+-hound_image = new BufferedImage[8]: BufferedImage[]
+~anim: Animation
+~r = new Random(): Random
+~choose = 0: int
+~hp = 100: int
+--
++Hound(int x, int y, ID id, Handler handler, SpriteSheet cs): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getBoundsBig(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1588</x>
+      <y>844</y>
+      <w>236</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Minion
+--
+-handler: Handler
+-minion_image = new BufferedImage[8]: BufferedImage[]
+~anim: Animation
+~r = new Random(): Random
+~choose = 0: int
+~hp = 100: int
+--
++Minion(int x, int y, ID id, Handler handler, SpriteSheet cs): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
++getBoundsBig(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1644</x>
+      <y>536</y>
+      <w>272</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Wizard
+--
+~handler: Handler
+~game: Game
+-wizard_image = new BufferedImage[4]: BufferedImage[]
+~anim: Animation
+--
++Wizard(int x, int y, ID id, Handler handler, Game game, SpriteSheet cs): ctor
++tick(): void
++collision(): void
++place_free(int x, int y, Rectangle myRect, Rectangle otherRect): boolean
++render(Graphics g): void
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1716</x>
+      <y>392</y>
+      <w>212</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Block
+--
+~game: Game
+-block_image: BufferedImage
+--
++Block(int x, int y, ID id, SpriteSheet ss, Game game): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1656</x>
+      <y>228</y>
+      <w>288</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Bullet
+--
+-handler: Handler
+--
++Bullet(int x, int y, ID id, Handler handler, int mx, int my, SpriteSheet ss): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1716</x>
+      <y>312</y>
+      <w>176</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Crate
+--
+-crate_image: BufferedImage
+--
++Crate(int x, int y, ID id, SpriteSheet ss): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1372</x>
+      <y>736</y>
+      <w>176</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.objects::Totem
+--
+-totem_image: BufferedImage
+--
++Totem(int x, int y, ID id, SpriteSheet ss): ctor
++tick(): void
++render(Graphics g): void
++getBounds(): Rectangle
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1524</x>
+      <y>580</y>
+      <w>128</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1500</x>
+      <y>668</y>
+      <w>240</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0;550.0;50.0;550.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1400</x>
+      <y>668</y>
+      <w>24</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1344</x>
+      <y>668</y>
+      <w>24</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;370.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1460</x>
+      <y>668</y>
+      <w>188</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0;300.0;120.0;300.0;390.0;420.0;390.0;420.0;440.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1524</x>
+      <y>632</y>
+      <w>424</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;1040.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1524</x>
+      <y>652</y>
+      <w>380</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;900.0;10.0;900.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1524</x>
+      <y>416</y>
+      <w>200</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;330.0;130.0;330.0;130.0;250.0;410.0;250.0;410.0;10.0;480.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1496</x>
+      <y>344</y>
+      <w>228</w>
+      <h>188</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;450.0;10.0;370.0;370.0;370.0;370.0;10.0;550.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1444</x>
+      <y>264</y>
+      <w>220</w>
+      <h>268</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;650.0;10.0;490.0;430.0;490.0;430.0;10.0;530.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>972</x>
+      <y>596</y>
+      <w>172</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;410.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1372</x>
+      <y>424</y>
+      <w>44</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+depends on</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1212</x>
+      <y>468</y>
+      <w>116</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>NOTE:
+
+Suggestion: sub-packages for...
+
+-world objects
+-characters
+
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1280</x>
+      <y>1012</y>
+      <w>164</w>
+      <h>124</h>
+    </coordinates>
+    <panel_attributes>NOTE:
+
+A little messy and non-object-oriented
+
+Suggestion:
+
+Window class should be the main JFrame
+(if we were to use AWT/SWING) and all the
+screens are JPanel that the Window class
+adds into the main frame.
+
+Also, We could use JLayeredPanel to transition
+between screens smoothly
+
+Optional:
+
+Since AWT/Swing is a bit old, JavaFX?
+
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1348</x>
+      <y>1132</y>
+      <w>12</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>592</x>
+      <y>604</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Event Package
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1136</x>
+      <y>580</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Object Package
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>872</x>
+      <y>960</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>GUI Package
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>936</x>
+      <y>1104</y>
+      <w>80</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Screen Subpackage
+--
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>648</x>
+      <y>1144</y>
+      <w>80</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Animation Subpackage
+--
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1188</x>
+      <y>596</y>
+      <w>152</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;360.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>612</y>
+      <w>168</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>400.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>620</y>
+      <w>132</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>310.0;10.0;10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>844</x>
+      <y>340</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Utils Package
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>364</y>
+      <w>44</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+depends on</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>648</x>
+      <y>144</y>
+      <w>80</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>IO Subpackage
+--
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>812</x>
+      <y>184</y>
+      <w>80</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Image Subpackage
+--
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>772</x>
+      <y>0</y>
+      <w>232</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.utils.images::SpriteSheet
+--
+-image: BufferedImage
+--
++SpriteSheet(BufferedImage image): ctor
++grabImage(int col, int row, int width, int height): BufferedImage
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>892</x>
+      <y>80</y>
+      <w>220</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.utils.images::BufferedImageLoader
+--
+-image: BufferedImage
+--
++loadImage(String path): BufferedImage
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>844</x>
+      <y>100</y>
+      <w>56</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>820</x>
+      <y>40</y>
+      <w>12</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;360.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>932</x>
+      <y>40</y>
+      <w>44</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+depends on</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>208</y>
+      <w>12</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;330.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>724</x>
+      <y>156</y>
+      <w>128</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>300.0;490.0;120.0;490.0;120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>500</x>
+      <y>40</y>
+      <w>188</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.utils.io::ResourceManager
+--
+--
++save(Serializable data, String fileName): void
++load(String fileName): Object
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>656</x>
+      <y>72</y>
+      <w>12</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>12</y>
+      <w>776</w>
+      <h>1536</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+depends on</panel_attributes>
+    <additional_attributes>1640.0;3820.0;20.0;3820.0;10.0;10.0;1920.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>544</x>
+      <y>720</y>
+      <w>272</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>660.0;10.0;10.0;380.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>476</x>
+      <y>856</y>
+      <w>72</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Features Package
+--
+TO BE IMPLEMENTED
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>344</x>
+      <y>264</y>
+      <w>156</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>edu.sdccd.cisc191.wizardGame.save::SaveData
+--
+-serialVersionUID = 1L: long
++level: int
++lives: int
+--
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>556</x>
+      <y>388</y>
+      <w>56</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Save Package
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>608</x>
+      <y>412</y>
+      <w>208</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>500.0;310.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>304</y>
+      <w>104</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>240.0;240.0;10.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>504</x>
+      <y>444</y>
+      <w>116</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>NOTE:
+
+Should SaveData or LoadData
+be under the same package?
+Maybe under Features package?
+
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>400</x>
+      <y>48</y>
+      <w>108</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+depends on</panel_attributes>
+    <additional_attributes>250.0;20.0;10.0;20.0;10.0;530.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1280</x>
+      <y>120</y>
+      <w>76</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+Aggregation</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1284</x>
+      <y>136</y>
+      <w>72</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Association</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1280</x>
+      <y>104</y>
+      <w>76</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+Composition</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1284</x>
+      <y>184</y>
+      <w>72</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+Dependency
+</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1284</x>
+      <y>152</y>
+      <w>72</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inheritance</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1252</x>
+      <y>32</y>
+      <w>336</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>UML Class Diagram Resources:
+
+https://www.cs.bsu.edu/homepages/pvgestwicki/misc/uml/
+https://www.youtube.com/watch?v=UI6lqHOVHic
+https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1460</x>
+      <y>84</y>
+      <w>100</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Multiplicity
+-
+0..1  zero to one (optional)
+n     specific number
+0..*  zero to many
+1..*  one to many
+m..n  specific range
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1376</x>
+      <y>84</y>
+      <w>64</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Visibility
+-
+- private
+# protected
+~ package/default
++ public
+
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1284</x>
+      <y>84</y>
+      <w>64</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Relationships
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1284</x>
+      <y>168</y>
+      <w>72</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+Realization</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
