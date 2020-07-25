@@ -20,13 +20,12 @@ import edu.sdccd.cisc191.wizardGame.Game;
  *
  * Date: 2020-07-23
  */
-public class Window {
+public class Window extends JFrame {
 
     /** Game class reference */
     private Game game;
 
     /** Frame components */
-    private JFrame frame = new JFrame();
     private int frameWidth;
     private int frameHeight;
     private JLayeredPane layeredPane;
@@ -52,10 +51,18 @@ public class Window {
      * @param title     Title of the window
      */
     public Window(Game game, int width, int height, String title) {
+        super(title);
+
+        // Instantiate fields
         this.game = game;
-        frame.setTitle(title);
         frameWidth = width;
         frameHeight = height;
+
+        // Frame configs
+        this.setSize(new Dimension(frameWidth, frameHeight));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable((false));
     }
 
     public void init() {
@@ -96,15 +103,10 @@ public class Window {
         this.currOpenPanel = "menu";
 
         // Frame configs
-        frame.setSize(new Dimension(frameWidth, frameHeight));
-        frame.add(layeredPane);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(new Dimension(frameWidth, frameHeight));
-        frame.setLayout(null);
-        frame.setResizable((false));
-        frame.setLocationRelativeTo(null);
-        device.setFullScreenWindow(frame);
+        this.add(layeredPane);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        device.setFullScreenWindow(this);
     }
 
     /**
@@ -160,7 +162,7 @@ public class Window {
 
     /** Quit game */
     public void quitGame() {
-        frame.setVisible(false); frame.dispose(); System.exit(0);
+        this.setVisible(false); this.dispose(); System.exit(0);
     }
 
     /** Accessor methods */

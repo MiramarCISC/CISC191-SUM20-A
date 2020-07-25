@@ -4,6 +4,13 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferStrategy;
+
+import javax.swing.JButton;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
@@ -12,12 +19,9 @@ import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelOne;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.LevelTwo;
+import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
-import edu.sdccd.cisc191.wizardGame.objects.Handler;
-
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 /**
  * The Game panel for {@code Window} class.
@@ -31,26 +35,29 @@ import java.awt.image.BufferedImage;
  */
 public class GamePanel extends GeneralPanel implements Runnable {
 
-    /** Reference to the Game class */
+    /** Class references */
     private Game game;
+    private Window frame;
     private Canvas canvas = new Canvas();
 
-    // Thread variables.
+    /** Thread variables */
     private boolean isRunning = false;
     private Thread gameThread;
 
-    private AbstractLevel level;
+    /** Current level instance */
+    private AbstractLevel currLevel;
 
-    // Camera and handler.
+    /** Camera and handler */
     private Camera camera;
     private Handler handler;
 
-    // Spritesheets for imagery,
+    /** SpriteSheets for imagery */
     private BufferedImageLoader loader = new BufferedImageLoader();
-    private SpriteSheet ss;
-    private SpriteSheet cs; // character sheet
-    private BufferedImage sprite_sheet;
-    private BufferedImage char_sheet;
+    private SpriteSheet ss; // Sprite sheet
+    private SpriteSheet cs; // Character sheet
+
+    /** Buttons */
+    private JButton pauseBtn;
 
     /**
      * GamePanel constructor.
@@ -58,18 +65,37 @@ public class GamePanel extends GeneralPanel implements Runnable {
      */
     public GamePanel(Window frame) {
         super(frame);
-        this.add(canvas);
-        canvas.setPreferredSize(new Dimension(1980, 1080));
+        this.frame = frame;
         this.game = frame.getGame();
-
-        // Upon the games beginning, the level variable is set to a new instance of the level one class.
-        this.setLevel(new LevelOne(this.game, this));
 
         // Load in the sprite sheets. One for the levels, one for characters.
         ss = new SpriteSheet(loader.loadImage("/main_sheet.png"));
         cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
+        this.setLevel(1);  // Start with level 1
+
+
+        // Create layered pane
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+
+        // Create buttons
+        this.pauseBtn = new JButton("PAUSE");
+
+        // Add canvas
+        layeredPane.add(canvas, new Integer(1));
+        // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
+        layeredPane.add(pauseBtn, new Integer(2));
+
+        canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+        pauseBtn.setBounds(frame.getWidth() - 100, 0, 100, 50);  // Top right corner
+
+        this.add(layeredPane);
+        this.addButtonListeners();
     }
 
+    /**
+     * Start new Thread and run this class.
+     */
     public synchronized void start() {
         if (!isRunning) {
             isRunning = true;
@@ -78,10 +104,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
         }
     }
 
+    /**
+     * Gracefully stops Thread and exit {@code Window}.
+     */
     public synchronized void stop() {
         if (isRunning) {
-            isRunning = false;
-            System.exit(0);
+            frame.quitGame();
         }
     }
 
@@ -121,7 +149,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     public void tick() {
         // Level variable determines which level to tick.
-        level.tick();
+        currLevel.tick();
     }
 
     public void render() {
@@ -135,7 +163,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         // Obtain the current frame from the buffer
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-        level.render(g);
+        currLevel.render(g);
 
         g.dispose();
         bs.show();
@@ -160,31 +188,46 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     public void respawn() {
-        level.respawn();
-    }
-
-    public void setLevel(int levelNumb){
-        // Important method, determines which level to control.
-        switch (levelNumb){
-            case 1: level = new LevelOne(this.game, this);
-                    break;
-            case 2: level = new LevelTwo(this.game, this);
-                    update();
-                    break;
-        }
-
-        this.update();
+        currLevel.respawn();
     }
 
     /** Accessor methods */
     public boolean isGameRunning()            { return this.isRunning; }
-    public AbstractLevel getLevel()           { return this.level; }
-    public Handler getHandler()               { return this.level.getHandler(); }
-    public Camera getCamera()                 { return this.level.getCamera(); }
+    public AbstractLevel getLevel()           { return this.currLevel; }
+    public Handler getHandler()               { return this.currLevel.getHandler(); }
+    public Camera getCamera()                 { return this.currLevel.getCamera(); }
 
     /** Modifier methods */
-    public void setLevel(AbstractLevel level) { this.level = level; }
-    public void setHandler()                  { this.handler = level.getHandler(); }
+    public void setHandler()                  { this.handler = currLevel.getHandler(); }
+    public void setLevel(int levelNumb){
+        // Important method, determines which level to control.
+        switch (levelNumb){
+            case 1: currLevel = new LevelOne(this.game, this);
+                    break;
+            case 2: currLevel = new LevelTwo(this.game, this);
+                    break;
+        }
+        this.update();
+    }
+
+    /**
+     * Add all button listeners.
+     */
+    protected void addButtonListeners() {
+        /** Pause button mouse listener */
+        pauseBtn.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) { frame.changePanel("pause"); }
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+    }
 
     /**
      * Nullifies parent {@code GeneralPanel} paintComponent method to have

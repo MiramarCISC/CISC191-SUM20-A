@@ -57,12 +57,9 @@ public class HelpPanel extends GeneralPanel {
         /** Back button mouse listener */
         backBtn.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                // Go back to last open panel
-                frame.changePanel(frame.getLastOpenPanel());
-            }
+            public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) { frame.changePanel(frame.getLastOpenPanel()); }  // Go back to last open panel
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override

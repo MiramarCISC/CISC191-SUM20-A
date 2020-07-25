@@ -185,17 +185,6 @@ public abstract class AbstractLevel {
         g.setColor(Color.white);
         g.drawString("Level: " + levelNum, 5, 70); // Change to level numb variable
 
-        // Creating escape button.
-        g.setColor(Color.gray);
-        g.fillRect(250, 5, 75, 25);
-        g.setColor(Color.gray);
-        g.fillRect(250, 5, 75, 25);
-        g.setColor(Color.gray);
-        g.drawRect(250, 5, 75, 25);
-        g.setColor(Color.black);
-        g.drawString("|| PAUSE", 265, 25);
-
-
         // Creating lives HUD.
         // for the amount of lives render an image.
         int x = 100; // Create x coordinate

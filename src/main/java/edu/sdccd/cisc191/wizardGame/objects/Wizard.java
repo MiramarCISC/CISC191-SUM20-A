@@ -54,16 +54,16 @@ public class Wizard extends GameObject {
 
         // Movement handling
         if (handler.isUp()) velY = -5;
-        else if(!handler.isDown()) velY = 0; // If down is being pushed and velocity gets set to zero. Lag may result
+        else if (!handler.isDown()) velY = 0; // If down is being pushed and velocity gets set to zero. Lag may result
 
         if (handler.isDown()) velY = 5;
-        else if(!handler.isUp()) velY = 0;
+        else if (!handler.isUp()) velY = 0;
 
         if (handler.isRight()) velX = 5;
-        else if(!handler.isLeft()) velX = 0;
+        else if (!handler.isLeft()) velX = 0;
 
         if (handler.isLeft()) velX = -5;
-        else if(!handler.isRight()) velX = 0;
+        else if (!handler.isRight()) velX = 0;
 
         anim.tick();
     }
@@ -114,7 +114,7 @@ public class Wizard extends GameObject {
 
         myRect.x = x;
         myRect.y = y;
-        if(myRect.intersects(otherRect)) {
+        if (myRect.intersects(otherRect)) {
             return false;
         } else {
             return true;
@@ -122,7 +122,7 @@ public class Wizard extends GameObject {
     }
 
     public void render(Graphics g) {
-        if(velX == 0 && velY == 0)
+        if (velX == 0 && velY == 0)
             g.drawImage(wizard_image[0], x, y, 62, 62, null);
         else
             anim.render(g, x, y, 62, 62);

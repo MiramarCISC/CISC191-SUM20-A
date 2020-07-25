@@ -61,7 +61,7 @@ public class PausePanel extends GeneralPanel {
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(font);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
 
@@ -78,7 +78,7 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) { frame.changePanel(frame.getLastOpenPanel()); }  // Go back to last open panel
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -92,11 +92,9 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) { frame.changePanel("help"); }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                frame.changePanel("help");
-            }
+            public void mouseReleased(MouseEvent e) {}
             @Override
             public void mouseEntered(MouseEvent e) {}
             @Override
@@ -108,11 +106,9 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) { frame.changePanel("quit"); }
             @Override
-            public void mouseReleased(MouseEvent e) {
-                frame.changePanel("quit");
-            }
+            public void mouseReleased(MouseEvent e) {}
             @Override
             public void mouseEntered(MouseEvent e) {}
             @Override
