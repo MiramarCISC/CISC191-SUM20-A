@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.LinkedList;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
@@ -26,7 +28,7 @@ public abstract class AbstractLevel {
     // Several utility variables.
     protected Game game;
     protected GamePanel gamePanel;
-    protected int levelNumb;
+    protected int levelNum;
     protected BufferedImageLoader loader = new BufferedImageLoader();
 
     // Load camera and handler.
@@ -37,12 +39,8 @@ public abstract class AbstractLevel {
     protected SpriteSheet ss = new SpriteSheet(loader.loadImage("/main_sheet.png")); // Who says we need to declare variables?
     protected SpriteSheet cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
 
-    // Level Maps
-    protected BufferedImage levelOneImage = loader.loadImage("/level_one.png");
-    protected BufferedImage levelTwoImage = loader.loadImage("/level_two.png");
-    protected BufferedImage levelThreeImage = loader.loadImage("/level_two.png");
-    protected BufferedImage levelFourImage = loader.loadImage("/level_two.png");
-    protected BufferedImage levelFiveImage = loader.loadImage("/level_one.png");
+    /** Level Maps  @see bufferedLevelImages */
+    protected LinkedList<BufferedImage> levelImages = new LinkedList<BufferedImage>();
 
     // Floor Tile Images
     protected BufferedImage floorOne = ss.grabImage(6, 6, 32, 32);
@@ -53,7 +51,7 @@ public abstract class AbstractLevel {
 
     // Current Level Map and Current Floor. Instantiated in Extended class.
     protected BufferedImage currentMap;
-    protected BufferedImage floor;
+    protected BufferedImage level;
 
     // Sprite used to display lives in HUD
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
@@ -64,6 +62,24 @@ public abstract class AbstractLevel {
         this.gamePanel = gamePanel;
         camera = new Camera(0, 0); // and the camera
         handler = new Handler(); // make sure the handler is started from new.
+
+        // Buffer all level images in level resource
+        bufferLevelImages();
+    }
+
+    /**
+     * Loads all images dynamically in level resource directory into levelImages
+     * LinkedList<BufferedImage>.
+     */
+    public void bufferLevelImages() {
+        // Count all level images in resources
+        File file= new File("src/main/resources/levels");
+        int numLevels = file.list().length;
+
+        // Load all level into levelImages list in order
+        for (int i = 0; i < numLevels; i++) {
+            this.levelImages.add(loader.loadImage("/levels/level_" + (i + 1) + ".png"));  // +1 to offset index 0
+        }
     }
 
     public void loadLevel(BufferedImage image) {
@@ -79,38 +95,23 @@ public abstract class AbstractLevel {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
-                // Color map determines which sprites render to the map.
-                if (red == 255 && green == 0 && blue == 0) // pure red
-                    handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss, this));
-
-                if (red == 0 && green == 0 && blue == 255) // pure blue
-                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs));
-
-                if (red == 0 && green == 255 && blue == 0) // pure green
-                    handler.addObject(new Minion(xx * 32, yy * 32, ID.Minion, handler, cs));
-
-                if (red == 0 && green == 255 && blue == 255) // pure cyan
-                    handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
-
-                if (red == 255 && green == 255 && blue == 0) // pure yellow
-                    handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss));
-
-                if (red == 255 && green == 0 && blue == 255) //pure magenta
-                    handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs));
-
-                if (red == 0 && green == 153 && blue == 102) // # 009966 green
-                    handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs)); //
-
-                if (red == 255 && green == 153 && blue == 51) // # ff9933 vivid orange
-                    handler.addObject(new Hound(xx * 32, yy * 32, ID.Hound, handler, cs));
+                // Color map. Determines which sprites render to the map.
+                if (red == 255 && green == 0 && blue == 0) handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss, this)); // pure red
+                if (red == 0 && green == 0 && blue == 255) handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs)); // pure blue
+                if (red == 0 && green == 255 && blue == 0) handler.addObject(new Minion(xx * 32, yy * 32, ID.Minion, handler, cs)); // pure green
+                if (red == 0 && green == 255 && blue == 255) handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss)); // pure cyan
+                if (red == 255 && green == 255 && blue == 0) handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss)); // pure yellow
+                if (red == 255 && green == 0 && blue == 255) handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs)); //pure magenta
+                if (red == 0 && green == 153 && blue == 102) handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs)); // // # 009966 green
+                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Hound(xx * 32, yy * 32, ID.Hound, handler, cs)); // # ff9933 vivid orange
             }
-
         }
     }
 
+    /**
+     * Respawn {@code Wizard} after death.
+     */
     public void respawn() {
-        // Respawn the wizard after death.
-
         // Set all key releases to true.
         handler.setUp(false);
         handler.setDown(false);
@@ -156,7 +157,7 @@ public abstract class AbstractLevel {
 
         for(int xx = 0; xx < 30*92; xx += 32) { //debug
             for(int yy = 0; yy < 30*72; yy += 32) {
-                g.drawImage(floor, xx, yy, null);
+                g.drawImage(level, xx, yy, null);
             }
         }
 
@@ -182,7 +183,7 @@ public abstract class AbstractLevel {
 
         // Creating level HUD.
         g.setColor(Color.white);
-        g.drawString("Level: " + levelNumb, 5, 70); // Change to level numb variable
+        g.drawString("Level: " + levelNum, 5, 70); // Change to level numb variable
 
         // Creating escape button.
         g.setColor(Color.gray);
@@ -210,7 +211,6 @@ public abstract class AbstractLevel {
             g.drawString("You have died!", 400, 281);
             g.drawString("Click to respawn", 810, 150);
 
-
             Rectangle resButton = new Rectangle(810, 150, 150, 75); //reset button.
             g.draw(resButton);
 
@@ -223,7 +223,6 @@ public abstract class AbstractLevel {
             g.setColor(Color.white);
             g.drawString("Game Over!", 400, 281);
 
-            game.setGameState(Game.STATE.MENU); // this is how it's done.
             gamePanel.resetGame(); // call reset level
             // Go back to the menu.
         }
@@ -231,43 +230,24 @@ public abstract class AbstractLevel {
 
     public void resetLevel() {
         // Resets hp, lives and resets entire game back to level One. Really should be called resetGame()?
-        game.setHp(1); // debug
-        game.setLives(3);
-        gamePanel.setLevel(1);
-        handler.clearHandler();
-        loadLevel(currentMap);
-        gamePanel.update();
+        this.game.setHp(1); // debug
+        this.game.setLives(3);
+        this.gamePanel.setLevel(1);
+        this.handler.clearHandler();
+        this.loadLevel(currentMap);
+        this.gamePanel.update();
     }
 
-    /*getters and setters.*/
-    public int getHp(){
-        return game.getHp();
-    }
+    /** Accessor methods */
+    public int getHp()                           { return this.game.getHp(); }
+    public int getAmmo()                         { return this.game.getAmmo(); }
+    public int getLives()                        { return this.game.getLives(); }
+    public Handler getHandler()                  { return this.handler; }
+    public Camera getCamera()                    { return this.camera; }
+    public BufferedImage getLevel(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
 
-    public void decHp(){
-        game.decHp();
-    }
-
-    public int getLives() {
-        return game.getLives();
-    }
-
-    public void decLives() {
-        game.decLives();
-    }
-
-    public int getAmmo() {
-        return game.getAmmo();
-    }
-    public void incAmmo(int inc) {
-        game.incAmmo(inc);
-    }
-
-    public Handler getHandler(){
-        return handler;
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
+    /** Modifier methods */
+    public void decHp()                          { this.game.decHp(); }
+    public void decLives()                       { this.game.decLives(); }
+    public void incAmmo(int inc)                 { this.game.incAmmo(inc); }
 }

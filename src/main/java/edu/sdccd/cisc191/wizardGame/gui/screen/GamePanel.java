@@ -71,8 +71,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     public synchronized void start() {
-        this.update();
-
         if (!isRunning) {
             isRunning = true;
             gameThread = new Thread(this, "GameController");
@@ -137,19 +135,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         // Obtain the current frame from the buffer
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-
-        // TODO: Delete these and implement state changes in Window class
-        // // Decide what to render depending on level.
-        // switch (this.game.getGameState()) {
-        //     case MENU: menu.render(g);
-        //                break;
-        //     case HELP: help.render(g);
-        //                break;
-        //     case PAUSE: pause.render(g);
-        //                 break;
-        //     default:level.render(g);
-        // }
-
         level.render(g);
 
         g.dispose();
@@ -162,8 +147,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
         handler = getHandler();
         camera = getCamera();
 
-        canvas.addMouseListener(new MouseInput(handler, camera, this.game, this, ss, cs));
-        canvas.addKeyListener(new KeyInput(handler)); // is getting null for some reason?
+        canvas.addMouseListener(new MouseInput(handler, camera, this.game, ss, cs));
+        canvas.addKeyListener(new KeyInput(handler));  // is getting null for some reason?
     }
 
     public void resetGame() {
@@ -172,23 +157,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.game.setLives(3);
         setLevel(1);
         handler.clearHandler();
-        level = new LevelOne(this.game, this);
-        update();
     }
 
-
-    public Handler getHandler(){
-
-        return level.getHandler();
-    }
-
-    public void setHandler(){
-        this.handler = level.getHandler();
-
-    }
-
-    public Camera getCamera(){
-        return level.getCamera();
+    public void respawn() {
+        level.respawn();
     }
 
     public void setLevel(int levelNumb){
@@ -200,23 +172,19 @@ public class GamePanel extends GeneralPanel implements Runnable {
                     update();
                     break;
         }
+
+        this.update();
     }
 
-    public boolean isGameRunning() {
-        return isRunning;
-    }
+    /** Accessor methods */
+    public boolean isGameRunning()            { return this.isRunning; }
+    public AbstractLevel getLevel()           { return this.level; }
+    public Handler getHandler()               { return this.level.getHandler(); }
+    public Camera getCamera()                 { return this.level.getCamera(); }
 
-    public AbstractLevel getLevel(){
-        return level;
-    }
-
-    public void setLevel(AbstractLevel level) {
-        this.level = level;
-    }
-
-    public void respawn() {
-        level.respawn();
-    }
+    /** Modifier methods */
+    public void setLevel(AbstractLevel level) { this.level = level; }
+    public void setHandler()                  { this.handler = level.getHandler(); }
 
     /**
      * Nullifies parent {@code GeneralPanel} paintComponent method to have

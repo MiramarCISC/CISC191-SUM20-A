@@ -75,11 +75,11 @@ public class Wizard extends GameObject {
 
             if(tempObject.getId() == ID.Block) {
 
-                if(!place_free((int) (x+velX), y, getBounds(), tempObject.getBounds())) {
+                if(!placeFree((int) (x+velX), y, getBounds(), tempObject.getBounds())) {
                     velX = 0;
                 }
 
-                if(!place_free(x, (int) (y+velY), getBounds(), tempObject.getBounds())) {
+                if(!placeFree(x, (int) (y+velY), getBounds(), tempObject.getBounds())) {
                     velY = 0;
                 }
             }
@@ -96,6 +96,7 @@ public class Wizard extends GameObject {
 
                 if(getBounds().intersects(tempObject.getBounds())) {
                     handler.removeObject(tempObject);
+                    // Got to next level
                     GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
                     gamePanel.setLevel(2);
                 }
@@ -109,7 +110,7 @@ public class Wizard extends GameObject {
         }
     }
 
-    public boolean place_free(int x, int y, Rectangle myRect, Rectangle otherRect) {
+    public boolean placeFree(int x, int y, Rectangle myRect, Rectangle otherRect) {
 
         myRect.x = x;
         myRect.y = y;
