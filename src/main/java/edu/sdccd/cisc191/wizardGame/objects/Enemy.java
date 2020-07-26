@@ -63,7 +63,7 @@ public class Enemy extends GameObject {
             }
 
             if(tempObject.getId() == ID.Bullet) {
-                // If shooty shoot time take away health point.
+                // If bullet fired remove enemy hp.
                 if(getBounds().intersects(tempObject.getBounds())) {
                     hp -= 50;
                     handler.removeObject(tempObject);
@@ -72,7 +72,7 @@ public class Enemy extends GameObject {
         }
 
         anim.tick();
-        // If no hp, bye bye.
+        // If no hp, remove object.
         if(hp <= 0) handler.removeObject(this);
     } //End tick method
 

@@ -1,9 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
@@ -139,8 +136,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 updates++;
                 delta--;
             }
-            render();
-            frames++;
+            if (!game.gamePaused()) {
+                render();
+                frames++;
+            }
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
@@ -153,11 +152,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     public void tick() {
         // Level variable determines which level to tick.
+        if (!game.gamePaused())
         currLevel.tick();
     }
 
     public void render() {
-        // Obtain bugger strategy. 3 Frames will be preloaded each render.
+        // Obtain buffer strategy. 3 Frames will be preloaded each render.
         // 3 is the ideal buffer strategy.
         BufferStrategy bs = canvas.getBufferStrategy();
         if (bs == null) {
@@ -185,11 +185,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     public void resetGame() {
-        // Resets hp, lives and resets entire game back to level One. Really should be called resetGame()?
-        this.game.setHp(1); // debug
+        // Resets hp, lives and resets entire game back to level One.
+        handler.clearHandler();
+        this.game.setHp(100); // debug
         this.game.setLives(3);
         setLevel(1);
-        handler.clearHandler();
+
     }
 
     public void showRespawn() {
@@ -229,7 +230,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("pause"); }
+            public void mousePressed(MouseEvent e) {frame.changePanel("pause"); releaseKeys(); game.pauseGame();}
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -255,6 +256,13 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseExited(MouseEvent e) {}
         });
+    }
+
+    public void releaseKeys() {
+        handler.setUp(false);
+        handler.setDown(false);
+        handler.setLeft(false);
+        handler.setRight(false);
     }
 
     /**

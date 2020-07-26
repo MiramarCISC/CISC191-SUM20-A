@@ -113,6 +113,7 @@ public abstract class AbstractLevel {
      */
     public void respawn() {
         // Set all key releases to true.
+        game.setHp(100); // Reset hp to 100.
         handler.setUp(false);
         handler.setDown(false);
         handler.setLeft(false);
@@ -193,8 +194,8 @@ public abstract class AbstractLevel {
             x += 20;
         }
 
-        // Handle player death event. (See wizard class)
-        if(this.getHp() <= 0) {
+        // Handle player death event. Still with additional lives).
+        if(this.getHp() <= 0 && this.getLives() > 0) {
             gamePanel.showRespawn(); // Show respawn button.
 
             camera.setX(0); //reset camera so button coordinates don't glitch.
@@ -202,7 +203,7 @@ public abstract class AbstractLevel {
         }
 
         if(this.getLives() <= 0) {
-            // Handle game over event. (Also done through wizard class)
+            // Handle game over event.
             g.setColor(Color.white);
             g.drawString("Game Over!", 400, 281);
 

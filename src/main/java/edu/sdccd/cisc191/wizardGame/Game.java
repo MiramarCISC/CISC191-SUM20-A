@@ -19,6 +19,7 @@ public class Game {
 
     /** Game states */
     private boolean isWizardDead = false;
+    private boolean paused = false;
 
     /**
      * Game constructor.
@@ -42,6 +43,7 @@ public class Game {
     public int getLives()           { return this.lives; }
     public int getHp()              { return this.hp; }
     public boolean hasWizardDied()  { return this.isWizardDead; }
+    public boolean gamePaused()     { return this.paused; }
 
     /** Modifiers methods */
     public void setHp(int hp)       { this.hp = hp; }
@@ -53,6 +55,8 @@ public class Game {
     public void decLives()          { this.lives--; }
     public void wizardDied()        { this.isWizardDead = true; }
     public void wizardRespawn()     { this.isWizardDead = false; }
+    public void pauseGame()          { this.paused = true;}
+    public void resumeGame()         { this.paused = false;}
 
     /**
      * Main method to instantiate and initialize this Game class.

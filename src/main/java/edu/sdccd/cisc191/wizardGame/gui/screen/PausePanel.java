@@ -30,8 +30,9 @@ public class PausePanel extends GeneralPanel {
      */
     public PausePanel(Window frame) {
         super(frame);
-        addBackground("/pause.jpg", GeneralPanel.BGOrientation.STRETCH);
         this.setLayout(new GridBagLayout());
+        addBackground("/pause.jpg", GeneralPanel.BGOrientation.STRETCH);
+
 
         /* Add Buttons */
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -78,7 +79,7 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("game"); }  // Go back to last open panel
+            public void mousePressed(MouseEvent e) { frame.changePanel("game"); frame.getGame().resumeGame(); }  // Go back to last open panel
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -116,5 +117,3 @@ public class PausePanel extends GeneralPanel {
         });
     }
 }
-
-

@@ -86,17 +86,19 @@ public class Window extends JFrame {
 
         // Store panels into gamePanels
         allPanels.put("menu", menuPanel);
-        allPanels.put("game", gamePanel);
-        allPanels.put("help", helpPanel);
         allPanels.put("pause", pausePanel);
+        allPanels.put("help", helpPanel);
         allPanels.put("load", loadPanel);
+        allPanels.put("game", gamePanel);
 
         // Add all panels into layers
         layeredPane.add(menuPanel, new Integer(1));
-        layeredPane.add(gamePanel, new Integer(1));
-        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(pausePanel, new Integer(1));
+        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(loadPanel, new Integer(1));
+        layeredPane.add(gamePanel, new Integer(1));
+
+
 
         // Start with menu panel
         menuPanel.setVisible(true);
@@ -106,7 +108,7 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this);
+       // device.setFullScreenWindow(this); commented to prevent true fullscreen.
     }
 
     /**
@@ -164,6 +166,7 @@ public class Window extends JFrame {
     public void quitGame() {
         this.setVisible(false); this.dispose(); System.exit(0);
     }
+
 
     /** Accessor methods */
     public Game getGame()                           { return this.game; }
