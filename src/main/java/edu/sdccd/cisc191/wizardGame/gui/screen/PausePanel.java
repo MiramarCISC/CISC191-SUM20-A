@@ -79,7 +79,7 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("game"); frame.getGame().resumeGame(); }  // Go back to last open panel
+            public void mousePressed(MouseEvent e) { frame.changePanel("game"); frame.getGame().resumeGame();}  // Go back to last open panel
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override

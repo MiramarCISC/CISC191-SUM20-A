@@ -29,6 +29,7 @@ public class Game {
 
     /** Initialize game */
     public void init() {
+        
         // Initialize Wizard stats
         this.ammo = 50;
         this.hp = 100;

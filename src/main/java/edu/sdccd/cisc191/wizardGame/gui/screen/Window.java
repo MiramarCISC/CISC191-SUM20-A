@@ -108,14 +108,14 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-       // device.setFullScreenWindow(this); commented to prevent true fullscreen.
+        device.setFullScreenWindow(this); // Sets fullscreen based on device. 
     }
 
     /**
      * Display specified game panel and hide the others.
      * @param panelName     Name of the panel to display
      */
-    protected void changePanel(String panelName) {
+    public void changePanel(String panelName) {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
@@ -139,17 +139,19 @@ public class Window extends JFrame {
     }
 
     // TODO: Fix with multi-threading
-    protected void showLoadScreen() {
+    public void showLoadScreen() {
         // Hide current panel
         if (getCurrOpenPanel() != null)
             if (allPanels.get(getCurrOpenPanel()).isVisible())
                 allPanels.get(getCurrOpenPanel()).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
+
         Thread t1 = new Thread(new Runnable(){
 
             @Override
             public void run() {
+                LoadPanel load = (LoadPanel) allPanels.get("load");
                 load.start();
                 try {
                     Thread.sleep(2000);

@@ -87,7 +87,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         layeredPane.add(respawnBtn, new Integer(2));
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-        pauseBtn.setBounds(frame.getWidth() - 100, 0, 100, 50);  // Top right corner
+        pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
@@ -135,10 +135,13 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 tick();
                 updates++;
                 delta--;
-            }
-            if (!game.gamePaused()) {
                 render();
                 frames++;
+            }
+
+            if (game.gamePaused()) {
+                // If the game is paused then interrupt game thread.
+                gameThread.interrupt();
             }
 
             if(System.currentTimeMillis() - timer > 1000) {
@@ -188,6 +191,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Resets hp, lives and resets entire game back to level One.
         handler.clearHandler();
         this.game.setHp(100); // debug
+        this.game.setAmmo(50);
         this.game.setLives(3);
         setLevel(1);
 
@@ -207,6 +211,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public AbstractLevel getLevel()           { return this.currLevel; }
     public Handler getHandler()               { return this.currLevel.getHandler(); }
     public Camera getCamera()                 { return this.currLevel.getCamera(); }
+
+   //public Frame getFrame()                   { return this.getFrame(); }
 
     /** Modifier methods */
     public void setHandler()                  { this.handler = currLevel.getHandler(); }
@@ -230,7 +236,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {frame.changePanel("pause"); releaseKeys(); game.pauseGame();}
+            public void mousePressed(MouseEvent e) {frame.changePanel("pause"); game.pauseGame(); releaseKeys(); }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -257,6 +263,11 @@ public class GamePanel extends GeneralPanel implements Runnable {
             public void mouseExited(MouseEvent e) {}
         });
     }
+
+    /**
+     * Releases all keys.
+     * To prevent wizard from continuing movement during change of state.
+     */
 
     public void releaseKeys() {
         handler.setUp(false);

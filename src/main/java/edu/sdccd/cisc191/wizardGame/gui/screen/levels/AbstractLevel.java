@@ -112,8 +112,9 @@ public abstract class AbstractLevel {
      * Respawn {@code Wizard} after death.
      */
     public void respawn() {
-        // Set all key releases to true.
         game.setHp(100); // Reset hp to 100.
+        game.setAmmo(50); // Reset ammo.
+        // Set all key releases to true.
         handler.setUp(false);
         handler.setDown(false);
         handler.setLeft(false);
@@ -204,23 +205,12 @@ public abstract class AbstractLevel {
 
         if(this.getLives() <= 0) {
             // Handle game over event.
-            g.setColor(Color.white);
-            g.drawString("Game Over!", 400, 281);
-
-            gamePanel.resetGame(); // call reset level
             // Go back to the menu.
+            this.game.getFrame().changePanel("menu");
+            // call reset Game();
+            gamePanel.resetGame();
         }
     } // end render
-
-    public void resetLevel() {
-        // Resets hp, lives and resets entire game back to level One. Really should be called resetGame()?
-        this.game.setHp(1); // debug
-        this.game.setLives(3);
-        this.gamePanel.setLevel(1);
-        this.handler.clearHandler();
-        this.loadLevel(currentMap);
-        this.gamePanel.update();
-    }
 
     /** Accessor methods */
     public int getHp()                           { return this.game.getHp(); }
