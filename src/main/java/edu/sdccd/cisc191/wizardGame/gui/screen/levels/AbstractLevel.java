@@ -10,16 +10,8 @@ import java.util.LinkedList;
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
-import edu.sdccd.cisc191.wizardGame.objects.Block;
-import edu.sdccd.cisc191.wizardGame.objects.Crate;
-import edu.sdccd.cisc191.wizardGame.objects.Ent;
-import edu.sdccd.cisc191.wizardGame.objects.Handler;
-import edu.sdccd.cisc191.wizardGame.objects.Hound;
-import edu.sdccd.cisc191.wizardGame.objects.ID;
-import edu.sdccd.cisc191.wizardGame.objects.Knight;
-import edu.sdccd.cisc191.wizardGame.objects.Minion;
-import edu.sdccd.cisc191.wizardGame.objects.Totem;
-import edu.sdccd.cisc191.wizardGame.objects.Wizard;
+import edu.sdccd.cisc191.wizardGame.objects.*;
+import edu.sdccd.cisc191.wizardGame.objects.Horizontal;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
@@ -103,7 +95,7 @@ public abstract class AbstractLevel {
                 if (red == 255 && green == 255 && blue == 0) handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss)); // pure yellow
                 if (red == 255 && green == 0 && blue == 255) handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs)); //pure magenta
                 if (red == 0 && green == 153 && blue == 102) handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs)); // // # 009966 green
-                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Hound(xx * 32, yy * 32, ID.Hound, handler, cs)); // # ff9933 vivid orange
+                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Horizontal(xx * 32, yy * 32, ID.Horizontal, handler, cs)); // # ff9933 vivid orange
             }
         }
     }

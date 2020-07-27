@@ -108,7 +108,7 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this); // Sets fullscreen based on device. 
+        device.setFullScreenWindow(this); // Sets fullscreen based on device.
     }
 
     /**

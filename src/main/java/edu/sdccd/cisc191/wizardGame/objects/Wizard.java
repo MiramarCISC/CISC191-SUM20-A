@@ -102,7 +102,7 @@ public class Wizard extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
+            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent || tempObject.getId() == ID.Horizontal) {
                 if(getBounds().intersects(tempObject.getBounds())) {
                    level.decHp(); //Debug line
                 }
