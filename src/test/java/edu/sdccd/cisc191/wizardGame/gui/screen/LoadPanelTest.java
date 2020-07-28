@@ -13,7 +13,6 @@ class LoadPanelTest {
 
   @BeforeAll
   static void init() {
-    graphics = new LoadPanel();
   }
 
   @Test

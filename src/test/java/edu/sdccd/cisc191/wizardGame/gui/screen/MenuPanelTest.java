@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
  * @author Mark Lucernas
  * Date: 2020-07-14
  */
-class MenuTest {
+class MenuPanelTest {
 
   private static MenuPanel menu;
 
   @BeforeAll
   static void init() {
-    menu = new MenuPanel();
   }
 
   @Test
