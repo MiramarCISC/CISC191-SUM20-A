@@ -71,22 +71,23 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven-javadoc-plugin.version}</version>
-        <configuration>
-          <quiet>true</quiet>
-        </configuration>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+      <!-- Javadoc plugin -->
+      <!-- <plugin>                                             -->
+      <!--   <groupId>org.apache.maven.plugins</groupId>        -->
+      <!--   <artifactId>maven-javadoc-plugin</artifactId>      -->
+      <!--   <version>${maven-javadoc-plugin.version}</version> -->
+      <!--   <configuration>                                    -->
+      <!--     <quiet>true</quiet>                              -->
+      <!--   </configuration>                                   -->
+      <!--   <executions>                                       -->
+      <!--     <execution>                                      -->
+      <!--       <id>attach-javadocs</id>                       -->
+      <!--       <goals>                                        -->
+      <!--         <goal>jar</goal>                             -->
+      <!--       </goals>                                       -->
+      <!--     </execution>                                     -->
+      <!--   </executions>                                      -->
+      <!-- </plugin>                                            -->
       <!-- Add versioning to jar manifest -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
