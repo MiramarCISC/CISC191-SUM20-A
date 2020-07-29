@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 public class Handler {
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+    private LinkedList<GameObject> object = new LinkedList<GameObject>();
     /* The purpose of the handler class is to update
         every GameObject in the application at one time, in one place.
         As opposed to doing that separately, in the child class for example */

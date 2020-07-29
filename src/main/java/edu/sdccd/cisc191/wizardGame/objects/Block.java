@@ -9,24 +9,28 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Block extends GameObject {
 
-    AbstractLevel level; // Needs access to game in order to access level
+    private AbstractLevel level;
+    private BufferedImage blockImage;
 
-    private BufferedImage block_image;
+    /**
+     * No args Block constructor.
+     */
+    public Block() { super(); }
 
     public Block(int x, int y, ID id, SpriteSheet ss, AbstractLevel level) {
         super(x, y, id, ss);
+        this.level = level;
 
-        this.level = level; // Needs access to level to determine which level we are on.
-
-        block_image = level.getBlockImage(level.getLevelNumber()); // Get block image based on current level number.
-        }
+        // Get block image based on current level number.
+        this.blockImage = this.level.getBlockImage(this.level.getLevelNumber());
+    }
 
     public void tick() {
 
     }
 
     public void render(Graphics g) {
-        g.drawImage(block_image, x, y, null);
+        g.drawImage(blockImage, x, y, null);
     }
 
     public Rectangle getBounds() {

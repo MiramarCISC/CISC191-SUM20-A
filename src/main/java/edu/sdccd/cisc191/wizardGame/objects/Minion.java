@@ -8,45 +8,69 @@ import java.util.Random;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
+/**
+ * Minion enemy game object.
+ *
+ * @author Jordan Tobin
+ *
+ * Editor: Mark Lucernas
+ * Date: 2020-06-08
+ */
 public class Minion extends GameObject {
 
     private Handler handler;
-    private BufferedImage[] minion_image = new BufferedImage[8];
-    Animation anim;
+    private BufferedImage[] minionImages = new BufferedImage[8];
+    private Animation anim;
 
     // Import random as enemies will roam around randomly.
     Random r = new Random();
     int choose = 0;
     int hp = 100;
 
+    /**
+     * No args Minion constructor.
+     */
+    public Minion() { super(); }
+
+    /**
+     * Minion constructor.
+     * @param x         X coordinate
+     * @param y         Y coordinate
+     * @param id        Object ID
+     * @param handler   Handler to handle all GameObjects
+     * @param cs        Character SpriteSheet
+     */
     public Minion (int x, int y, ID id, Handler handler, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
 
-        minion_image[0] = cs.grabImage(1, 11, 32, 32);
-        minion_image[1] = cs.grabImage(2, 11, 32, 32);
-        minion_image[2] = cs.grabImage(3, 11, 32, 32);
-        minion_image[3] = cs.grabImage(4, 11, 32, 32);
-        minion_image[4] = cs.grabImage(5, 11, 32, 32);
-        minion_image[5] = cs.grabImage(6, 11, 32, 32);
-        minion_image[6] = cs.grabImage(7, 11, 32, 32);
-        minion_image[7] = cs.grabImage(8, 11, 32, 32);
+        minionImages[0] = cs.grabImage(1, 11, 32, 32);
+        minionImages[1] = cs.grabImage(2, 11, 32, 32);
+        minionImages[2] = cs.grabImage(3, 11, 32, 32);
+        minionImages[3] = cs.grabImage(4, 11, 32, 32);
+        minionImages[4] = cs.grabImage(5, 11, 32, 32);
+        minionImages[5] = cs.grabImage(6, 11, 32, 32);
+        minionImages[6] = cs.grabImage(7, 11, 32, 32);
+        minionImages[7] = cs.grabImage(8, 11, 32, 32);
 
-
-        anim = new Animation(minion_image, 150);
+        anim = new Animation(minionImages, 150);
     }
 
+    /**
+     * Tick method to define Minion movements.
+     * Delete Minion on hp == 0.
+     */
     public void tick() {
         x += velX;
         y += velY;
 
         /* Constantly 'choose' is a random variable from 0-9.
-        If choose == 0, enemy moves in a different direction. */
+           If choose == 0, enemy moves in a different direction. */
         choose = r.nextInt(10);
 
         // If enemy collides, they automatically pick a new direction.
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
+        for (int i = 0; i < handler.getObject().size(); i++) {
+            GameObject tempObject = handler.getObject().get(i);
 
             if(tempObject.getId() == ID.Block) {
                 // Play around with this to get a better enemy AI. Lil' glitchy...
@@ -72,8 +96,9 @@ public class Minion extends GameObject {
         }
 
         anim.tick();
-        // If hp at 0 delete.
-        if(hp <= 0) handler.removeObject(this);
+
+        // Remove this Minion if hp at 0.
+        if (hp <= 0) handler.removeObject(this);
     } //End tick method
 
     public void render(Graphics g) {

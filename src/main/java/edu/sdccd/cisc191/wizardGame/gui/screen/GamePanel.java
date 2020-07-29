@@ -133,11 +133,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 tick();
                 updates++;
                 delta--;
-                render();
-                frames++;
             }
 
-            if (game.gamePaused()) {
+            render();
+            frames++;
+
+            if (game.isGamePaused()) {
                 // If the game is paused then interrupt game thread.
                 gameThread.interrupt();
             }
@@ -153,7 +154,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     public void tick() {
         // Level variable determines which level to tick.
-        if (!game.gamePaused())
+        if (!game.isGamePaused())
         currLevel.tick();
     }
 

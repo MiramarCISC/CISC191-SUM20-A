@@ -3,7 +3,6 @@ package edu.sdccd.cisc191.wizardGame.objects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
@@ -43,8 +42,8 @@ public class Vertical extends GameObject {
         y += velY;
 
         // If enemy collides, they automatically pick a new direction.
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
+        for (int i = 0; i < handler.getObject().size(); i++) {
+            GameObject tempObject = handler.getObject().get(i);
 
             if(tempObject.getId() == ID.Block) {
                 // Play around with this to get a better enemy AI. Lil' glitchy...

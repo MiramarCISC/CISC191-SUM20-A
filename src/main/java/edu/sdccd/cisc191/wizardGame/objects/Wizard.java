@@ -69,9 +69,9 @@ public class Wizard extends GameObject {
     }
 
     public void collision() {
-        for (int i = 0; i < handler.object.size(); i++) {
+        for (int i = 0; i < handler.getObject().size(); i++) {
 
-            GameObject tempObject = handler.object.get(i);
+            GameObject tempObject = handler.getObject().get(i);
 
             if(tempObject.getId() == ID.Block) {
 

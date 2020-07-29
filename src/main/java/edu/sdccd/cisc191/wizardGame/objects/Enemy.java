@@ -45,8 +45,8 @@ public class Enemy extends GameObject {
         choose = r.nextInt(10);
 
         // If enemy collides, they automatically pick a new direction.
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
+        for (int i = 0; i < handler.getObject().size(); i++) {
+            GameObject tempObject = handler.getObject().get(i);
 
             if(tempObject.getId() == ID.Block) {
                 // Play around with this to get a better enemy AI. Lil' glitchy...

@@ -70,9 +70,8 @@ public abstract class AbstractLevel {
         int numLevels = file.list().length;
 
         // Load all level into levelImages list in order
-        for (int i = 0; i < numLevels; i++) {
+        for (int i = 0; i < numLevels; i++)
             this.levelImages.add(loader.loadImage("/levels/level_" + (i + 1) + ".png"));  // +1 to offset index 0
-        }
     }
 
     /**
@@ -113,14 +112,22 @@ public abstract class AbstractLevel {
                 int blue = (pixel) & 0xff;
 
                 // Color map. Determines which sprites render to the map.
-                if (red == 255 && green == 0 && blue == 0) handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss, this)); // pure red
-                if (red == 0 && green == 0 && blue == 255) handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs)); // pure blue
-                if (red == 0 && green == 255 && blue == 0) handler.addObject(new Minion(xx * 32, yy * 32, ID.Minion, handler, cs)); // pure green
-                if (red == 0 && green == 255 && blue == 255) handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss)); // pure cyan
-                if (red == 255 && green == 255 && blue == 0) handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss)); // pure yellow
-                if (red == 255 && green == 0 && blue == 255) handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs)); //pure magenta
-                if (red == 0 && green == 153 && blue == 102) handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs)); // // # 009966 green
-                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Horizontal(xx * 32, yy * 32, ID.Horizontal, handler, cs)); // # ff9933 vivid orange
+                if (red == 255 && green == 0 && blue == 0)
+                    handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss, this));                  // pure red
+                if (red == 0 && green == 0 && blue == 255)
+                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs)); // pure blue
+                if (red == 0 && green == 255 && blue == 0)
+                    handler.addObject(new Minion(xx * 32, yy * 32, ID.Minion, handler, cs));             // pure green
+                if (red == 0 && green == 255 && blue == 255)
+                    handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));                        // pure cyan
+                if (red == 255 && green == 255 && blue == 0)
+                    handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss));                        // pure yellow
+                if (red == 255 && green == 0 && blue == 255)
+                    handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs));       // pure magenta
+                if (red == 0 && green == 153 && blue == 102)
+                    handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs));             // green #009966
+                if (red == 255 && green == 153 && blue == 51)
+                    handler.addObject(new Horizontal(xx * 32, yy * 32, ID.Horizontal, handler, cs));     // vivid orange #ff9933
             }
         }
     }
