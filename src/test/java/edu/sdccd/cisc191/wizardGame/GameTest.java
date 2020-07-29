@@ -1,12 +1,10 @@
 package edu.sdccd.cisc191.wizardGame;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -46,8 +44,14 @@ class GameTest {
         }
 
         @Test
-        void testAssertFalseHasWizardDied() {
-            boolean actual = game.hasWizardDied();
+        void testHasWizardDied() {
+            boolean actual = game.isWizardDead();
+            assertFalse(actual);
+        }
+
+        @Test
+        void testGamePaused() {
+            boolean actual = game.isGamePaused();
             assertFalse(actual);
         }
     }
@@ -132,13 +136,25 @@ class GameTest {
         @Test
         void testWizardDied() {
             game.wizardDied();
-            assertTrue(game.hasWizardDied());
+            assertTrue(game.isWizardDead());
         }
 
         @Test
         void testWizardRespawn() {
             game.wizardRespawn();
-            assertFalse(game.hasWizardDied());
+            assertFalse(game.isWizardDead());
+        }
+
+        @Test
+        void testPauseGame() {
+            game.pauseGame();
+            assertTrue(game.isGamePaused());
+        }
+
+        @Test
+        void testResumeGame() {
+            game.resumeGame();
+            assertFalse(game.isGamePaused());
         }
     }
 }
