@@ -9,5 +9,6 @@ public enum ID {
     Minion(),
     Ent(),
     Knight(),
-    Hound(),
+    Horizontal(),
+    Vertical(),
 }
