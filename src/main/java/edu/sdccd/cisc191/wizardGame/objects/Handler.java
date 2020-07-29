@@ -9,12 +9,6 @@ public class Handler {
         every GameObject in the application at one time, in one place.
         As opposed to doing that separately, in the child class for example */
 
-    // Essentially - This is an array of every object in the game.
-   // public Handler() {
-       // object = new LinkedList<GameObject>(); // Everytime a new level is made we get a new handler.
-  //  }
-
-
     private boolean up = false, down = false, right = false, left = false, pause = false;
 
     public void tick() {

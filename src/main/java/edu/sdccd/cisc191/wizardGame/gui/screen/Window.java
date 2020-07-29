@@ -86,17 +86,19 @@ public class Window extends JFrame {
 
         // Store panels into gamePanels
         allPanels.put("menu", menuPanel);
-        allPanels.put("game", gamePanel);
-        allPanels.put("help", helpPanel);
         allPanels.put("pause", pausePanel);
+        allPanels.put("help", helpPanel);
         allPanels.put("load", loadPanel);
+        allPanels.put("game", gamePanel);
 
         // Add all panels into layers
         layeredPane.add(menuPanel, new Integer(1));
-        layeredPane.add(gamePanel, new Integer(1));
-        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(pausePanel, new Integer(1));
+        layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(loadPanel, new Integer(1));
+        layeredPane.add(gamePanel, new Integer(1));
+
+
 
         // Start with menu panel
         menuPanel.setVisible(true);
@@ -106,14 +108,14 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this);
+        device.setFullScreenWindow(this); // Sets fullscreen based on device.
     }
 
     /**
      * Display specified game panel and hide the others.
      * @param panelName     Name of the panel to display
      */
-    protected void changePanel(String panelName) {
+    public void changePanel(String panelName) {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
@@ -137,17 +139,19 @@ public class Window extends JFrame {
     }
 
     // TODO: Fix with multi-threading
-    protected void showLoadScreen() {
+    public void showLoadScreen() {
         // Hide current panel
         if (getCurrOpenPanel() != null)
             if (allPanels.get(getCurrOpenPanel()).isVisible())
                 allPanels.get(getCurrOpenPanel()).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
+
         Thread t1 = new Thread(new Runnable(){
 
             @Override
             public void run() {
+                LoadPanel load = (LoadPanel) allPanels.get("load");
                 load.start();
                 try {
                     Thread.sleep(2000);
@@ -164,6 +168,7 @@ public class Window extends JFrame {
     public void quitGame() {
         this.setVisible(false); this.dispose(); System.exit(0);
     }
+
 
     /** Accessor methods */
     public Game getGame()                           { return this.game; }

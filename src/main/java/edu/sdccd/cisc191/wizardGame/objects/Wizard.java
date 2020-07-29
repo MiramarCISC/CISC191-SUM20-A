@@ -98,11 +98,12 @@ public class Wizard extends GameObject {
                     handler.removeObject(tempObject);
                     // Got to next level
                     GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
-                    gamePanel.setLevel(2);
+                    game.incLevelNumber();
+                    gamePanel.changeLevel(); // Create an incrementing level variable here.
                 }
             }
 
-            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent) {
+            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent || tempObject.getId() == ID.Horizontal) {
                 if(getBounds().intersects(tempObject.getBounds())) {
                    level.decHp(); //Debug line
                 }

@@ -10,16 +10,8 @@ import java.util.LinkedList;
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
-import edu.sdccd.cisc191.wizardGame.objects.Block;
-import edu.sdccd.cisc191.wizardGame.objects.Crate;
-import edu.sdccd.cisc191.wizardGame.objects.Ent;
-import edu.sdccd.cisc191.wizardGame.objects.Handler;
-import edu.sdccd.cisc191.wizardGame.objects.Hound;
-import edu.sdccd.cisc191.wizardGame.objects.ID;
-import edu.sdccd.cisc191.wizardGame.objects.Knight;
-import edu.sdccd.cisc191.wizardGame.objects.Minion;
-import edu.sdccd.cisc191.wizardGame.objects.Totem;
-import edu.sdccd.cisc191.wizardGame.objects.Wizard;
+import edu.sdccd.cisc191.wizardGame.objects.*;
+import edu.sdccd.cisc191.wizardGame.objects.Horizontal;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
@@ -28,7 +20,6 @@ public abstract class AbstractLevel {
     // Several utility variables.
     protected Game game;
     protected GamePanel gamePanel;
-    protected int levelNum;
     protected BufferedImageLoader loader = new BufferedImageLoader();
 
     // Load camera and handler.
@@ -39,19 +30,19 @@ public abstract class AbstractLevel {
     protected SpriteSheet ss = new SpriteSheet(loader.loadImage("/main_sheet.png")); // Who says we need to declare variables?
     protected SpriteSheet cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
 
-    /** Level Maps  @see bufferedLevelImages */
+    // Track level number.
+    protected int levelNumber;
+
+    /** Level Maps, Floors and Blocks  @see bufferedLevelImages */
     protected LinkedList<BufferedImage> levelImages = new LinkedList<BufferedImage>();
+    protected LinkedList<BufferedImage> floorImages = new LinkedList<BufferedImage>();
+    protected LinkedList<BufferedImage> blockImages = new LinkedList<BufferedImage>();
 
-    // Floor Tile Images
-    protected BufferedImage floorOne = ss.grabImage(6, 6, 32, 32);
-    protected BufferedImage floorTwo = ss.grabImage(7, 2, 32, 32);
-    protected BufferedImage floorThree = ss.grabImage(6, 6, 32, 32);
-    protected BufferedImage floorFour = ss.grabImage(7, 2, 32, 32);
-    protected BufferedImage floorFive = ss.grabImage(6, 6, 32, 32);
 
-    // Current Level Map and Current Floor. Instantiated in Extended class.
+    // Images that change each level, Map, Floor and Block. Instantiated in Extended class.
     protected BufferedImage currentMap;
-    protected BufferedImage level;
+    protected BufferedImage currentFloor;
+    protected BufferedImage currentBlock;
 
     // Sprite used to display lives in HUD
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
@@ -63,8 +54,10 @@ public abstract class AbstractLevel {
         camera = new Camera(0, 0); // and the camera
         handler = new Handler(); // make sure the handler is started from new.
 
-        // Buffer all level images in level resource
+        // Buffer all level, floor and block images in level resource and sprite sheet.
         bufferLevelImages();
+        bufferFloorImages();
+        bufferBlockImages();
     }
 
     /**
@@ -80,6 +73,30 @@ public abstract class AbstractLevel {
         for (int i = 0; i < numLevels; i++) {
             this.levelImages.add(loader.loadImage("/levels/level_" + (i + 1) + ".png"));  // +1 to offset index 0
         }
+    }
+
+    /**
+     * To change the floor or wall blocks.
+     * Alter images in the following linked list.
+     */
+
+    public void bufferFloorImages() {
+        // Just add particular tiles to linked list in order.
+        // This is the place to change level design look.
+        floorImages.add(ss.grabImage(6, 6, 32, 32)); // Level one....
+        floorImages.add(ss.grabImage(7, 2, 32, 32));
+        floorImages.add(ss.grabImage(6, 3, 32, 32));
+        floorImages.add(ss.grabImage(7, 9, 32, 32));
+        floorImages.add(ss.grabImage(6, 5, 32, 32));
+    }
+
+    public void bufferBlockImages() {
+        // Just add particular tiles to linked list in order.
+        blockImages.add(ss.grabImage(6, 9, 32, 32)); // Level one..
+        blockImages.add(ss.grabImage(6, 10, 32, 32));
+        blockImages.add(ss.grabImage(6, 13, 32, 32));
+        blockImages.add(ss.grabImage(6, 12, 32, 32));
+        blockImages.add(ss.grabImage(6, 13, 32, 32));
     }
 
     public void loadLevel(BufferedImage image) {
@@ -103,7 +120,7 @@ public abstract class AbstractLevel {
                 if (red == 255 && green == 255 && blue == 0) handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss)); // pure yellow
                 if (red == 255 && green == 0 && blue == 255) handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs)); //pure magenta
                 if (red == 0 && green == 153 && blue == 102) handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs)); // // # 009966 green
-                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Hound(xx * 32, yy * 32, ID.Hound, handler, cs)); // # ff9933 vivid orange
+                if (red == 255 && green == 153 && blue == 51) handler.addObject(new Horizontal(xx * 32, yy * 32, ID.Horizontal, handler, cs)); // # ff9933 vivid orange
             }
         }
     }
@@ -112,6 +129,8 @@ public abstract class AbstractLevel {
      * Respawn {@code Wizard} after death.
      */
     public void respawn() {
+        game.setHp(100); // Reset hp to 100.
+        game.setAmmo(50); // Reset ammo.
         // Set all key releases to true.
         handler.setUp(false);
         handler.setDown(false);
@@ -157,7 +176,7 @@ public abstract class AbstractLevel {
 
         for(int xx = 0; xx < 30*92; xx += 32) { //debug
             for(int yy = 0; yy < 30*72; yy += 32) {
-                g.drawImage(level, xx, yy, null);
+                g.drawImage(currentFloor, xx, yy, null);
             }
         }
 
@@ -183,7 +202,7 @@ public abstract class AbstractLevel {
 
         // Creating level HUD.
         g.setColor(Color.white);
-        g.drawString("Level: " + levelNum, 5, 70); // Change to level numb variable
+        g.drawString("Level: " + game.getLevelNumber(), 5, 70); // Change to level numb variable
 
         // Creating lives HUD.
         // for the amount of lives render an image.
@@ -193,8 +212,8 @@ public abstract class AbstractLevel {
             x += 20;
         }
 
-        // Handle player death event. (See wizard class)
-        if(this.getHp() <= 0) {
+        // Handle player death event. Still with additional lives).
+        if(this.getHp() <= 0 && this.getLives() > 0) {
             gamePanel.showRespawn(); // Show respawn button.
 
             camera.setX(0); //reset camera so button coordinates don't glitch.
@@ -202,32 +221,25 @@ public abstract class AbstractLevel {
         }
 
         if(this.getLives() <= 0) {
-            // Handle game over event. (Also done through wizard class)
-            g.setColor(Color.white);
-            g.drawString("Game Over!", 400, 281);
-
-            gamePanel.resetGame(); // call reset level
+            // Handle game over event.
             // Go back to the menu.
+            this.game.getFrame().changePanel("menu");
+            // call reset Game();
+            gamePanel.resetGame();
         }
     } // end render
 
-    public void resetLevel() {
-        // Resets hp, lives and resets entire game back to level One. Really should be called resetGame()?
-        this.game.setHp(1); // debug
-        this.game.setLives(3);
-        this.gamePanel.setLevel(1);
-        this.handler.clearHandler();
-        this.loadLevel(currentMap);
-        this.gamePanel.update();
-    }
-
     /** Accessor methods */
+    public Game getGame()                        { return this.game; }
     public int getHp()                           { return this.game.getHp(); }
     public int getAmmo()                         { return this.game.getAmmo(); }
     public int getLives()                        { return this.game.getLives(); }
     public Handler getHandler()                  { return this.handler; }
     public Camera getCamera()                    { return this.camera; }
-    public BufferedImage getLevel(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getLevelMap(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getFloorImage(int numLevel ) { return this.floorImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getBlockImage(int numLevel ) { return this.blockImages.get(numLevel - 1); }
+    public int getLevelNumber()                      { return game.getLevelNumber(); } // Refactor?
 
     /** Modifier methods */
     public void decHp()                          { this.game.decHp(); }
