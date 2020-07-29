@@ -15,6 +15,10 @@ import edu.sdccd.cisc191.wizardGame.objects.Horizontal;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
+/**
+ *  The abstract construction of a level with all necessary game components (map, game objects, etc).
+ *  Creates the game world.
+ */
 public abstract class AbstractLevel {
 
     // Several utility variables.
@@ -98,16 +102,19 @@ public abstract class AbstractLevel {
         blockImages.add(ss.grabImage(6, 13, 32, 32));
     }
 
+    /**
+     * Handles the loading of all of the game objects to the map.
+     * @param image The level image to be loaded.
+     */
     public void loadLevel(BufferedImage image) {
         currentMap = image;
 
         int w = image.getWidth();
         int h = image.getHeight();
-
         for (int xx = 0; xx < w; xx++) {
             for (int yy = 0; yy < h; yy++) {
-                int pixel = image.getRGB(xx, yy);
-                int red = (pixel >> 16) & 0xff;
+                int pixel = image.getRGB(xx, yy); // Return int that represents color in ARGB colorspace (32 bits) - Seth
+                int red = (pixel >> 16) & 0xff; // Binary arithmetic to extract the correct color channel. - Seth
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
@@ -131,6 +138,15 @@ public abstract class AbstractLevel {
             }
         }
     }
+
+    /* NOTE: Working on making the loading of game objects a little more elegant without sacrificing overhead. - Seth
+
+    private int matchRGB(BufferedImage image){
+        int w = image.getWidth();
+        int h = image.getHeight();
+
+    }
+     */
 
     /**
      * Respawn {@code Wizard} after death.
