@@ -8,41 +8,39 @@ import java.util.Random;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
-public class Enemy extends GameObject {
+public class Horizontal extends GameObject {
 
     private Handler handler;
-    private BufferedImage[] enemy_image = new BufferedImage[8];
+    private BufferedImage[] horiz_image = new BufferedImage[8];
     Animation anim;
 
-    // Import random as enemies will roam around randomly.
-    Random r = new Random();
-    int choose = 0;
+    // Enemies will move right until they hit a block.
+    int velX = 3;
     int hp = 100;
 
-    public Enemy (int x, int y, ID id, Handler handler, SpriteSheet cs) {
+    public Horizontal (int x, int y, ID id, Handler handler, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
 
-        enemy_image[0] = cs.grabImage(1, 11, 32, 32);
-        enemy_image[1] = cs.grabImage(2, 11, 32, 32);
-        enemy_image[2] = cs.grabImage(3, 11, 32, 32);
-        enemy_image[3] = cs.grabImage(4, 11, 32, 32);
-        enemy_image[4] = cs.grabImage(5, 11, 32, 32);
-        enemy_image[5] = cs.grabImage(6, 11, 32, 32);
-        enemy_image[6] = cs.grabImage(7, 11, 32, 32);
-        enemy_image[7] = cs.grabImage(8, 11, 32, 32);
+        horiz_image[0] = cs.grabImage(1, 9, 32, 32);
+        horiz_image[1] = cs.grabImage(2, 9, 32, 32);
+        horiz_image[2] = cs.grabImage(3, 9, 32, 32);
+        horiz_image[3] = cs.grabImage(4, 9, 32, 32);
+        horiz_image[4] = cs.grabImage(5, 9, 32, 32);
+        horiz_image[5] = cs.grabImage(6, 9, 32, 32);
+        horiz_image[6] = cs.grabImage(7, 9, 32, 32);
+        horiz_image[7] = cs.grabImage(8, 9, 32, 32);
 
 
-        anim = new Animation(enemy_image, 150);
+        anim = new Animation(horiz_image, 150);
     }
 
+
+
     public void tick() {
+
         x += velX;
         y += velY;
-
-        /* Constantly 'choose' is a random variable from 0-9.
-        If choose == 0, enemy moves in a different direction. */
-        choose = r.nextInt(10);
 
         // If enemy collides, they automatically pick a new direction.
         for (int i = 0; i < handler.object.size(); i++) {
@@ -51,19 +49,12 @@ public class Enemy extends GameObject {
             if(tempObject.getId() == ID.Block) {
                 // Play around with this to get a better enemy AI. Lil' glitchy...
                 if(getBoundsBig().intersects(tempObject.getBounds())) {
-                    x += (velX*5) * -1;
-                    y += (velY*5) * -1; //Invert velocity and shoot it back (ricochet)
                     velX *= -1;
-                    velY *= -1;
-                } else if (choose == 0) {
-                    // Random between -4 and 4 algorithm.
-                    velX = (r.nextInt(2 - -2) + -2);
-                    velY = (r.nextInt(2 - -2) + -2);
                 }
             }
 
             if(tempObject.getId() == ID.Bullet) {
-                // If bullet fired remove enemy hp.
+                // If bullet hits minion...
                 if(getBounds().intersects(tempObject.getBounds())) {
                     hp -= 50;
                     handler.removeObject(tempObject);
@@ -72,7 +63,7 @@ public class Enemy extends GameObject {
         }
 
         anim.tick();
-        // If no hp, remove object.
+        // If hp at 0 delete.
         if(hp <= 0) handler.removeObject(this);
     } //End tick method
 
