@@ -11,6 +11,11 @@ public class Totem extends GameObject {
 
     private BufferedImage totem_image;
 
+    /**
+     * No args Totem constructor.
+     */
+    public Totem() { super(); }
+
     public Totem(int x, int y, ID id, SpriteSheet ss) {
 
         super(x, y, id, ss);

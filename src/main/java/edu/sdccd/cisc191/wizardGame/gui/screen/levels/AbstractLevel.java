@@ -47,6 +47,11 @@ public abstract class AbstractLevel {
     // Sprite used to display lives in HUD
     protected BufferedImage livesImage = cs.grabImage(13, 8, 32, 32); // Sprite to display lives.
 
+    /**
+     * No args AbstractLevel constructor.
+     */
+    public AbstractLevel() {}
+
     // Constructor
     public AbstractLevel(Game game, GamePanel gamePanel) {
         this.game = game;
@@ -237,19 +242,23 @@ public abstract class AbstractLevel {
     } // end render
 
     /** Accessor methods */
-    public Game getGame()                        { return this.game; }
-    public int getHp()                           { return this.game.getHp(); }
-    public int getAmmo()                         { return this.game.getAmmo(); }
-    public int getLives()                        { return this.game.getLives(); }
-    public Handler getHandler()                  { return this.handler; }
-    public Camera getCamera()                    { return this.camera; }
-    public BufferedImage getLevelMap(int numLevel ) { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
-    public BufferedImage getFloorImage(int numLevel ) { return this.floorImages.get(numLevel - 1); }  // -1 to offset index 0
-    public BufferedImage getBlockImage(int numLevel ) { return this.blockImages.get(numLevel - 1); }
-    public int getLevelNumber()                      { return game.getLevelNumber(); } // Refactor?
+    public int getHp()                               { return this.game.getHp(); }
+    public int getAmmo()                             { return this.game.getAmmo(); }
+    public int getLives()                            { return this.game.getLives(); }
+    public int getLevelNumber()                      { return this.game.getLevelNumber(); } // Refactor?
+    public Game getGame()                            { return this.game; }
+    public GamePanel getGamePanel()                  { return this.gamePanel; }
+    public Handler getHandler()                      { return this.handler; }
+    public Camera getCamera()                        { return this.camera; }
+    public BufferedImage getLevelMap(int numLevel)   { return this.levelImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getFloorImage(int numLevel) { return this.floorImages.get(numLevel - 1); }  // -1 to offset index 0
+    public BufferedImage getBlockImage(int numLevel) { return this.blockImages.get(numLevel - 1); }
 
     /** Modifier methods */
-    public void decHp()                          { this.game.decHp(); }
-    public void decLives()                       { this.game.decLives(); }
-    public void incAmmo(int inc)                 { this.game.incAmmo(inc); }
+    public void setLevel(int levelNumber)            { this.levelNumber = levelNumber; }
+    public void setGame(Game game)                   { this.game = game; }
+    public void setGamePanel(GamePanel gamePanel)    { this.gamePanel = gamePanel; }
+    public void decHp()                              { this.game.decHp(); }
+    public void decLives()                           { this.game.decLives(); }
+    public void incAmmo(int inc)                     { this.game.incAmmo(inc); }
 }

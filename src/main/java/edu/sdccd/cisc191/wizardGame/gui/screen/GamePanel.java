@@ -55,6 +55,11 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private JButton pauseBtn, respawnBtn;
 
     /**
+     * No args GamePanel constructor.
+     */
+    public GamePanel() { super(); }
+
+    /**
      * GamePanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
@@ -216,10 +221,9 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
     /** Modifier methods */
     public void setHandler()                  { this.handler = currLevel.getHandler(); }
-    public void changeLevel(){
+    public void changeLevel() {
         // Important method, determines which level to control.
         currLevel = new Level(game, this);
-
         this.update();
     }
 

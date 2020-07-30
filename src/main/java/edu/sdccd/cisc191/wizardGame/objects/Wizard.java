@@ -12,13 +12,18 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Wizard extends GameObject {
 
-    Handler handler;
-    AbstractLevel level;
-    Game game;
+    private Handler handler;
+    private AbstractLevel level;
+    private Game game;
 
-    private BufferedImage[] wizard_image = new BufferedImage[4];
+    private BufferedImage[] wizardImage = new BufferedImage[4];
 
-    Animation anim;
+    private Animation anim;
+
+    /**
+     * No args Wizard constructor.
+     */
+    public Wizard() { super(); }
 
     public Wizard(int x, int y, ID id, Handler handler, Game game, AbstractLevel level, SpriteSheet cs) {
         super(x, y, id, cs);
@@ -26,13 +31,12 @@ public class Wizard extends GameObject {
         this.level = level;
         this.game = game;
 
-        wizard_image[0] = cs.grabImage(13, 8, 32, 32);
-        wizard_image[1] = cs.grabImage(14, 8, 32, 32);
-        wizard_image[2] = cs.grabImage(15, 8, 32, 32);
-        wizard_image[3] = cs.grabImage(16, 8, 32, 32);
+        wizardImage[0] = cs.grabImage(13, 8, 32, 32);
+        wizardImage[1] = cs.grabImage(14, 8, 32, 32);
+        wizardImage[2] = cs.grabImage(15, 8, 32, 32);
+        wizardImage[3] = cs.grabImage(16, 8, 32, 32);
 
-        anim = new Animation(wizard_image, 200); // Animation speed
-
+        anim = new Animation(wizardImage, 200); // Animation speed
     }
 
     public void tick() {
@@ -68,6 +72,11 @@ public class Wizard extends GameObject {
         anim.tick();
     }
 
+    /**
+     * Wizard collision detection.
+     * Prevents from running over Blocks, picks up Crates, take hits from
+     * monsters and enters next level colliding with Totem.
+     */
     public void collision() {
         for (int i = 0; i < handler.getObject().size(); i++) {
 
@@ -75,11 +84,11 @@ public class Wizard extends GameObject {
 
             if(tempObject.getId() == ID.Block) {
 
-                if(!placeFree((int) (x+velX), y, getBounds(), tempObject.getBounds())) {
+                if(!placeFree((int) (x + velX), y, getBounds(), tempObject.getBounds())) {
                     velX = 0;
                 }
 
-                if(!placeFree(x, (int) (y+velY), getBounds(), tempObject.getBounds())) {
+                if(!placeFree(x, (int) (y + velY), getBounds(), tempObject.getBounds())) {
                     velY = 0;
                 }
             }
@@ -124,7 +133,7 @@ public class Wizard extends GameObject {
 
     public void render(Graphics g) {
         if (velX == 0 && velY == 0)
-            g.drawImage(wizard_image[0], x, y, 62, 62, null);
+            g.drawImage(wizardImage[0], x, y, 62, 62, null);
         else
             anim.render(g, x, y, 62, 62);
     }
@@ -132,5 +141,15 @@ public class Wizard extends GameObject {
     public Rectangle getBounds() {
         return new Rectangle (x, y, 62, 62);
     }
+
+    /** Accessor methods */
+    public AbstractLevel getLevel()           { return this.level; }
+    public Handler getHandler()               { return this.handler; }
+    public Animation getAnimation()           { return this.anim; }
+
+    /** Modifier methods */
+    public void setLevel(AbstractLevel level) { this.level = level; }
+    public void setHandler(Handler handler)   { this.handler = handler; }
+    public void setAnimation(Animation anim)  { this.anim = anim; }
 }
 

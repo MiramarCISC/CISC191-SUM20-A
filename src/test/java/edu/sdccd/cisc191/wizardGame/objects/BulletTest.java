@@ -6,9 +6,8 @@ import java.awt.Rectangle;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 /**
  * @author Mark Lucernas
@@ -16,23 +15,25 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  */
 class BulletTest {
 
+    /** Class instance fields */
     private Bullet bullet;
-    private Rectangle rectangle;
     private Handler handler;
+
+    /** Class static fields */
     private static int x;
     private static int y;
-    private static int mx;
-    private static int my;
     private static int velX;
     private static int velY;
+    private static Rectangle tempRectangle;
 
     @BeforeAll
     static void init() {
         // Initialize static fields
         x = 1;
         y = 1;
-        velX = (mx - x) / 10;
-        velY = (my - y) / 10;
+        velX = 0; // Make Bullet immobile
+        velY = 0;
+        tempRectangle = new Rectangle(x, y, 8, 8); // set up for getBounds()
     }
 
     @BeforeEach
@@ -48,14 +49,11 @@ class BulletTest {
         bullet.setId(ID.Bullet);
         bullet.setHandler(handler);
 
-        // Add to handler (the order matters)
         handler.addObject(bullet);
-
-
-        rectangle = new Rectangle(x, y, 8, 8);
     }
 
     @Test
+    @DisplayName("Test Bullet tick() Block collision")
     void testTickBlockCollision() {
         // Set up Block
         Block block = new Block();
@@ -66,11 +64,12 @@ class BulletTest {
 
         bullet.tick();
         GameObject object = handler.getObject().getFirst();
-        assertEquals(1, handler.getObject().size(), "Check if Bullet is removed");
-        assertEquals(ID.Block, object.getId(), "Check if remaining object is Block");
+        assertEquals(1, handler.getObject().size(), "Test handler size if Bullet is removed");
+        assertEquals(ID.Block, object.getId(), "Test handler remaining object is Block");
     }
 
     @Test
+    @DisplayName("Test Bullet tick() non-Block collision")
     void testTickNonBlockCollision() {
         // Set up Block
         Minion minion = new Minion();
@@ -80,12 +79,13 @@ class BulletTest {
         handler.addObject(minion);
 
         bullet.tick();
-        assertEquals(2, handler.getObject().size(), "Check if Bullet is not removed");
+        assertEquals(2, handler.getObject().size(), "Test handler size if Bullet is not removed");
     }
 
     @Test
+    @DisplayName("Test Bullet Rectangle bounds")
     void testGetBounds() {
         Rectangle actual = bullet.getBounds();
-        assertEquals(rectangle, actual, "Gets Bullet Rectangle bounds");
+        assertEquals(tempRectangle, actual);
     }
 }

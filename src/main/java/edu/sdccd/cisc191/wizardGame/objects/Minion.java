@@ -40,7 +40,7 @@ public class Minion extends GameObject {
      * @param handler   Handler to handle all GameObjects
      * @param cs        Character SpriteSheet
      */
-    public Minion (int x, int y, ID id, Handler handler, SpriteSheet cs) {
+    public Minion(int x, int y, ID id, Handler handler, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
 

@@ -10,6 +10,11 @@ public class Crate extends GameObject {
 
     private BufferedImage crate_image;
 
+    /**
+     * No args Crate constructor.
+     */
+    public Crate() { super(); }
+
     public Crate(int x, int y, ID id, SpriteSheet ss) {
 
         super(x, y, id, ss);

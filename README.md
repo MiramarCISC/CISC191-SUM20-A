@@ -106,7 +106,9 @@ mvn package
 To run test suite
 
 ```bash
-mvn test
+mvn clean test
+# -e to run tests with full stack trace on failures
+mvn clean test -e
 ```
 
 To clean and remove maven build from project

@@ -6,6 +6,11 @@ import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 
 public class Level extends AbstractLevel {
 
+    /**
+     * No args Level constructor.
+     */
+    public Level() { super(); }
+
     public Level(Game game, GamePanel gamePanel) {
         // Call the AbstractLevel parent constructor.
         super(game, gamePanel);

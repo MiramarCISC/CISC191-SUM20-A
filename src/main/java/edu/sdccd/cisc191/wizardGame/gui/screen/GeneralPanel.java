@@ -32,6 +32,11 @@ public class GeneralPanel extends JPanel {
     protected Window frame;
 
     /**
+     * No args GeneralPanel constructor.
+     */
+    public GeneralPanel() {}
+
+    /**
      * GeneralPanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
