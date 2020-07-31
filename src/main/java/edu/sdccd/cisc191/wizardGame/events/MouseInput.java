@@ -19,15 +19,20 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class MouseInput extends MouseAdapter {
 
-    private Handler handler;
     private Camera camera;
+    private Handler handler;
     private Game game;
     private SpriteSheet ss;
     private SpriteSheet cs; //Needs two sprite sheets, that's the reason I would like to just have one big sprite sheet.
 
     /** Coords */
-    private int mx, my;  // Bullet speed
     private int x, y;  // Click location
+    private int mx, my;  // Bullet speed
+
+    /**
+     * No args MouseInput constructor.
+     */
+    public MouseInput() {}
 
     public MouseInput(Handler handler, Camera camera, Game game, SpriteSheet ss, SpriteSheet cs) {
         this.handler = handler;
@@ -51,7 +56,7 @@ public class MouseInput extends MouseAdapter {
     }
 
     /* CHECKING AND UTIlITY FUNCTIONS */
-    private void fireBullet() {
+    public void fireBullet() {
         // Bullet firing.
         for (int i = 0; i < handler.getObject().size(); i++) {
             GameObject tempObject = handler.getObject().get(i);
@@ -62,5 +67,24 @@ public class MouseInput extends MouseAdapter {
             }
         }
     }
+
+    /** Accessor methods */
+    public Camera getCamera()               { return this.camera; }
+    public Handler getHandler()             { return this.handler; }
+    public Game getGame()                   { return this.game; }
+    public int getX()                       { return this.x; }
+    public int getY()                       { return this.y; }
+    public int getMx()                      { return this.mx; }
+    public int getMy()                      { return this.my; }
+
+    /** Modifier methods */
+    public void setCamera(Camera camera)    { this.camera = camera; }
+    public void setHandler(Handler handler) { this.handler = handler; }
+    public void setGame(Game game)          { this.game = game; }
+    public void setX(int x)                 { this.x = x; }
+    public void setY(int y)                 { this.y = y; }
+    public void setMx(int mx)               { this.mx = mx; }
+    public void setMy(int my)               { this.my = my; }
+
 
 } // End of class

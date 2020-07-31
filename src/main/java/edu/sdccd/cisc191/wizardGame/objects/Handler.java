@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class Handler {
 
     private LinkedList<GameObject> object = new LinkedList<GameObject>();
-    private boolean up, down, right, left = false;
+    private boolean up = false, down = false, right = false, left = false;
 
     /**
      * No args Handler constructor.
