@@ -2,7 +2,8 @@ package edu.sdccd.cisc191.wizardGame.gui.anim;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -11,52 +12,30 @@ import org.junit.jupiter.api.Test;
  */
 class CameraTest {
 
-  private static float x, y;
-  private static Camera camera;
+    private Camera camera;
+    private float x, y;
 
-  @BeforeAll
-  static void init() {
-    x = 0;
-    y = 0;
-    camera = new Camera(x, y);
-  }
+    @BeforeEach
+    void setUp() {
+        this.x = 1;
+        this.y = 1;
+        camera = new Camera(x, y);
+    }
 
-  @Test
-  void tickTest() {
-    // TODO: Figure out
-  }
+    @Test
+    @DisplayName("Test Camera accessor methods")
+    void testAccessorMethods() {
+        assertEquals(this.x, camera.getX(), "Test Camera getX()");
+        assertEquals(this.y, camera.getY(), "Test Camera getY()");
+    }
 
-  @Test
-  void getXTest() {
-    float expected = x;
-    float actual = camera.getX();
+    @Test
+    @DisplayName("Test Camera modifier methods")
+    void testModifierMethods() {
+        camera.setX(2);
+        camera.setY(2);
 
-    assertEquals(expected, actual, "Gets Camera x value");
-  }
-
-  @Test
-  void setXTest() {
-    float expected = x;
-    camera.setX(x);
-    float actual = camera.getX();
-
-    assertEquals(expected, actual, "Sets Camera x value");
-  }
-
-  @Test
-  void getYTest() {
-    float expected = y;
-    float actual = camera.getY();
-
-    assertEquals(expected, actual, "Gets Camera y value");
-  }
-
-  @Test
-  void setYTest() {
-    float expected = y;
-    camera.setY(y);
-    float actual = camera.getY();
-
-    assertEquals(expected, actual, "Sets Camera y value");
-  }
+        assertEquals(2, camera.getX(), "Test Camera setX()");
+        assertEquals(2, camera.getY(), "Test Camera setY()");
+    }
 }
