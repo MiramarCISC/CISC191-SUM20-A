@@ -3,11 +3,19 @@ package edu.sdccd.cisc191.wizardGame.gui.anim;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+/**
+ * @author Jordan Tobin
+ *
+ * Editor: Mark Lucernas
+ *
+ * Date: 2020-07-30
+ */
 public class Animation {
 
     private BufferedImage[] images;
-    private int interval, index;
-    private long timer, now, lastTime;
+    private int interval, index = 0;
+    private long timer, now = 0;
+    private long lastTime = System.currentTimeMillis();
 
     /**
      * No args Animation constructor.
@@ -18,10 +26,6 @@ public class Animation {
         // Renders array of BufferedImages successively
         this.images = images;
         this.interval = interval;
-        index = 0;
-        timer = 0;
-        now = 0;
-        lastTime = System.currentTimeMillis();
     }
 
     public void tick() {
@@ -44,12 +48,12 @@ public class Animation {
     }
 
     /** Accessor methods */
-    public BufferedImage[] getImages()            { return images; }
-    public int getInterval()                      { return interval; }
-    public int getIndex()                         { return index; }
-    public long getTimer()                        { return timer; }
-    public long getNow()                          { return now; }
-    public long getLastTime()                     { return lastTime; }
+    public BufferedImage[] getImages()            { return this.images; }
+    public int getInterval()                      { return this.interval; }
+    public int getIndex()                         { return this.index; }
+    public long getTimer()                        { return this.timer; }
+    public long getNow()                          { return this.now; }
+    public long getLastTime()                     { return this.lastTime; }
 
     /** Modifier methods */
     public void setImages(BufferedImage[] images) { this.images = images; }
