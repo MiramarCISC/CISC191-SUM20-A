@@ -33,7 +33,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     /** Class references */
     private Game game;
     private Window frame;
-    private Canvas canvas = new Canvas();
+    private Canvas canvas;
 
     /** Thread variables */
     private boolean isRunning = false;
@@ -54,6 +54,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
     /** Buttons */
     private JButton pauseBtn, respawnBtn;
 
+    /** Listeners */
+    private MouseInput mouseInput;
+    private KeyInput keyInput;
+
     /**
      * No args GamePanel constructor.
      */
@@ -67,6 +71,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         super(frame);
         this.frame = frame;
         this.game = frame.getGame();
+        this.canvas = new Canvas();
 
         // Load in the sprite sheets. One for the levels, one for characters.
         ss = new SpriteSheet(loader.loadImage("/main_sheet.png"));
@@ -186,19 +191,21 @@ public class GamePanel extends GeneralPanel implements Runnable {
         handler = getHandler();
         camera = getCamera();
 
-        canvas.addMouseListener(new MouseInput(handler, camera, this.game, ss, cs));
-        canvas.addKeyListener(new KeyInput(handler));  // is getting null for some reason?
+        mouseInput = new MouseInput(handler, camera, this.game, ss, cs);
+        keyInput = new KeyInput(handler);
+
+        canvas.addMouseListener(mouseInput);
+        canvas.addKeyListener(keyInput);  // is getting null for some reason?
     }
 
     public void resetGame() {
         // Resets hp, lives and resets entire game back to level One.
-        handler.clearHandler(); // Remove all game objects from handler.
-        this.game.setHp(100); // set hp to full
-        this.game.setAmmo(50); // refill ammo
-        this.game.setLives(3); // refill lives
+        handler.clearHandler();      // Remove all game objects from handler.
+        this.game.setHp(100);        // set hp to full
+        this.game.setAmmo(50);       // refill ammo
+        this.game.setLives(3);       // refill lives
         this.game.setLevelNumber(1); // begin at level 1.
-        changeLevel(); // Load level.
-
+        changeLevel();               // Load level.
     }
 
     public void showRespawn() {
@@ -211,20 +218,23 @@ public class GamePanel extends GeneralPanel implements Runnable {
     }
 
     /** Accessor methods */
-    public boolean isGameRunning()            { return this.isRunning; }
-    public AbstractLevel getLevel()           { return this.currLevel; }
-    public Handler getHandler()               { return this.currLevel.getHandler(); }
-    public Camera getCamera()                 { return this.currLevel.getCamera(); }
-
-   //public Frame getFrame()                   { return this.getFrame(); }
+    public boolean isGameRunning()                   { return this.isRunning; }
+    public AbstractLevel getLevel()                  { return this.currLevel; }
+    public Handler getHandler()                      { return this.currLevel.getHandler(); }
+    public Camera getCamera()                        { return this.currLevel.getCamera(); }
+    public Frame getFrame()                          { return this.frame; }
+    public Canvas getCanvas()                        { return this.canvas; }
+    public MouseInput getMouseInput()                { return this.mouseInput; }
+    public KeyInput getKeyInput()                    { return this.keyInput; }
 
     /** Modifier methods */
-    public void setHandler()                  { this.handler = currLevel.getHandler(); }
-    public void changeLevel() {
-        // Important method, determines which level to control.
-        currLevel = new Level(game, this);
-        this.update();
-    }
+    public void setHandler(Handler handler)          { this.handler = handler; }
+    public void setCamera(Camera camera)             { this.camera = camera; }
+    public void setFrame(Window frame)               { this.frame = frame; }
+    public void setCanvas(Canvas canvas)             { this.canvas = canvas; }
+    public void setMouseInput(MouseInput mouseInput) { this.mouseInput = mouseInput; }
+    public void setKeyInput(KeyInput keyInput)       { this.keyInput = keyInput; }
+    public void changeLevel()                        { this.currLevel = new Level(this.game, this); this.update(); }
 
     /**
      * Add all button listeners.
@@ -235,7 +245,11 @@ public class GamePanel extends GeneralPanel implements Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) {frame.changePanel("pause"); game.pauseGame(); releaseKeys(); }
+            public void mousePressed(MouseEvent e) {
+                frame.changePanel("pause");
+                game.pauseGame();
+                releaseKeys();
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -267,7 +281,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
      * Releases all keys.
      * To prevent wizard from continuing movement during change of state.
      */
-
     public void releaseKeys() {
         handler.setUp(false);
         handler.setDown(false);
