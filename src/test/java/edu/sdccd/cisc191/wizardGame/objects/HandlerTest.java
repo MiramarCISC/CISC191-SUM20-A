@@ -1,8 +1,12 @@
 package edu.sdccd.cisc191.wizardGame.objects;
 
-import java.util.LinkedList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -11,70 +15,75 @@ import org.junit.jupiter.api.Test;
  */
 class HandlerTest {
 
-  private static Handler handler;
-  private static LinkedList<GameObject> object;
+    private Handler handler;
 
-  @BeforeAll
-  static void init() {
-    handler = new Handler();
-    object = new LinkedList<GameObject>();
-    // TODO: Continue
-  }
+    @BeforeEach
+    void setUp() {
+        handler = new Handler();
+    }
 
-  @Test
-  void tickTest() {
-    // TODO: Figure out
-  }
+    @Test
+    @DisplayName("Test Handler default movement fields")
+    void testDefaultMovements() {
+        assertFalse(handler.isUp());
+        assertFalse(handler.isDown());
+        assertFalse(handler.isRight());
+        assertFalse(handler.isLeft());
+    }
 
-  @Test
-  void renderTest() {
-    // TODO: Figure out
-  }
+    @Test
+    @DisplayName("Test Handler movement modifier methods")
+    void testMovementModifiers() {
+        handler.setUp(true);
+        handler.setDown(true);
+        handler.setRight(true);
+        handler.setLeft(true);
+        assertTrue(handler.isUp());
+        assertTrue(handler.isDown());
+        assertTrue(handler.isRight());
+        assertTrue(handler.isLeft());
+    }
 
-  @Test
-  void addObjectTest() {
-    // TODO
-  }
+    @Nested
+    class HandlerObjectTests {
 
-  @Test
-  void isUpTest() {
-    // TODO
-  }
+        @BeforeEach
+        void setUp() {
+            handler = new Handler();
+        }
 
-  @Test
-  void setUpTest() {
-    // TODO
-  }
+        @Test
+        @DisplayName("Test Handler addObject()")
+        void testAddObject() {
+            handler.addObject(new Wizard());
+            handler.addObject(new Minion());
 
-  @Test
-  void isDownTest() {
-    // TODO
-  }
+            assertEquals(2, handler.getObject().size(), "Test object size after addObject()");
+        }
 
-  @Test
-  void setDownTest() {
-    // TODO
-  }
+        @Test
+        @DisplayName("Test Handler removeObject()")
+        void testRemoveObject() {
+            Wizard wizard = new Wizard();
+            Minion minion = new Minion();
+            handler.addObject(wizard);
+            handler.addObject(minion);
 
-  @Test
-  void isRightTest() {
-    // TODO
-  }
+            handler.removeObject(wizard);
 
-  @Test
-  void setRightTest() {
-    // TODO
-  }
-
-  @Test
-  void isLeftTest() {
-    // TODO
-  }
-
-  @Test
-  void setLeftTest() {
-    // TODO
-  }
+            assertEquals(1, handler.getObject().size(), "Test object size after removeObject()");
+        }
 
 
+        @Test
+        @DisplayName("Test Handler clearHandler()")
+        void testClearHandler() {
+            handler.addObject(new Wizard());
+            handler.addObject(new Minion());
+
+            handler.clearHandler();
+
+            assertEquals(0, handler.getObject().size(), "Test object size after clearHandler()");
+        }
+    }
 }
