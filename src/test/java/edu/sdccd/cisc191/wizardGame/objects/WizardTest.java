@@ -1,8 +1,8 @@
 package edu.sdccd.cisc191.wizardGame.objects;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
 
@@ -44,7 +43,7 @@ class WizardTest {
         y = 1;
         velX = 0; // Make Wizard immobile
         velY = 0;
-        tempRectangle = new Rectangle(x, y, 8, 8); // set up for getBounds()
+        tempRectangle = new Rectangle(x, y, 62, 62); // set up for getBounds()
     }
 
     @BeforeEach
@@ -247,7 +246,6 @@ class WizardTest {
     @Test
     @DisplayName("Test Wizard getBounds()")
     void getBoundsTest() {
-        Rectangle tempRectangle = new Rectangle(x, x, 62, 62);
         assertEquals(tempRectangle.getBounds(), wizard.getBounds());
     }
 }

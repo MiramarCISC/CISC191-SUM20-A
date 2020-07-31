@@ -63,7 +63,7 @@ class BulletTest {
         handler.addObject(block);
 
         bullet.tick();
-        GameObject object = handler.getObject().getFirst();
+        GameObject object = handler.getObject().getLast();
         assertEquals(1, handler.getObject().size(), "Test handler size if Bullet is removed");
         assertEquals(ID.Block, object.getId(), "Test handler remaining object is Block");
     }
