@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.objects.ID;
 import edu.sdccd.cisc191.wizardGame.objects.Wizard;
@@ -22,7 +21,6 @@ import edu.sdccd.cisc191.wizardGame.objects.Wizard;
  */
 class KeyInputTest {
 
-    private GamePanel gamePanel;
     private Canvas canvas;
     private Handler handler;
     private KeyInput keyInput;
@@ -30,7 +28,6 @@ class KeyInputTest {
     @BeforeEach
     void setUp() {
         // Init fields
-        gamePanel = new GamePanel();
         canvas = new Canvas();
         handler = new Handler();
         keyInput = new KeyInput(handler);
@@ -42,10 +39,6 @@ class KeyInputTest {
 
         // Add KeyInput as Canvas KeyListener
         canvas.addKeyListener(keyInput);
-
-        // Add Canvas and Handler to GamePanel
-        gamePanel.setCanvas(canvas);
-        gamePanel.setHandler(handler);
     }
 
     @Nested
@@ -58,10 +51,9 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_W, 'w');
-            // Execute key
-            keyInput.keyPressed(key);
-
-            assertTrue(handler.isUp());
+            assertFalse(handler.isUp()); // Pre-keyPressed handler check
+            keyInput.keyPressed(key);    // Execute key
+            assertTrue(handler.isUp());  // Post-keyPressed handler check
         }
 
         @Test
@@ -71,10 +63,9 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_A, 'a');
-            // Execute key
-            keyInput.keyPressed(key);
-
-            assertTrue(handler.isLeft());
+            assertFalse(handler.isLeft()); // Pre-keyPressed handler check
+            keyInput.keyPressed(key);      // Execute key
+            assertTrue(handler.isLeft());  // Post-keyPressed handler check
         }
 
         @Test
@@ -84,10 +75,9 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_S, 's');
-            // Execute key
-            keyInput.keyPressed(key);
-
-            assertTrue(handler.isDown());
+            assertFalse(handler.isDown()); // Pre-keyPressed handler check
+            keyInput.keyPressed(key);      // Execute key
+            assertTrue(handler.isDown());  // Post-keyPressed handler check
         }
 
         @Test
@@ -97,10 +87,9 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_D, 'd');
-            // Execute key
-            keyInput.keyPressed(key);
-
-            assertTrue(handler.isRight());
+            assertFalse(handler.isRight()); // Pre-keyPressed handler check
+            keyInput.keyPressed(key);       // Execute key
+            assertTrue(handler.isRight());  // Post-keyPressed handler check
         }
 
     }
@@ -115,12 +104,11 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_W, 'w');
-            // Execute key
-            keyInput.keyPressed(key);
-            // Release key
-            keyInput.keyReleased(key);
+            keyInput.keyPressed(key);    // Execute key
 
-            assertFalse(handler.isUp());
+            assertTrue(handler.isUp());  // Pre-keyReleased handler check
+            keyInput.keyReleased(key);   // Release key
+            assertFalse(handler.isUp()); // Post-keyReleased handler check
         }
 
         @Test
@@ -130,12 +118,11 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_A, 'a');
-            // Execute key
-            keyInput.keyPressed(key);
-            // Release key
-            keyInput.keyReleased(key);
+            keyInput.keyPressed(key);      // Execute key
 
-            assertFalse(handler.isLeft());
+            assertTrue(handler.isLeft());  // Pre-keyReleased handler check
+            keyInput.keyReleased(key);     // Release key
+            assertFalse(handler.isLeft()); // Post-keyReleased handler check
         }
 
         @Test
@@ -145,12 +132,11 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_S, 's');
-            // Execute key
-            keyInput.keyPressed(key);
-            // Release key
-            keyInput.keyReleased(key);
+            keyInput.keyPressed(key);      // Execute key
 
-            assertFalse(handler.isDown());
+            assertTrue(handler.isDown());  // Pre-keyReleased handler check
+            keyInput.keyReleased(key);     // Release key
+            assertFalse(handler.isDown()); // Post-keyReleased handler check
         }
 
         @Test
@@ -160,12 +146,11 @@ class KeyInputTest {
             KeyEvent key = new KeyEvent(canvas, KeyEvent.KEY_PRESSED,
                                         System.currentTimeMillis(), 0,
                                         KeyEvent.VK_D, 'd');
-            // Execute key
-            keyInput.keyPressed(key);
-            // Release key
-            keyInput.keyReleased(key);
+            keyInput.keyPressed(key);       // Execute key
 
-            assertFalse(handler.isRight());
+            assertTrue(handler.isRight());  // Pre-keyReleased handler check
+            keyInput.keyReleased(key);      // Release key
+            assertFalse(handler.isRight()); // Post-keyReleased handler check
         }
     }
 }

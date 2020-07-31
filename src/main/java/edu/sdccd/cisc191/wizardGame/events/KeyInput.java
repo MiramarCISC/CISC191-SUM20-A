@@ -9,7 +9,12 @@ import edu.sdccd.cisc191.wizardGame.objects.ID;
 
 public class KeyInput extends KeyAdapter {
 
-    Handler handler;
+    private Handler handler;
+
+    /**
+     * No args KeyInput constructor.
+     */
+    public KeyInput() {}
 
     public KeyInput(Handler handler) {
         this.handler = handler;
@@ -44,4 +49,10 @@ public class KeyInput extends KeyAdapter {
             }
         }
     }
+
+    /** Accessor methods */
+    public Handler getHandler()             { return this.handler; }
+
+    /** Modifiers methods */
+    public void setHandler(Handler handler) { this.handler = handler; }
 }
