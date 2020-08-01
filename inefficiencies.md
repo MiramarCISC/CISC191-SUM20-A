@@ -2,7 +2,48 @@
 
 These inefficiencies I noticed while unit testing are not critical with the
 scope of our project, but will start to drag down performance once more
-GameObjects are added or with a bigger screen resolution.
+GameObjects are added.
+
+Also, I noticed some of the loops we have over the GameObject LinkedList are
+generally inefficient as the `get()` method also iterates over the LinkedList.
+We can use `java.util.ListIterator` to prevent from double unnecessary extra
+loops.
+
+Sample code with ListIterator:
+
+```java
+LinkedList<String> authorsList = new LinkedList<String>();
+String authorName;
+ListIterator<String> listIterator;
+
+authorsList.add("Gamow");
+authorsList.add("Greene");
+authorsList.add("Penrose");
+
+listIterator = authorsList.listIterator();
+
+while (listIterator.hasNext()) {
+   authorName = listIterator.next();
+   System.out.println(authorName);
+}
+```
+
+Inefficient way of looping over a LinkedList:
+
+```java
+LinkedList<String> authorsList = new LinkedList<String>();
+
+String authorName;
+
+authorsList.add("Gamow");
+authorsList.add("Greene");
+authorsList.add("Penrose");
+
+for (int i = 0; i < authorsList.size(); i++) {
+    authorName = authorsList.get(i); // get() method also iterates over the list
+    System.out.println(authorName);
+}
+```
 
 ## KeyInput.java
 
