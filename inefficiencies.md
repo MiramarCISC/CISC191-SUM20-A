@@ -6,8 +6,7 @@ GameObjects are added.
 
 Also, I noticed some of the loops we have over the GameObject LinkedList are
 generally inefficient as the `get()` method also iterates over the LinkedList.
-We can use `java.util.ListIterator` to prevent from double unnecessary extra
-loops.
+We can use `java.util.ListIterator` to prevent unnecessary double loops.
 
 Sample code with ListIterator:
 
