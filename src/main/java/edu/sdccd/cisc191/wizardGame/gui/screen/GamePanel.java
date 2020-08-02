@@ -246,7 +246,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
             public void mouseClicked(MouseEvent e) {}
             @Override
             public void mousePressed(MouseEvent e) {
-                frame.changePanel("pause");
+                frame.changePanel("pause", false);
                 game.pauseGame();
                 releaseKeys();
             }

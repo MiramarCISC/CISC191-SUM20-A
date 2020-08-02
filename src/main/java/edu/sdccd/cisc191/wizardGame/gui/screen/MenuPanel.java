@@ -25,7 +25,7 @@ public class MenuPanel extends GeneralPanel {
     private Dimension buttonSize = new Dimension(200, 75);
 
     /**
-     * MenuPanel constructer.
+     * MenuPanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
     public MenuPanel(Window frame) {
@@ -78,7 +78,7 @@ public class MenuPanel extends GeneralPanel {
         playBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.changePanel("game");
+                frame.changePanel("game", true);
             }
             @Override
             public void mousePressed(MouseEvent e) {}
@@ -94,7 +94,7 @@ public class MenuPanel extends GeneralPanel {
         helpBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.changePanel("help");
+                frame.changePanel("help", false);
             }
             @Override
             public void mousePressed(MouseEvent e) {}
@@ -110,7 +110,7 @@ public class MenuPanel extends GeneralPanel {
         quitBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.changePanel("quit");
+                frame.changePanel("quit", false);
             }
             @Override
             public void mousePressed(MouseEvent e) {}

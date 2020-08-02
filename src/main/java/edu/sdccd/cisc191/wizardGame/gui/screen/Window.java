@@ -114,15 +114,16 @@ public class Window extends JFrame {
     /**
      * Display specified game panel and hide the others.
      * @param panelName     Name of the panel to display
+     * @param isLoadScreen  Switch if loading panel will display
      */
-    public void changePanel(String panelName) {
+    public void changePanel(String panelName, boolean isLoadScreen) {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
+        if (isLoadScreen)
+            this.showLoadScreen();
+
         allPanels.get(getCurrOpenPanel()).setVisible(false);
-        // TODO: Fix loading screen
-        // this.showLoadScreen();
-        // System.out.println("Loading done");
 
         // Change panel
         allPanels.get(panelName).setVisible(true);
@@ -140,10 +141,11 @@ public class Window extends JFrame {
 
     // TODO: Fix with multi-threading
     public void showLoadScreen() {
+        String currOpenPanel = getCurrOpenPanel();
         // Hide current panel
-        if (getCurrOpenPanel() != null)
-            if (allPanels.get(getCurrOpenPanel()).isVisible())
-                allPanels.get(getCurrOpenPanel()).setVisible(false);
+        if (currOpenPanel != null)
+            if (allPanels.get(currOpenPanel).isVisible())
+                allPanels.get(currOpenPanel).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
 
@@ -154,7 +156,7 @@ public class Window extends JFrame {
                 LoadPanel load = (LoadPanel) allPanels.get("load");
                 load.start();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -162,6 +164,9 @@ public class Window extends JFrame {
             }
         });
         t1.start();
+
+        // Restore current open panel
+        allPanels.get(currOpenPanel).setVisible(true);
     }
 
     /** Quit game */

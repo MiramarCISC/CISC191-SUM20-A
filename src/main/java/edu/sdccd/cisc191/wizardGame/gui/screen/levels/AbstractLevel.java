@@ -2,7 +2,6 @@ package edu.sdccd.cisc191.wizardGame.gui.screen.levels;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.LinkedList;
@@ -235,7 +234,7 @@ public abstract class AbstractLevel {
         if(this.getLives() <= 0) {
             // Handle game over event.
             // Go back to the menu.
-            this.game.getFrame().changePanel("menu");
+            this.game.getFrame().changePanel("menu", false);
             // call reset Game();
             gamePanel.resetGame();
         }

@@ -59,7 +59,9 @@ public class HelpPanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel(frame.getLastOpenPanel()); }  // Go back to last open panel
+            public void mousePressed(MouseEvent e) {
+                frame.changePanel(frame.getLastOpenPanel(), false); // Go back to last open panel
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override

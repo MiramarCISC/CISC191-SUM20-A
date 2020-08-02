@@ -79,7 +79,10 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("game"); frame.getGame().resumeGame();}  // Go back to last open panel
+            public void mousePressed(MouseEvent e) {
+                frame.changePanel("game", false);
+                frame.getGame().resumeGame();
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -93,7 +96,9 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("help"); }
+            public void mousePressed(MouseEvent e) {
+                frame.changePanel("help", false);
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
@@ -107,7 +112,9 @@ public class PausePanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override
-            public void mousePressed(MouseEvent e) { frame.changePanel("quit"); }
+            public void mousePressed(MouseEvent e) {
+                frame.changePanel("quit", false);
+            }
             @Override
             public void mouseReleased(MouseEvent e) {}
             @Override
