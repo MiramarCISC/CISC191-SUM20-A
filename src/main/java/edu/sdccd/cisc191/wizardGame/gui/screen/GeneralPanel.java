@@ -75,7 +75,7 @@ public class GeneralPanel extends JPanel {
                 g2d.drawImage(background.getScaledInstance(this.getWidth(), -1, Image.SCALE_SMOOTH), 0, 0, null);
             }
         } else {  // Default background
-            g2d.setColor(Color.GRAY);
+            g2d.setColor(new Color(20, 20, 20));
             g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
             g2d.setColor(Color.WHITE);
             Font font = new Font("Arial", Font.PLAIN, 18);

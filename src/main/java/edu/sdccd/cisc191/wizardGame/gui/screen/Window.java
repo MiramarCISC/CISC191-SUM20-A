@@ -121,7 +121,7 @@ public class Window extends JFrame {
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
         if (isLoadScreen)
-            this.showLoadScreen();
+            this.showLoadScreen(4000);
 
         allPanels.get(getCurrOpenPanel()).setVisible(false);
 
@@ -139,8 +139,10 @@ public class Window extends JFrame {
         this.currOpenPanel = panelName;
     }
 
-    // TODO: Fix with multi-threading
-    public void showLoadScreen() {
+    /**
+     * @param duration  Loading screen duration in milliseconds
+     */
+    public void showLoadScreen(int duration) {
         String currOpenPanel = getCurrOpenPanel();
         // Hide current panel
         if (currOpenPanel != null)
@@ -156,7 +158,7 @@ public class Window extends JFrame {
                 LoadPanel load = (LoadPanel) allPanels.get("load");
                 load.start();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(duration);
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -177,8 +179,8 @@ public class Window extends JFrame {
 
     /** Accessor methods */
     public Game getGame()                           { return this.game; }
-    public Map<String, GeneralPanel> getAllPanels() { return allPanels; }
-    public GeneralPanel getPanel(String panelName)  { return allPanels.get(panelName); }
-    public String getLastOpenPanel()                { if (lastOpenPanel != null) { return lastOpenPanel; } else { return null; } }
-    public String getCurrOpenPanel()                { if (currOpenPanel != null) { return currOpenPanel; } else { return null; } }
+    public Map<String, GeneralPanel> getAllPanels() { return this.allPanels; }
+    public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
+    public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
+    public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
 }

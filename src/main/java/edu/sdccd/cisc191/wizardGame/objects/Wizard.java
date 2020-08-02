@@ -110,7 +110,8 @@ public class Wizard extends GameObject {
                     game.incLevelNumber();
                     // Show load screen then build next level
                     game.pauseGame();
-                    game.getFrame().showLoadScreen();
+                    game.getFrame().showLoadScreen(2000);
+                    game.resumeGame();
                     gamePanel.changeLevel(); // Create an incrementing level variable here.
                 }
             }

@@ -21,9 +21,6 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  *
  * @author Mark Lucernas
  * Date: 2020-07-16
- *
- * Resources:
- * https://www.youtube.com/watch?v=-3KjiEga-cI
  */
 public class LoadPanel extends GeneralPanel implements ActionListener {
 
@@ -39,6 +36,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     int coverage = 0;
     boolean isShrinking = false;
 
+    /** Load screen components */
     JLabel label;
     private SpriteSheet charSheet;
     private SpriteSheet mainSheet;
@@ -47,6 +45,8 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private Image[] knightImages = new Image[8];
     private Image[] rotateFireImages = new Image[4];
     private Image terrain;
+
+    /** Sprite index for cycling through sprite poses */
     int wizardIndex = 0;
     int mushroomIndex = 0;
     int knightIndex = 0;
@@ -63,16 +63,16 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         mainSheet = new SpriteSheet(mainSheetImage);
 
         // Load Images
-        fillSpriteImage(wizardImages, 13, 8, 80, 80, charSheet);
-        fillSpriteImage(mushroomImages, 1, 11, 80, 80, charSheet);
-        fillSpriteImage(knightImages, 9, 5, 80, 80, charSheet);
-        fillSpriteImage(rotateFireImages, 52, 37, 50, 50, mainSheet);
+        fillSpriteImage(wizardImages, 13, 8, 100, 100, charSheet);
+        fillSpriteImage(mushroomImages, 1, 11, 100, 100, charSheet);
+        fillSpriteImage(knightImages, 9, 5, 80, 100, charSheet);
+        fillSpriteImage(rotateFireImages, 52, 37, 80, 80, mainSheet);
         terrain = mainSheet.grabImage(6, 6, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
         // Add label
         label = new JLabel();
         label.setText("Wizard Game by Group A");
-        label.setFont(new Font("Helvetica Neue", Font.PLAIN, 10));
+        label.setFont(new Font("Helvetica Neue", Font.PLAIN, 14));
         label.setSize(label.getPreferredSize());
         label.setForeground(Color.WHITE);
         label.setLocation(50, this.getHeight() - 50);
@@ -127,21 +127,21 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     public void drawScene(Graphics2D g2d, int scene) {
         switch (scene) {
             case 1:
-                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 100, (int) yCenter - 50, null);
-                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 200, (int) yCenter - 50, null);
+                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 200, (int) yCenter - 50, null);
+                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 300, (int) yCenter - 50, null);
                 break;
             case 2:
-                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 100, (int) yCenter - 50, null);
-                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 200, (int) yCenter - 50, null);
+                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 200, (int) yCenter - 50, null);
+                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 300, (int) yCenter - 50, null);
                 break;
             case 3:
-                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 100, (int) yCenter - 50, null);
-                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 100, (int) yCenter - 100, null);
-                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 20, (int) yCenter - 50, null);
-                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 130, (int) yCenter, null);
-                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 200, (int) yCenter - 150, null);
-                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 200, (int) yCenter - 50, null);
-                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 250, (int) yCenter + 50, null);
+                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter + 200, (int) yCenter - 50, null);
+                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 200, (int) yCenter - 100, null);
+                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 120, (int) yCenter - 50, null);
+                g2d.drawImage(mushroomImages[mushroomIndex], (int) xCenter - 230, (int) yCenter, null);
+                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 300, (int) yCenter - 150, null);
+                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 300, (int) yCenter - 50, null);
+                g2d.drawImage(knightImages[knightIndex], (int) xCenter - 350, (int) yCenter + 50, null);
                 break;
         }
     }
@@ -185,8 +185,11 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.YELLOW);
 
+        g2d.setColor(new Color(20, 20, 20));
+        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+
         // Draw terrain
-        drawTerrain(g2d, terrain);
+        // drawTerrain(g2d, terrain);
 
         // Draw elements
         drawScene(g2d, scene);
@@ -199,7 +202,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // Update sprite pose
+        // Update sprite poses
         wizardIndex = updateSpriteIndex(wizardImages, wizardIndex);
         mushroomIndex = updateSpriteIndex(mushroomImages, mushroomIndex);
         knightIndex = updateSpriteIndex(knightImages, knightIndex);
@@ -225,7 +228,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
             }
         }
 
-        // Update metrics
+        // Update screen metrics for dynamic resizing
         xCenter = this.getWidth() / 2;
         yCenter = this.getHeight() / 2;
         furthestDistance = (int) Math.sqrt(Math.pow(xCenter - 0, 2) + Math.pow(yCenter - 0, 2));
