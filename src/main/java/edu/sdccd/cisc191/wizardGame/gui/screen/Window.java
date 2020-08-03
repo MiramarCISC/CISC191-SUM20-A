@@ -140,6 +140,7 @@ public class Window extends JFrame {
     }
 
     /**
+     * Hide current panel and show loading screen for given duration.
      * @param duration  Loading screen duration in milliseconds
      */
     public void showLoadScreen(int duration) {
@@ -150,6 +151,7 @@ public class Window extends JFrame {
                 allPanels.get(currOpenPanel).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
+        load.setDuration(duration);
 
         Thread t1 = new Thread(new Runnable(){
 
