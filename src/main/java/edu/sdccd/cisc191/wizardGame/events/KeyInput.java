@@ -7,6 +7,10 @@ import edu.sdccd.cisc191.wizardGame.objects.GameObject;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.objects.ID;
 
+/**
+ * Describes conditions that will change handler attributes upon a KeyEvent.
+ * Used for player movement.
+ */
 public class KeyInput extends KeyAdapter {
 
     private Handler handler;
