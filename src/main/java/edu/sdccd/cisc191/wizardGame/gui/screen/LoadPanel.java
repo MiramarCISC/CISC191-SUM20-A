@@ -18,10 +18,23 @@ import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 /**
- * Load screen panel for {@code Window} class.
+ * Load screen panel for {@link Window} class.
+ * Creates separate {@link Thread} to update the value of {@link JProgressBar}
+ * and uses {@link Timer} to render the frames of the loading screen at
+ * specified rate of change.
+ *
+ * Defines an inner {@link ProgressBarThread} class extending Thread to
+ * implement {@code JProgressBar} value updater matching the {@code duration}
+ * of a LoadPanel instance.
+ *
+ * Also generates random predefined "scene" or sprite images arrangement to
+ * display in the {@link JPanel} to make loading screen interesting.
  *
  * @author Mark Lucernas
  * Date: 2020-07-16
+ *
+ * @see Window
+ * @see GeneralPanel
  */
 public class LoadPanel extends GeneralPanel implements ActionListener {
 
@@ -35,6 +48,15 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private Random rand = new Random();
     private int scene;
     private boolean changeScene = true;
+
+    /** Scene object images */
+    private SpriteSheet charSheet;
+    private SpriteSheet mainSheet;
+    private Image terrain;
+    private Image[] wizardImages = new Image[4];
+    private Image[] mushroomImages = new Image[8];
+    private Image[] knightImages = new Image[8];
+    private Image[] rotateFireImages = new Image[4];
 
     /** Load panel metrics */
     int x = 0;
@@ -50,13 +72,6 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     /** Load screen components */
     private JLabel label;
     private JProgressBar progressBar;
-    private SpriteSheet charSheet;
-    private SpriteSheet mainSheet;
-    private Image terrain;
-    private Image[] wizardImages = new Image[4];
-    private Image[] mushroomImages = new Image[8];
-    private Image[] knightImages = new Image[8];
-    private Image[] rotateFireImages = new Image[4];
 
     /** Progress bar Thread */
     private int minProgress;

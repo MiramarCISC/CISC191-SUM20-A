@@ -108,25 +108,25 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this); // Sets fullscreen based on device.
+        this.device.setFullScreenWindow(this); // Sets fullscreen based on device.
     }
 
     /**
      * Display specified game panel and hide the others.
-     * @param panelName     Name of the panel to display
-     * @param isLoadScreen  Switch if loading panel will display
+     * @param panelName         Name of the panel to display
+     * @param showLoadScreen    Switch if loading panel will display
      */
-    public void changePanel(String panelName, boolean isLoadScreen) {
+    public void changePanel(String panelName, boolean showLoadScreen) {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
-        if (isLoadScreen)
-            this.showLoadScreen(4000);
+        if (showLoadScreen)
+            showLoadScreen(4000);
 
-        allPanels.get(getCurrOpenPanel()).setVisible(false);
+        this.allPanels.get(getCurrOpenPanel()).setVisible(false);
 
         // Change panel
-        allPanels.get(panelName).setVisible(true);
+        this.allPanels.get(panelName).setVisible(true);
 
         // Starts the game only if not already
         if (panelName.equals("game")) {
