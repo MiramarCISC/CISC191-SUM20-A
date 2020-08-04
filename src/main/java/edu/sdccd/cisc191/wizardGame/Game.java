@@ -25,16 +25,17 @@ public class Game {
      * Game constructor.
      * Creates new instance of {@code Window} class to set up the view.
      */
-    public Game() { this.frame = new Window(this, 1920, 1080, "Wizard Game"); }
-
-    /** Initialize game */
-    public void init() {
-
-        // Initialize Wizard stats
+    public Game() {
+        // Initialize Wizard field members
         this.ammo = 50;
         this.hp = 100;
         this.lives = 3;
         this.levelNumber = 1;
+        this.frame = new Window(this, 1920, 1080, "Wizard Game");
+    }
+
+    /** Initialize game */
+    public void init() {
         // Initialize frame
         this.frame.init();
     }

@@ -11,20 +11,16 @@ import edu.sdccd.cisc191.wizardGame.Game;
  */
 class WindowTest {
 
-  private static Window window;
+    private static Window window;
 
-  @BeforeAll
-  static void init() {
-    int width;
-    int height;
-    String title;
-    Game game;
-    // TODO
-  }
+    @BeforeAll
+    static void init() {
+        window = new Window(new Game(), 1920, 1080, "Test Window");
+    }
 
-  @Test
-  void quitGameTest() {
-    // TODO
-  }
+    @Test
+    void quitGameTest() {
+        // TODO
+    }
 
 }

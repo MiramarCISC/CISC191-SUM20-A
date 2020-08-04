@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -19,54 +21,40 @@ class GameTest {
     @BeforeAll
     static void init() {
         game = new Game();
-        game.init();
     }
 
-    @Nested
-    class AccessorMethodsTest {
+    @Test
+    @Order(1)
+    @DisplayName("Test Game Accessor Methods")
+    void testAccessorMethods() {
+        int ammo = game.getAmmo();
+        int lives = game.getLives();
+        int hp = game.getHp();
+        boolean isWizardDead = game.isWizardDead();
+        boolean isGamePaused = game.isGamePaused();
 
-        @Test
-        void testGetAmmo50() {
-            int actual = game.getAmmo();
-            assertEquals(50, actual);
-        }
-
-        @Test
-        void testGetLives3() {
-            int actual = game.getLives();
-            assertEquals(3, actual);
-        }
-
-        @Test
-        void testGetHp100() {
-            int actual = game.getHp();
-            assertEquals(100, actual);
-        }
-
-        @Test
-        void testHasWizardDied() {
-            boolean actual = game.isWizardDead();
-            assertFalse(actual);
-        }
-
-        @Test
-        void testGamePaused() {
-            boolean actual = game.isGamePaused();
-            assertFalse(actual);
-        }
+        assertEquals(50, ammo, "Test getAmmo()");
+        assertEquals(3, lives, "Test getLives()");
+        assertEquals(100, hp, "Test getHp()");
+        assertFalse(isWizardDead, "Test isWizardDead()");
+        assertFalse(isGamePaused, "Test isGamePaused()");
     }
 
     @Nested
     class ModifierMethodsTest  {
 
         @Test
-        void testSetHp() {
+        @Order(2)
+        @DisplayName("Test setHp() with positive number")
+        void testSetHpPositive() {
             int testNum = 20;
             game.setHp(testNum);
             assertEquals(testNum, game.getHp());
         }
 
         @Test
+        @Order(3)
+        @DisplayName("Test setHp() with negative number")
         void testSetHpNegative() {
             int testNegNum = -1;
             game.setHp(testNegNum);
@@ -74,13 +62,17 @@ class GameTest {
         }
 
         @Test
-        void testSetAmmo () {
+        @Order(4)
+        @DisplayName("Test setAmmo() with positive number")
+        void testSetAmmoPositive() {
             int testNum = 30;
             game.setAmmo(testNum);
             assertEquals(testNum, game.getAmmo());
         }
 
         @Test
+        @Order(5)
+        @DisplayName("Test setAmmo() with negative number")
         void testSetAmmoNegative() {
             int testPosNum = -1;
             game.setAmmo(testPosNum);
@@ -88,13 +80,17 @@ class GameTest {
         }
 
         @Test
-        void testSetLives() {
+        @Order(6)
+        @DisplayName("Test setLives() with positive number")
+        void testSetLivesPositive() {
             int testNum = 3;
             game.setLives(testNum);
             assertEquals(testNum, game.getLives());
         }
 
         @Test
+        @Order(7)
+        @DisplayName("Test setLives() with negative number")
         void testSetLivesNegative() {
             int testNegNum = -1;
             game.setLives(testNegNum);
@@ -102,6 +98,8 @@ class GameTest {
         }
 
         @Test
+        @Order(8)
+        @DisplayName("Test incAmmo()")
         void testIncAmmo() {
             int currAmmo = game.getAmmo();
             int increment = 5;
@@ -110,6 +108,8 @@ class GameTest {
         }
 
         @Test
+        @Order(9)
+        @DisplayName("Test decAmmo()")
         void testDecAmmo() {
             game.setAmmo(50);
             int currAmmo = game.getAmmo();
@@ -118,6 +118,8 @@ class GameTest {
         }
 
         @Test
+        @Order(10)
+        @DisplayName("Test decHp()")
         void testDecHp() {
             game.setHp(100);
             int currHp = game.getHp();
@@ -126,6 +128,8 @@ class GameTest {
         }
 
         @Test
+        @Order(11)
+        @DisplayName("Test decLives()")
         void testDecLives() {
             game.setLives(3);
             int currLives = game.getLives();
@@ -134,24 +138,32 @@ class GameTest {
         }
 
         @Test
+        @Order(12)
+        @DisplayName("Test wizardDied()")
         void testWizardDied() {
             game.wizardDied();
             assertTrue(game.isWizardDead());
         }
 
         @Test
+        @Order(13)
+        @DisplayName("Test wizardRespawn()")
         void testWizardRespawn() {
             game.wizardRespawn();
             assertFalse(game.isWizardDead());
         }
 
         @Test
+        @Order(14)
+        @DisplayName("Test pauseGame()")
         void testPauseGame() {
             game.pauseGame();
             assertTrue(game.isGamePaused());
         }
 
         @Test
+        @Order(15)
+        @DisplayName("Test resumeGame()")
         void testResumeGame() {
             game.resumeGame();
             assertFalse(game.isGamePaused());

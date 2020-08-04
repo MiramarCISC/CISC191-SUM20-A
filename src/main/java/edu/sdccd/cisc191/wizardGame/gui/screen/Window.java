@@ -45,6 +45,11 @@ public class Window extends JFrame {
         GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     /**
+     * No args Window constructor.
+     */
+    public Window() { super(); }
+
+    /**
      * Window constructor.
      * @param width     Width of the window
      * @param height    Height of the window
