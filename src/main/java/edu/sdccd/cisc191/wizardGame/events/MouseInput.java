@@ -1,6 +1,5 @@
 package edu.sdccd.cisc191.wizardGame.events;
 
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

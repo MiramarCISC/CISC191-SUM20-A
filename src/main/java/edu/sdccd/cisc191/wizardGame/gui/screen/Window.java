@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 import edu.sdccd.cisc191.wizardGame.Game;
+import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 
 /**
  * The main frame of the game.
@@ -25,13 +26,17 @@ public class Window extends JFrame {
     /** Game class reference */
     private Game game;
 
+    /** Action Manager */
+
+    private ActionManager actionManager;
+
     /** Frame components */
     private int frameWidth;
     private int frameHeight;
     private JLayeredPane layeredPane;
 
     /** Game panels Map */
-    private Map<String, GeneralPanel> allPanels
+    public Map<String, GeneralPanel> allPanels
         = new HashMap<String, GeneralPanel>();
 
     /** Last opened panel name */
@@ -63,6 +68,9 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable((false));
+
+        actionManager = new ActionManager(this);
+        actionManager.initializeActions(this);
     }
 
     public void init() {
@@ -185,4 +193,5 @@ public class Window extends JFrame {
     public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
     public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
     public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
+    public ActionManager getActionManager()         { return actionManager; }
 }

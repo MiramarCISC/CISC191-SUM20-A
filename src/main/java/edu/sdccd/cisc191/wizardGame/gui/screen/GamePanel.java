@@ -1,16 +1,16 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 
-import javax.swing.JButton;
-import javax.swing.JLayeredPane;
+import javax.swing.*;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
+import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
@@ -29,6 +29,8 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  * Date: 2020-07-24
  */
 public class GamePanel extends GeneralPanel implements Runnable {
+
+    protected ActionManager am;
 
     /** Class references */
     private Game game;
@@ -72,6 +74,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.frame = frame;
         this.game = frame.getGame();
         this.canvas = new Canvas();
+        this.am = frame.getActionManager();
 
         // Load in the sprite sheets. One for the levels, one for characters.
         ss = new SpriteSheet(loader.loadImage("/main_sheet.png"));
@@ -85,7 +88,9 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         // Create buttons
         this.pauseBtn = new JButton("PAUSE");
+        this.pauseBtn.addActionListener(am.getWizardGameAction("pauseAction"));
         this.respawnBtn = new JButton("TRY AGAIN?");
+        this.respawnBtn.addActionListener(am.getWizardGameAction("respawnAction"));
         this.respawnBtn.setVisible(false);
 
         // Add canvas
@@ -99,7 +104,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
-        this.addButtonListeners();
+        // this.addButtonListeners();
     }
 
     /**
@@ -226,6 +231,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public Canvas getCanvas()                        { return this.canvas; }
     public MouseInput getMouseInput()                { return this.mouseInput; }
     public KeyInput getKeyInput()                    { return this.keyInput; }
+    public JButton getRespawnBtn()                   { return respawnBtn; }
 
     /** Modifier methods */
     public void setHandler(Handler handler)          { this.handler = handler; }
@@ -236,46 +242,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public void setKeyInput(KeyInput keyInput)       { this.keyInput = keyInput; }
     public void changeLevel()                        { this.currLevel = new Level(this.game, this); this.update(); }
 
-    /**
-     * Add all button listeners.
-     */
-    protected void addButtonListeners() {
-        /** Pause button mouse listener */
-        pauseBtn.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {
-                frame.changePanel("pause", false);
-                game.pauseGame();
-                releaseKeys();
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-
-        /** Respawn button mouse listener */
-        respawnBtn.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {
-                respawn();
-                frame.getGame().wizardRespawn();
-                respawnBtn.setVisible(false);
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-    }
 
     /**
      * Releases all keys.
@@ -294,4 +260,5 @@ public class GamePanel extends GeneralPanel implements Runnable {
      */
     @Override
     protected void paintComponent(Graphics g) {}
+
 }
