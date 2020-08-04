@@ -60,28 +60,21 @@ public class Window extends JFrame {
         frameWidth = width;
         frameHeight = height;
 
-        // Frame configs
-        this.setSize(1980, 1080);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setResizable((false));
-        this.setVisible(true);
-        device.setFullScreenWindow(this);
-
-        // Create a new fullscreen window (1080p)
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frameHeight = (int) screenSize.getHeight();
         frameWidth = (int) screenSize.getWidth();
-
 
         // the screen height
         screenSize.getHeight();
         // the screen width
         screenSize.getWidth();
+        // Frame configs
         this.setPreferredSize(new Dimension(frameWidth, frameHeight));
         this.setMaximumSize(new Dimension(frameWidth, frameHeight));
         this.setMinimumSize(new Dimension(frameWidth, frameHeight));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setResizable((false));
 
     }
 
