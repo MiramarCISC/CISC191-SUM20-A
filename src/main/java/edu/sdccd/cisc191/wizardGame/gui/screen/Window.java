@@ -1,9 +1,8 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -19,6 +18,9 @@ import edu.sdccd.cisc191.wizardGame.Game;
  * @author Mark Lucernas
  *
  * Date: 2020-07-23
+ * Resize for All Displays
+ * @author Tamer Elsawaf
+ * 2020-08-03
  */
 public class Window extends JFrame {
 
@@ -59,10 +61,28 @@ public class Window extends JFrame {
         frameHeight = height;
 
         // Frame configs
-        this.setSize(new Dimension(frameWidth, frameHeight));
+        this.setSize(1980, 1080);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
+        this.setLocationRelativeTo(null);
         this.setResizable((false));
+        this.setVisible(true);
+        device.setFullScreenWindow(this);
+
+        // Create a new fullscreen window (1080p)
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameHeight = (int) screenSize.getHeight();
+        frameWidth = (int) screenSize.getWidth();
+
+
+        // the screen height
+        screenSize.getHeight();
+        // the screen width
+        screenSize.getWidth();
+        this.setPreferredSize(new Dimension(frameWidth, frameHeight));
+        this.setMaximumSize(new Dimension(frameWidth, frameHeight));
+        this.setMinimumSize(new Dimension(frameWidth, frameHeight));
+
     }
 
     public void init() {
