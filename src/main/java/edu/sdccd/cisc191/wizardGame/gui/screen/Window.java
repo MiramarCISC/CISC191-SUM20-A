@@ -104,8 +104,6 @@ public class Window extends JFrame {
         layeredPane.add(loadPanel, new Integer(1));
         layeredPane.add(gamePanel, new Integer(1));
 
-
-
         // Start with menu panel
         menuPanel.setVisible(true);
         this.currOpenPanel = "menu";

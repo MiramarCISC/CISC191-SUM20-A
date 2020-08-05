@@ -1,7 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class WindowTest {
         window.changePanel("pause", false);
         assertEquals("pause", window.getCurrOpenPanelName(), "Test post changePanel() to pause panel without loadscreen");
         window.changePanel("help", true);
-        assertEquals("load", window.getCurrOpenPanelName(), "Test post changePanel() to help panel with loadscreen");
+        assertEquals("help", window.getCurrOpenPanelName(), "Test post changePanel() to help panel with loadscreen");
     }
 
     // TODO
