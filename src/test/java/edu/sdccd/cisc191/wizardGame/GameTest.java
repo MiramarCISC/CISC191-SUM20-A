@@ -45,47 +45,47 @@ class GameTest {
 
         @Test
         @Order(2)
-        @DisplayName("Test setHp() with positive number")
-        void testSetHpPositive() {
-            int testNum = 20;
-            game.setHp(testNum);
-            assertEquals(testNum, game.getHp());
+        @DisplayName("Test setHp()")
+        void testSetHp() {
+            int testHp = 20;
+            game.setHp(testHp);
+            assertEquals(testHp, game.getHp());
         }
 
         @Test
         @Order(3)
         @DisplayName("Test setHp() with negative number")
         void testSetHpNegative() {
-            int testNegNum = -1;
-            game.setHp(testNegNum);
+            int testNegHp = -1;
+            game.setHp(testNegHp);
             assertFalse(game.getHp() < 0);
         }
 
         @Test
         @Order(4)
-        @DisplayName("Test setAmmo() with positive number")
-        void testSetAmmoPositive() {
-            int testNum = 30;
-            game.setAmmo(testNum);
-            assertEquals(testNum, game.getAmmo());
+        @DisplayName("Test setAmmo()")
+        void testSetAmmo() {
+            int testAmmo = 30;
+            game.setAmmo(testAmmo);
+            assertEquals(testAmmo, game.getAmmo());
         }
 
         @Test
         @Order(5)
         @DisplayName("Test setAmmo() with negative number")
         void testSetAmmoNegative() {
-            int testPosNum = -1;
-            game.setAmmo(testPosNum);
+            int testNegAmmo = -1;
+            game.setAmmo(testNegAmmo);
             assertFalse(game.getAmmo() < 0);
         }
 
         @Test
         @Order(6)
-        @DisplayName("Test setLives() with positive number")
-        void testSetLivesPositive() {
-            int testNum = 3;
-            game.setLives(testNum);
-            assertEquals(testNum, game.getLives());
+        @DisplayName("Test setLives()")
+        void testSetLives() {
+            int testLives = 3;
+            game.setLives(testLives);
+            assertEquals(testLives, game.getLives());
         }
 
         @Test

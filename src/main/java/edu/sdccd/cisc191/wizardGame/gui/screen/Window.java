@@ -51,6 +51,7 @@ public class Window extends JFrame {
 
     /**
      * Window constructor.
+     * @param game      {@code Game} instance reference
      * @param width     Width of the window
      * @param height    Height of the window
      * @param title     Title of the window
@@ -128,7 +129,7 @@ public class Window extends JFrame {
         if (showLoadScreen)
             showLoadScreen(4000);
 
-        this.allPanels.get(getCurrOpenPanel()).setVisible(false);
+        this.allPanels.get(getCurrOpenPanelName()).setVisible(false);
 
         // Change panel
         this.allPanels.get(panelName).setVisible(true);
@@ -140,7 +141,7 @@ public class Window extends JFrame {
                 gamePanel.start();
         }
 
-        this.lastOpenPanel = getCurrOpenPanel();
+        this.lastOpenPanel = getCurrOpenPanelName();
         this.currOpenPanel = panelName;
     }
 
@@ -149,11 +150,11 @@ public class Window extends JFrame {
      * @param duration  Loading screen duration in milliseconds
      */
     public void showLoadScreen(int duration) {
-        String currOpenPanel = getCurrOpenPanel();
+        String currOpenPanel = getCurrOpenPanelName();
         // Hide current panel
         if (currOpenPanel != null)
-            if (allPanels.get(currOpenPanel).isVisible())
-                allPanels.get(currOpenPanel).setVisible(false);
+            if (this.allPanels.get(currOpenPanel).isVisible())
+                this.allPanels.get(currOpenPanel).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
         load.setDuration(duration);
@@ -183,11 +184,15 @@ public class Window extends JFrame {
         this.setVisible(false); this.dispose(); System.exit(0);
     }
 
-
     /** Accessor methods */
     public Game getGame()                           { return this.game; }
     public Map<String, GeneralPanel> getAllPanels() { return this.allPanels; }
     public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
-    public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
-    public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
+    public String getLastOpenPanelName()            { if (this.lastOpenPanel != null) return this.lastOpenPanel; else return null; }
+    public String getCurrOpenPanelName()            { if (this.currOpenPanel != null) return this.currOpenPanel; else return null; }
+    public GeneralPanel getLastOpenPanel()          { if (this.lastOpenPanel != null) return this.allPanels.get(this.lastOpenPanel); return null; }
+    public GeneralPanel getCurrOpenPanel()          { if (this.currOpenPanel != null) return this.allPanels.get(this.currOpenPanel); return null; }
+
+    /** Modifier methods */
+    public void setGame(Game game) { this.game = game; }
 }
