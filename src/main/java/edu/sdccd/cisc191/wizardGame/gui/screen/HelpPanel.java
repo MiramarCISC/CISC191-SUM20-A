@@ -5,10 +5,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-
-import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 
 /**
  * Help menu panel for {@code Window} class.
@@ -24,16 +24,12 @@ public class HelpPanel extends GeneralPanel {
     protected JButton backBtn;
     private Dimension buttonSize = new Dimension(400, 50);
 
-    /** Action manager */
-    ActionManager am;
-
     /**
      * HelpPanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
     public HelpPanel(Window frame) {
         super(frame);
-        this.am = frame.getActionManager();
         this.setLayout(new GridBagLayout());
         addBackground("/help.jpg", GeneralPanel.BGOrientation.CENTER);
 
@@ -42,8 +38,7 @@ public class HelpPanel extends GeneralPanel {
         gbc.insets = new Insets(15, 15, 15, 15); // Button spacing
 
         // Back button
-        this.backBtn = new JButton("BACK");
-        this.backBtn.addActionListener(am.getWizardGameAction("backAction"));
+        backBtn = new JButton("BACK");
         backBtn.setPreferredSize(buttonSize);
         backBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
@@ -51,17 +46,15 @@ public class HelpPanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(backBtn, gbc);
 
-
-
+        this.addButtonListeners();
     }
-
 
     /**
      * Add all button listeners.
      */
-    /*protected void addButtonListeners() {
+    protected void addButtonListeners() {
 
-        *//** Back button mouse listener *//*
+        /** Back button mouse listener */
         backBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {}
@@ -75,6 +68,6 @@ public class HelpPanel extends GeneralPanel {
             public void mouseEntered(MouseEvent e) {}
             @Override
             public void mouseExited(MouseEvent e) {}
-        });*/
-
+        });
+    }
 }

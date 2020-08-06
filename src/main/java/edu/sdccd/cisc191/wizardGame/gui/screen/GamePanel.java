@@ -30,7 +30,6 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  */
 public class GamePanel extends GeneralPanel implements Runnable {
 
-    /** Action manager */
     protected ActionManager am;
 
     /** Class references */
