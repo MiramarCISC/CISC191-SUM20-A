@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 import edu.sdccd.cisc191.wizardGame.objects.*;
 import edu.sdccd.cisc191.wizardGame.objects.Horizontal;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;

@@ -59,7 +59,7 @@ public class Game {
     public void incAmmo(int inc)          { this.ammo += inc; }
     public void decAmmo()                 { this.ammo-= 1; }
     public void decHp()                   { this.hp--; }
-    public void decLives()                { this.lives--; }
+    public void decLives()                { this.lives--; SoundEffect.LOSE.play(); }
     public void wizardDied()              { this.wizardDead = true; }
     public void wizardRespawn()           { this.wizardDead = false; }
     public void pauseGame()               { this.gamePaused = true;}

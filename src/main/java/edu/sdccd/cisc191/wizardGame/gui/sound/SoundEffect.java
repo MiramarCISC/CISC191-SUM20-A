@@ -15,7 +15,12 @@ import javax.sound.sampled.*;
  */
 public enum SoundEffect {
     // Different effects
-    THEME("theme.wav");
+    THEME("theme.wav"),
+    LEVEL("level.wav"),
+    BULLET("bullet.wav"),
+    CRATE("crate.wav"),
+    LOSE("lose_life.wav");
+
 
     // Nested class for specifying volume
     public static enum Volume {
