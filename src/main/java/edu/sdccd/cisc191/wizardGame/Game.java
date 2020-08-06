@@ -1,6 +1,7 @@
 package edu.sdccd.cisc191.wizardGame;
 
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 
 /**
  * Controller class controls GameObject properties and behaviors.
@@ -37,6 +38,7 @@ public class Game {
         this.levelNumber = 1;
         // Initialize frame
         this.frame.init();
+        SoundEffect.THEME.play();
     }
 
     /** Accessors methods */
