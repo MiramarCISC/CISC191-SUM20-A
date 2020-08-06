@@ -21,6 +21,7 @@ public class Game {
     /** Game states */
     private boolean wizardDead = false;
     private boolean gamePaused = false;
+    private boolean gameMuted = false;
 
     /**
      * Game constructor.
@@ -38,7 +39,6 @@ public class Game {
         this.levelNumber = 1;
         // Initialize frame
         this.frame.init();
-        SoundEffect.THEME.play();
     }
 
     /** Accessors methods */
@@ -49,6 +49,7 @@ public class Game {
     public int getHp()                    { return this.hp; }
     public boolean isWizardDead()         { return this.wizardDead; }
     public boolean isGamePaused()         { return this.gamePaused; }
+    public boolean gameMuted()          { return this.gameMuted; }
 
     /** Modifiers methods */
     public void setHp(int hp)             { this.hp = hp; }
@@ -64,6 +65,12 @@ public class Game {
     public void wizardRespawn()           { this.wizardDead = false; }
     public void pauseGame()               { this.gamePaused = true;}
     public void resumeGame()              { this.gamePaused = false;}
+    public void muteGame()                  {if (gameMuted) {
+        gameMuted = false;
+    }
+    else {
+        gameMuted = true;
+    }}
 
     /**
      * Main method to instantiate and initialize this Game class.

@@ -14,6 +14,7 @@ import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
@@ -52,7 +53,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private SpriteSheet cs; // Character sheet
 
     /** Buttons */
-    private JButton pauseBtn, respawnBtn;
+    private JButton pauseBtn, muteBtn, respawnBtn;
 
     /** Listeners */
     private MouseInput mouseInput;
@@ -78,12 +79,17 @@ public class GamePanel extends GeneralPanel implements Runnable {
         cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
         this.changeLevel();  // Start with level 1
 
+        // Load all sound effects and play theme music.
+        SoundEffect.init();
+        SoundEffect.THEME.play();
+
         // Create layered pane
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
 
         // Create buttons
         this.pauseBtn = new JButton("PAUSE");
+        this.muteBtn = new JButton("SOUND");
         this.respawnBtn = new JButton("TRY AGAIN?");
         this.respawnBtn.setVisible(false);
 
@@ -91,10 +97,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
         layeredPane.add(canvas, new Integer(1));
         // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
         layeredPane.add(pauseBtn, new Integer(2));
+        layeredPane.add(muteBtn, new Integer(2));
         layeredPane.add(respawnBtn, new Integer(2));
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
+        muteBtn.setBounds(325, 5, 100, 50);
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
@@ -248,6 +256,34 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 frame.changePanel("pause", false);
                 game.pauseGame();
                 releaseKeys();
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+
+        /** Mute button mouse listener */
+        muteBtn.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+                if (!game.gameMuted()) {
+                    SoundEffect.THEME.stop();
+                    SoundEffect.volume = SoundEffect.Volume.MUTE;
+                    releaseKeys();
+                }
+
+                else{
+                    SoundEffect.volume = SoundEffect.Volume.LOW;
+                    SoundEffect.THEME.play();
+                }
+
+                game.muteGame();
             }
             @Override
             public void mouseReleased(MouseEvent e) {}

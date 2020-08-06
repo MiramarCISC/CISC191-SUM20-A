@@ -5,13 +5,12 @@ import java.net.URL;
 import javax.sound.sampled.*;
 
 /**
- * This enum encapsulates all the sound effects of a game, so as to separate the sound playing
- * codes from the game codes.
- * 1. Define all your sound effect names and the associated wave file.
- * 2. To play a specific sound, simply invoke SoundEffect.SOUND_NAME.play().
- * 3. You might optionally invoke the static method SoundEffect.init() to pre-load all the
- *    sound files, so that the play is not paused while loading the file for the first time.
- * 4. You can use the static variable SoundEffect.volume to mute the sound.
+ * Enum to separate sound effects from game function
+ *
+ * 1. Define sound effect name and associated wave file.
+ * 2. To play an effect, invoke SoundEffect.SOUND_NAME.play().
+ * 3. You can use the static variable SoundEffect.volume to mute the sound.
+ *
  */
 public enum SoundEffect {
     // Different effects
@@ -62,8 +61,14 @@ public enum SoundEffect {
         }
     }
 
+    public void stop() {
+
+        clip.stop();
+    }
+
+
     // Optional static method to pre-load all the sound files.
-    static void init() {
+    public static void init() {
         values(); // calls the constructor for all the elements
     }
 }
