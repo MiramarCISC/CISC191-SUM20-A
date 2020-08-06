@@ -104,7 +104,9 @@ public class Wizard extends GameObject {
             if(tempObject.getId() == ID.Totem) {
 
                 if(getBounds().intersects(tempObject.getBounds())) {
+                    // Remove totem and remove current Wizard from handler.
                     handler.removeObject(tempObject);
+                    handler.removeObject(this);
                     // Got to next level
                     GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
                     game.incLevelNumber();
