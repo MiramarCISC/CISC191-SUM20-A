@@ -37,12 +37,4 @@ class WindowTest {
         window.changePanel("help", true);
         assertEquals("help", window.getCurrOpenPanelName(), "Test post changePanel() to help panel with loadscreen");
     }
-
-    // TODO
-    // @Test
-    // @DisplayName("Test showLoadScreen()")
-    // void testShowLoadScreen() {
-    //     window.showLoadScreen(4000);
-    //     assertEquals("load", window.getCurrOpenPanelName(), "Test current open panel after showLoadScreen()");
-    // }
 }

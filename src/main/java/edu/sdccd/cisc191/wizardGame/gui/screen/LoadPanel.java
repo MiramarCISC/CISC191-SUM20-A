@@ -28,7 +28,7 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  * of a LoadPanel instance.
  *
  * Also generates random predefined "scene" or sprite images arrangement to
- * display in the {@link JPanel} to make loading screen interesting.
+ * display in the {@link JPanel} to make loading screen interesting and random.
  *
  * @author Mark Lucernas
  * Date: 2020-07-16
@@ -50,8 +50,8 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private boolean changeScene = true;
 
     /** Scene object images */
-    private SpriteSheet charSheet;
-    private SpriteSheet mainSheet;
+    private SpriteSheet charSheet; // Character sprite sheet
+    private SpriteSheet mainSheet; // Other game objects sprites
     private Image terrain;
     private Image[] wizardImages = new Image[4];
     private Image[] mushroomImages = new Image[8];
@@ -59,8 +59,6 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private Image[] rotateFireImages = new Image[4];
 
     /** Load panel metrics */
-    int x = 0;
-    int y = 0;
     double xCenter = this.getWidth() / 2;
     double yCenter = this.getHeight() / 2;
     int furthestDistance = (int) Math.sqrt(Math.pow(xCenter - 0, 2) + Math.pow(yCenter - 0, 2));
@@ -70,7 +68,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     boolean isShrinking = false;
 
     /** Load screen components */
-    private JLabel label;
+    private JLabel label; // Watermark label
     private JProgressBar progressBar;
 
     /** Progress bar Thread */
@@ -173,14 +171,6 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     }
 
     /**
-     * Sets loading screen duration.
-     * @param duration      Loading screen duration
-     */
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    /**
      * Fill image array and set their location and size in the content pane.
      * @param imageArr      Image array container
      * @param startLoc      Start location to grab from {@code SpriteSheet}
@@ -197,7 +187,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         }
     }
 
-    /** DEPRECATED:
+    /** WARNING: DEPRECATED and resource heavy
      * Vignette effects that expand and shrink.
      *
      * Euclidean distance between the center and the furthest point from the
@@ -318,7 +308,8 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         knightIndex = updateSpriteIndex(knightImages, knightIndex);
         rotateFireIndex = updateSpriteIndex(rotateFireImages, rotateFireIndex);
 
-        // DEPRECATED: Update vignette coverage
+        // DEPRECATED: vignette() not used anymore
+        // Update vignette coverage
         // if (isShrinking) {
         //     coverage -= 10;
         //     if (coverage <= 0) {
@@ -356,20 +347,49 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         repaint();
     }
 
+    /** Accessor methods */
+    public void setDuration(int duration)                { this.duration = duration; }
+    public void setCharSpriteSheet(SpriteSheet sheet)    { this.charSheet = sheet; }
+    public void setMainSpriteSheet(SpriteSheet sheet)    { this.mainSheet = sheet; }
+    public void setProgressBar(JProgressBar progressBar) { this.progressBar = progressBar;}
+    public void setTerrainImage(Image terrain)           { this.terrain = terrain; }
+
+    /** Modifier methods */
+    public int getDuration()                             { return this.duration; }
+    public SpriteSheet getCharSpriteSheet()              { return this.charSheet; }
+    public SpriteSheet getMainSpriteSheet()              { return this.mainSheet; }
+    public JProgressBar getProgressBar()                 { return this.progressBar; }
+    public Image getTerrainImage()                       { return this.terrain; }
+
     /**
-     * Inner class to update {@code JProgressBar}.
+     * Inner class to update {@code JProgressBar} in a separate {@code Thread}.
      */
     class ProgressBarThread extends Thread {
 
+        /** JProgressBar reference to update */
         private JProgressBar bar;
+
+        /** Progress bar duration step for strategic pause or Thread sleep to
+          sync progress with actual duration */
         private int durationStep = 5;
 
+        /**
+         * ProgressBarThread constructor that takes in {@code JProgressBar}
+         * reference and duration to sync progress bar with actual loading
+         * duration.
+         * @param progressBar   {@code JProgressBar} instance reference.
+         * @param duration      Progress bar duration before it reaches 100%
+         *                      value.
+         */
         public ProgressBarThread(JProgressBar progressBar, int duration) {
             this.bar = progressBar;
             minProgress = 0;
             maxProgress = duration / durationStep;
         }
 
+        /**
+         * Updates JProgressBar value.
+         */
         @Override
         public void run() {
             bar.setMinimum(minProgress);
