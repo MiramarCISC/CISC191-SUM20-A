@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
+import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
+
 /**
  * Pause menu panel for {@code Window} class.
  *
@@ -24,12 +26,16 @@ public class PausePanel extends GeneralPanel {
     protected JButton resumeBtn, helpBtn, quitBtn;
     private Dimension buttonSize = new Dimension(200, 75);
 
+    /** Action manager */
+    ActionManager am;
+
     /**
      * PausePanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
     public PausePanel(Window frame) {
         super(frame);
+        this.am = frame.getActionManager();
         this.setLayout(new GridBagLayout());
         addBackground("/pause.jpg", GeneralPanel.BGOrientation.STRETCH);
 
@@ -40,7 +46,8 @@ public class PausePanel extends GeneralPanel {
         Font font = new Font("Arial", Font.BOLD, 18);
 
         // Resume button
-        resumeBtn = new JButton("RESUME");
+        this.resumeBtn = new JButton("RESUME");
+        this.resumeBtn.addActionListener(am.getWizardGameAction("resumeAction"));
         resumeBtn.setPreferredSize(buttonSize);
         resumeBtn.setFont(font);
         gbc.gridx = 0;
@@ -49,7 +56,8 @@ public class PausePanel extends GeneralPanel {
         this.add(resumeBtn, gbc);
 
         // Help button
-        helpBtn = new JButton("HELP");
+        this.helpBtn = new JButton("HELP");
+        this.helpBtn.addActionListener(am.getWizardGameAction("helpAction"));
         helpBtn.setPreferredSize(buttonSize);
         helpBtn.setFont(font);
         gbc.gridx = 0;
@@ -58,7 +66,8 @@ public class PausePanel extends GeneralPanel {
         this.add(helpBtn, gbc);
 
         // Quit button
-        quitBtn = new JButton("QUIT");
+        this.quitBtn = new JButton("QUIT");
+        this.quitBtn.addActionListener(am.getWizardGameAction("quitAction"));
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(font);
         gbc.gridx = 0;
@@ -66,61 +75,6 @@ public class PausePanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
 
-        this.addButtonListeners();
     }
 
-    /**
-     * Add all button listeners.
-     */
-    protected void addButtonListeners() {
-
-        /** Resume button mouse listener */
-        resumeBtn.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {
-                frame.changePanel("game", false);
-                frame.getGame().resumeGame();
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-
-        /** Help button mouse listener */
-        helpBtn.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {
-                frame.changePanel("help", false);
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-
-        /** Quit button mouse listener */
-        quitBtn.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
-            @Override
-            public void mousePressed(MouseEvent e) {
-                frame.changePanel("quit", false);
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-    }
 }
