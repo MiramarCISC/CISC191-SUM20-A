@@ -78,7 +78,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
         cs = new SpriteSheet(loader.loadImage("/wizard_sheet.png")); // character sheet
         this.changeLevel();  // Start with level 1
 
-
         // Create layered pane
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
