@@ -10,7 +10,6 @@ import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
-import edu.sdccd.cisc191.wizardGame.gui.Action.PauseAction;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
@@ -102,20 +101,25 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         // Add canvas
         layeredPane.add(canvas, new Integer(1));
-        // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
+        // Add buttons. Make sure Integer is greater than the canvas to stack on top.
         layeredPane.add(pauseBtn, new Integer(2));
         layeredPane.add(muteBtn, new Integer(2));
         layeredPane.add(saveBtn, new Integer(2));
         layeredPane.add(respawnBtn, new Integer(2));
 
+        this.canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+        this.pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
+        this.muteBtn.setBounds(325, 5, 100, 50);
+        this.saveBtn.setBounds(425, 5, 100, 50);
+        this.respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
-        canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-        pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
-        muteBtn.setBounds(325, 5, 100, 50);
-        saveBtn.setBounds(425, 5, 100, 50);
-        respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
+        // Remove focusable on all JComponents
+        this.setFocusable(false);
+        this.pauseBtn.setFocusable(false);
+        this.respawnBtn.setFocusable(false);
 
-        canvas.setFocusable(true);
+        // Set focusable on Canvas only
+        this.canvas.setFocusable(true);
 
         this.add(layeredPane);
     }
@@ -212,9 +216,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
         mouseInput = new MouseInput(handler, camera, this.game, ss, cs);
         keyInput = new KeyInput(handler);
 
-        canvas.addMouseListener(mouseInput);
-        canvas.addKeyListener(keyInput);  // is getting null for some reason?
-        canvas.requestFocusInWindow();
+        this.canvas.addMouseListener(mouseInput);
+        this.canvas.addKeyListener(keyInput);  // is getting null for some reason?
     }
 
     public void resetGame() {

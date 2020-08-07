@@ -117,8 +117,6 @@ public class Window extends JFrame {
         layeredPane.add(loadPanel, new Integer(1));
         layeredPane.add(gamePanel, new Integer(1));
 
-
-
         // Start with menu panel
         menuPanel.setVisible(true);
         this.currOpenPanel = "menu";
@@ -152,19 +150,18 @@ public class Window extends JFrame {
         if (isLoadScreen)
             this.showLoadScreen(4000);
 
+        // Hide current panel and show next one
         allPanels.get(getCurrOpenPanel()).setVisible(false);
-
-        // Change panel
-        allPanels.get(panelName).requestFocusInWindow();
         allPanels.get(panelName).setVisible(true);
 
         // Starts the game only if not already
         if (panelName.equals("game")) {
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
+            gamePanel.getCanvas().requestFocusInWindow();
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
         }
-
+        // Update last panel and current panel reference
         this.lastOpenPanel = getCurrOpenPanel();
         this.currOpenPanel = panelName;
     }
@@ -215,5 +212,5 @@ public class Window extends JFrame {
     public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
     public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
     public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
-    public ActionManager getActionManager()         { return actionManager; }
+    public ActionManager getActionManager()         { return this.actionManager; }
 }
