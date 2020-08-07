@@ -35,21 +35,18 @@
       </plugin>
       <!-- Uncomment to run edu.sdccd.cisc191.wizardGame.Game by default with "mvn exec:java" -->
 
-      <!-- <plugin>                                     -->
-      <!--   <groupId>org.codehaus.mojo</groupId>       -->
-      <!--   <artifactId>exec-maven-plugin</artifactId> -->
-      <!--   <configuration>                            -->
-      <!--     <mainClass>edu.sdccd.cisc191.wizardGame.Game</mainClass>   -->
-      <!--   </configuration>                           -->
-      <!-- </plugin>                                    -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>edu.sdccd.cisc191.wizardGame.Game</mainClass>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <forkMode>once</forkMode>
-          <reuseForks>false</reuseForks>
-          <forkCount>1</forkCount>
           <workingDirectory>target</workingDirectory>
           <!-- Uncomment to ignore test failures on build -->
           <configuration>
