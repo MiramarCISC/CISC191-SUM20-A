@@ -123,6 +123,8 @@ public class Window extends JFrame {
          */
         actionManager.getWizardGameAction("pauseAction").gamePanel = gamePanel;
         actionManager.getWizardGameAction("respawnAction").gamePanel = gamePanel;
+
+        gamePanel.getCanvas().setFocusable(true);
     }
 
     /**
@@ -140,12 +142,13 @@ public class Window extends JFrame {
         allPanels.get(getCurrOpenPanel()).setVisible(false);
 
         // Change panel
+        allPanels.get(panelName).requestFocusInWindow();
         allPanels.get(panelName).setVisible(true);
+
 
         // Starts the game only if not already
         if (panelName.equals("game")) {
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
-            gamePanel.getCanvas().requestFocusInWindow();
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
         }

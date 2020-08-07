@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -19,7 +22,7 @@ import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
  *
  * Date: 2020-07-23
  */
-public class GeneralPanel extends JPanel {
+public abstract class GeneralPanel extends JPanel {
 
     /** Enum for background orientation */
     protected enum BGOrientation {

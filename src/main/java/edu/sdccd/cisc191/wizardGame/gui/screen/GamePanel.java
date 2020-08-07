@@ -1,8 +1,7 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.*;
@@ -101,9 +100,12 @@ public class GamePanel extends GeneralPanel implements Runnable {
         layeredPane.add(pauseBtn, new Integer(2));
         layeredPane.add(respawnBtn, new Integer(2));
 
+
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
+
+        canvas.setFocusable(true);
 
         this.add(layeredPane);
     }
@@ -251,5 +253,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
      */
     @Override
     protected void paintComponent(Graphics g) {}
+
 
 }
