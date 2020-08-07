@@ -202,6 +202,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         canvas.addMouseListener(mouseInput);
         canvas.addKeyListener(keyInput);  // is getting null for some reason?
+        canvas.requestFocusInWindow();
     }
 
     public void resetGame() {

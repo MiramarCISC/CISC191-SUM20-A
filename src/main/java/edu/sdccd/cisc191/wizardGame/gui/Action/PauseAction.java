@@ -13,7 +13,6 @@ public class PauseAction extends WizardGameAction {
 
     public PauseAction(Window frame){
         super(frame, id);
-        this.panel = (GamePanel)frame.allPanels.get("game");
     }
 
     public void actionPerformed(ActionEvent event){
