@@ -11,13 +11,10 @@ import java.awt.event.ActionEvent;
 
 public class BackAction extends WizardGameAction {
 
-    GamePanel panel;
-
     public static final String id = "backAction";
 
     public BackAction(Window frame){
         super(frame, id);
-        this.panel = (GamePanel)frame.allPanels.get("game");
     }
 
     @Override

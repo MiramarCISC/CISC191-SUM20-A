@@ -7,13 +7,10 @@ import java.awt.event.ActionEvent;
 
 public class QuitAction extends WizardGameAction {
 
-    GamePanel panel;
-
     public static final String id = "quitAction";
 
     public QuitAction(Window frame){
         super(frame, id);
-        this.panel = (GamePanel)frame.allPanels.get("game");
     }
 
     @Override

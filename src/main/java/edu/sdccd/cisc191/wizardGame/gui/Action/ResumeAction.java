@@ -7,13 +7,10 @@ import java.awt.event.ActionEvent;
 
 public class ResumeAction extends WizardGameAction{
 
-    GamePanel panel;
-
     public static final String id = "resumeAction";
 
     public ResumeAction(Window frame){
         super(frame, id);
-        this.panel = (GamePanel)frame.allPanels.get("game");
     }
 
     @Override
