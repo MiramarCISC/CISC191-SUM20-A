@@ -6,6 +6,8 @@
 
 package edu.sdccd.cisc191.wizardGame.gui.Action;
 
+import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
+import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.option.OptionGroup;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
@@ -20,7 +22,10 @@ import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 public class ActionManager extends OptionGroup {
 
-    private final Window frame;
+    private Window frame;
+    private GamePanel panel;
+
+    private Handler handler;
 
     public ActionManager(Window frame) {
         this.frame = frame;
@@ -44,4 +49,5 @@ public class ActionManager extends OptionGroup {
     public WizardGameAction getWizardGameAction(String id){
         return getOption(id, WizardGameAction.class);
     }
+
 }

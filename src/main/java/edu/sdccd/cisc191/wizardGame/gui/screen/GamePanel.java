@@ -11,6 +11,7 @@ import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
+import edu.sdccd.cisc191.wizardGame.gui.Action.PauseAction;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
@@ -105,7 +106,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
-        // this.addButtonListeners();
     }
 
     /**
@@ -244,17 +244,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public void setKeyInput(KeyInput keyInput)       { this.keyInput = keyInput; }
     public void changeLevel()                        { this.currLevel = new Level(this.game, this); this.update(); }
 
-
-    /**
-     * Releases all keys.
-     * To prevent wizard from continuing movement during change of state.
-     */
-    public void releaseKeys() {
-        handler.setUp(false);
-        handler.setDown(false);
-        handler.setLeft(false);
-        handler.setRight(false);
-    }
 
     /**
      * Nullifies parent {@code GeneralPanel} paintComponent method to have

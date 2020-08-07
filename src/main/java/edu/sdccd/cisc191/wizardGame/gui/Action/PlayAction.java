@@ -12,7 +12,7 @@ public class PlayAction extends WizardGameAction {
     public static final String id = "playAction";
 
     public PlayAction(Window frame){
-        super(frame, id);
+        super(frame);
         this.panel = (GamePanel)frame.allPanels.get("game");
     }
 

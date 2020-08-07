@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.LinkedList;
 
 import edu.sdccd.cisc191.wizardGame.Game;
+import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.objects.*;
@@ -18,7 +19,7 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
  *  The abstract construction of a level with all necessary game components (map, game objects, etc).
  *  Creates the game world.
  */
-public abstract class AbstractLevel {
+public abstract class AbstractLevel extends KeyInput {
 
     // Several utility variables.
     protected Game game;
@@ -152,35 +153,7 @@ public abstract class AbstractLevel {
     }
      */
 
-    /**
-     * Respawn {@code Wizard} after death.
-     */
-    public void respawn() {
-        game.setHp(100); // Reset hp to 100.
-        game.setAmmo(50); // Reset ammo.
-        // Set all key releases to true.
-        handler.setUp(false);
-        handler.setDown(false);
-        handler.setLeft(false);
-        handler.setRight(false);
 
-        // Use current map file to load Wizard back in original position.
-        int w = currentMap.getWidth();
-        int h = currentMap.getHeight();
-
-        for (int xx = 0; xx < w; xx++) {
-            for (int yy = 0; yy < h; yy++) {
-                int pixel = currentMap.getRGB(xx, yy);
-                int red = (pixel >> 16) & 0xff;
-                int green = (pixel >> 8) & 0xff;
-                int blue = (pixel) & 0xff;
-
-                // Color map determines which sprites render to the map.
-                if (red == 0 && green == 0 && blue == 255) // pure blue
-                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs));
-            }
-        }
-    }
 
     public void tick() {
         // Tick all current game objects, and have camera follow player.
@@ -255,6 +228,44 @@ public abstract class AbstractLevel {
             gamePanel.resetGame();
         }
     } // end render
+
+    /**
+     * Respawn {@code Wizard} after death.
+     */
+    public void respawn() {
+        game.setHp(100); // Reset hp to 100.
+        game.setAmmo(50); // Reset ammo.
+        // Set all key releases to true.
+        releaseKeys();
+
+        // Use current map file to load Wizard back in original position.
+        int w = currentMap.getWidth();
+        int h = currentMap.getHeight();
+
+        for (int xx = 0; xx < w; xx++) {
+            for (int yy = 0; yy < h; yy++) {
+                int pixel = currentMap.getRGB(xx, yy);
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+
+                // Color map determines which sprites render to the map.
+                if (red == 0 && green == 0 && blue == 255) // pure blue
+                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, game, this, cs));
+            }
+        }
+    }
+
+    /**
+     * Releases all keys.
+     * To prevent wizard from continuing movement during change of state.
+     */
+    public void releaseKeys() {
+        handler.setUp(false);
+        handler.setDown(false);
+        handler.setLeft(false);
+        handler.setRight(false);
+    }
 
     /** Accessor methods */
     public int getHp()                               { return this.game.getHp(); }

@@ -117,6 +117,12 @@ public class Window extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         device.setFullScreenWindow(this); // Sets fullscreen based on device.
+
+        /** Dirty quick fix to address the {@code RespawnAction} and {@code PauseAction}
+         * from throwing null pointer exception.
+         */
+        actionManager.getWizardGameAction("pauseAction").gamePanel = gamePanel;
+        actionManager.getWizardGameAction("respawnAction").gamePanel = gamePanel;
     }
 
     /**
@@ -139,6 +145,7 @@ public class Window extends JFrame {
         // Starts the game only if not already
         if (panelName.equals("game")) {
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
+            gamePanel.getCanvas().requestFocusInWindow();
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
         }

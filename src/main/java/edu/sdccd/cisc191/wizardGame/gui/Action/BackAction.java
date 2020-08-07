@@ -1,6 +1,5 @@
 package edu.sdccd.cisc191.wizardGame.gui.Action;
 
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +13,7 @@ public class BackAction extends WizardGameAction {
     public static final String id = "backAction";
 
     public BackAction(Window frame){
-        super(frame, id);
+        super(frame);
     }
 
     @Override

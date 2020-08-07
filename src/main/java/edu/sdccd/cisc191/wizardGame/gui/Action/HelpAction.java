@@ -1,6 +1,5 @@
 package edu.sdccd.cisc191.wizardGame.gui.Action;
 
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +9,7 @@ public class HelpAction extends WizardGameAction{
     public static final String id = "helpAction";
 
     public HelpAction(Window frame){
-        super(frame, id);
+        super(frame);
     }
 
     @Override
