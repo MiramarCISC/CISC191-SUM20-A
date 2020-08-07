@@ -5,9 +5,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.*;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 
@@ -56,8 +55,5 @@ public class HelpPanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(backBtn, gbc);
         // Back button Position
-
     }
-
-
 }
