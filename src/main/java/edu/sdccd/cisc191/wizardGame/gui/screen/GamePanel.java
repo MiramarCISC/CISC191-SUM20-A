@@ -148,8 +148,6 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Main game loop timer.
         // Ticks 60 times a second. (Motion)
         // Renders 1000 times a second. (Drawing)
-
-        this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -218,6 +216,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
 
         this.canvas.addMouseListener(mouseInput);
         this.canvas.addKeyListener(keyInput);  // is getting null for some reason?
+        this.canvas.requestFocusInWindow();
     }
 
     public void resetGame() {
@@ -263,7 +262,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public MouseInput getMouseInput()                { return this.mouseInput; }
     public KeyInput getKeyInput()                    { return this.keyInput; }
     public JButton getRespawnBtn()                   { return respawnBtn; }
-    public Game getGame()                              { return this.game; }
+    public Game getGame()                            { return this.game; }
 
     /** Modifier methods */
     public void setHandler(Handler handler)          { this.handler = handler; }
@@ -281,6 +280,4 @@ public class GamePanel extends GeneralPanel implements Runnable {
      */
     @Override
     protected void paintComponent(Graphics g) {}
-
-
 }

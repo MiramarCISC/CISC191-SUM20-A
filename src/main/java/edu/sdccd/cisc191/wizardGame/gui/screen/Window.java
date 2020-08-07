@@ -164,13 +164,14 @@ public class Window extends JFrame {
         if (isLoadScreen)
             this.showLoadScreen(4000);
 
-        if (!panelName.equals("endgame")) { // Do not hide current panel if end game
-            // Hide current panel and show next one
+        // Do not hide current panel if end game
+        if (!panelName.equals("endgame"))
             allPanels.get(getCurrOpenPanel()).setVisible(false);
-            // Update last panel and current panel reference
-            this.lastOpenPanel = getCurrOpenPanel();
-            this.currOpenPanel = panelName;
-        } else if (panelName.equals("game")) {
+
+        allPanels.get(panelName).setVisible(true);
+
+        if (panelName.equals("game")) {
+            allPanels.get(panelName).setVisible(true);
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
             gamePanel.getCanvas().requestFocusInWindow();
             // Starts the game only if not already
@@ -178,7 +179,8 @@ public class Window extends JFrame {
                 gamePanel.start();
         }
 
-        allPanels.get(panelName).setVisible(true);
+        this.lastOpenPanel = getCurrOpenPanel();
+        this.currOpenPanel = panelName;
     }
 
     /**
