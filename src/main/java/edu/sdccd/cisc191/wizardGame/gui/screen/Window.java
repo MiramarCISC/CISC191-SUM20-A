@@ -45,7 +45,13 @@ public class Window extends JFrame {
         GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     /**
+     * No args Window constructor.
+     */
+    public Window() { super(); }
+
+    /**
      * Window constructor.
+     * @param game      {@code Game} instance reference
      * @param width     Width of the window
      * @param height    Height of the window
      * @param title     Title of the window
@@ -98,8 +104,6 @@ public class Window extends JFrame {
         layeredPane.add(loadPanel, new Integer(1));
         layeredPane.add(gamePanel, new Integer(1));
 
-
-
         // Start with menu panel
         menuPanel.setVisible(true);
         this.currOpenPanel = "menu";
@@ -108,25 +112,25 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this); // Sets fullscreen based on device.
+        this.device.setFullScreenWindow(this); // Sets fullscreen based on device.
     }
 
     /**
      * Display specified game panel and hide the others.
-     * @param panelName     Name of the panel to display
-     * @param isLoadScreen  Switch if loading panel will display
+     * @param panelName         Name of the panel to display
+     * @param showLoadScreen    Switch if loading panel will display
      */
-    public void changePanel(String panelName, boolean isLoadScreen) {
+    public void changePanel(String panelName, boolean showLoadScreen) {
         // Quit immediately on quit button click
         if (panelName.equals("quit")) { this.quitGame(); return; }
 
-        if (isLoadScreen)
-            this.showLoadScreen(4000);
+        if (showLoadScreen)
+            showLoadScreen(4000);
 
-        allPanels.get(getCurrOpenPanel()).setVisible(false);
+        this.allPanels.get(getCurrOpenPanelName()).setVisible(false);
 
         // Change panel
-        allPanels.get(panelName).setVisible(true);
+        this.allPanels.get(panelName).setVisible(true);
 
         // Starts the game only if not already
         if (panelName.equals("game")) {
@@ -135,7 +139,7 @@ public class Window extends JFrame {
                 gamePanel.start();
         }
 
-        this.lastOpenPanel = getCurrOpenPanel();
+        this.lastOpenPanel = getCurrOpenPanelName();
         this.currOpenPanel = panelName;
     }
 
@@ -144,11 +148,11 @@ public class Window extends JFrame {
      * @param duration  Loading screen duration in milliseconds
      */
     public void showLoadScreen(int duration) {
-        String currOpenPanel = getCurrOpenPanel();
+        String currOpenPanel = getCurrOpenPanelName();
         // Hide current panel
         if (currOpenPanel != null)
-            if (allPanels.get(currOpenPanel).isVisible())
-                allPanels.get(currOpenPanel).setVisible(false);
+            if (this.allPanels.get(currOpenPanel).isVisible())
+                this.allPanels.get(currOpenPanel).setVisible(false);
 
         LoadPanel load = (LoadPanel) allPanels.get("load");
         load.setDuration(duration);
@@ -178,11 +182,15 @@ public class Window extends JFrame {
         this.setVisible(false); this.dispose(); System.exit(0);
     }
 
-
     /** Accessor methods */
     public Game getGame()                           { return this.game; }
     public Map<String, GeneralPanel> getAllPanels() { return this.allPanels; }
     public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
-    public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
-    public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
+    public String getLastOpenPanelName()            { if (this.lastOpenPanel != null) return this.lastOpenPanel; else return null; }
+    public String getCurrOpenPanelName()            { if (this.currOpenPanel != null) return this.currOpenPanel; else return null; }
+    public GeneralPanel getLastOpenPanel()          { if (this.lastOpenPanel != null) return this.allPanels.get(this.lastOpenPanel); return null; }
+    public GeneralPanel getCurrOpenPanel()          { if (this.currOpenPanel != null) return this.allPanels.get(this.currOpenPanel); return null; }
+
+    /** Modifier methods */
+    public void setGame(Game game) { this.game = game; }
 }

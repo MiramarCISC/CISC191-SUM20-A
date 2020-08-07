@@ -27,16 +27,17 @@ public class Game {
      * Game constructor.
      * Creates new instance of {@code Window} class to set up the view.
      */
-    public Game() { this.frame = new Window(this, 1920, 1080, "Wizard Game"); }
-
-    /** Initialize game */
-    public void init() {
-
-        // Initialize Wizard stats
+    public Game() {
+        // Initialize Wizard field members
         this.ammo = 50;
         this.hp = 100;
         this.lives = 3;
         this.levelNumber = 1;
+        this.frame = new Window(this, 1920, 1080, "Wizard Game");
+    }
+
+    /** Initialize game */
+    public void init() {
         // Initialize frame
         this.frame.init();
     }
@@ -49,7 +50,7 @@ public class Game {
     public int getHp()                    { return this.hp; }
     public boolean isWizardDead()         { return this.wizardDead; }
     public boolean isGamePaused()         { return this.gamePaused; }
-    public boolean gameMuted()          { return this.gameMuted; }
+    public boolean gameMuted()            { return this.gameMuted; }
 
     /** Modifiers methods */
     public void setHp(int hp)             { this.hp = hp; }
@@ -65,12 +66,7 @@ public class Game {
     public void wizardRespawn()           { this.wizardDead = false; }
     public void pauseGame()               { this.gamePaused = true;}
     public void resumeGame()              { this.gamePaused = false;}
-    public void muteGame()                  {if (gameMuted) {
-        gameMuted = false;
-    }
-    else {
-        gameMuted = true;
-    }}
+    public void muteGame()                { if (gameMuted) gameMuted = false; else gameMuted = true; }
 
     /**
      * Main method to instantiate and initialize this Game class.
