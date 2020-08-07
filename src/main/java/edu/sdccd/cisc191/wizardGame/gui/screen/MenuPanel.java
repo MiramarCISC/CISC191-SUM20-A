@@ -35,7 +35,7 @@ public class MenuPanel extends GeneralPanel {
         super(frame);
         this.am = frame.getActionManager();
         this.setLayout(new GridBagLayout());
-        addBackground("/menu_background.jpg", GeneralPanel.BGOrientation.STRETCH);
+        addBackground("/menu_background.jpg", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
 
         /* Add buttons */
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -81,8 +81,5 @@ public class MenuPanel extends GeneralPanel {
         gbc.gridy = 3;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
-
-
     }
-
 }

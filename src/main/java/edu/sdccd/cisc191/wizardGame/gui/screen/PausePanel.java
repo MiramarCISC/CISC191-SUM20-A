@@ -37,7 +37,7 @@ public class PausePanel extends GeneralPanel {
         super(frame);
         this.am = frame.getActionManager();
         this.setLayout(new GridBagLayout());
-        addBackground("/pause.jpg", GeneralPanel.BGOrientation.STRETCH);
+        addBackground("/pause.jpg", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
 
 
         /* Add Buttons */

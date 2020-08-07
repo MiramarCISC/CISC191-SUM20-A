@@ -28,7 +28,6 @@ public class Window extends JFrame {
     private Game game;
 
     /** Action Manager */
-
     private ActionManager actionManager;
 
     /** Frame components */
@@ -50,6 +49,10 @@ public class Window extends JFrame {
     private GraphicsDevice device =
         GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
+    /** Window measurements */
+    private int xCenter;
+    private int yCenter;
+
     /**
      * Window constructor.
      * @param width     Width of the window
@@ -61,12 +64,17 @@ public class Window extends JFrame {
 
         // Instantiate fields
         this.game = game;
+
+        // TODO: remove width and height parameter
         frameWidth = width;
         frameHeight = height;
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frameHeight = (int) screenSize.getHeight();
-        frameWidth = (int) screenSize.getWidth();
+        this.frameWidth = (int) screenSize.getWidth();
+        this.frameHeight = (int) screenSize.getHeight();
+
+        this.xCenter = this.frameWidth / 2;
+        this.yCenter = this.frameHeight / 2;
 
         // the screen height
         screenSize.getHeight();
@@ -95,6 +103,7 @@ public class Window extends JFrame {
         HelpPanel helpPanel = new HelpPanel(this);
         PausePanel pausePanel = new PausePanel(this);
         LoadPanel loadPanel = new LoadPanel(this);
+        EndGamePanel endGamePanel = new EndGamePanel(this);
 
         // Set panel bounds
         menuPanel.setBounds(0, 0, frameWidth, frameHeight);
@@ -102,6 +111,10 @@ public class Window extends JFrame {
         helpPanel.setBounds(0, 0, frameWidth, frameHeight);
         pausePanel.setBounds(0, 0, frameWidth, frameHeight);
         loadPanel.setBounds(0, 0, frameWidth, frameHeight);
+        // Set floating panel bounds centered
+        endGamePanel.setBounds(this.xCenter - (endGamePanel.getWidth() / 2),
+                               this.yCenter - (endGamePanel.getHeight() / 2),
+                               endGamePanel.getWidth(), endGamePanel.getHeight());
 
         // Store panels into gamePanels
         allPanels.put("menu", menuPanel);
@@ -109,6 +122,7 @@ public class Window extends JFrame {
         allPanels.put("help", helpPanel);
         allPanels.put("load", loadPanel);
         allPanels.put("game", gamePanel);
+        allPanels.put("endgame", endGamePanel);
 
         // Add all panels into layers
         layeredPane.add(menuPanel, new Integer(1));
@@ -116,8 +130,7 @@ public class Window extends JFrame {
         layeredPane.add(helpPanel, new Integer(1));
         layeredPane.add(loadPanel, new Integer(1));
         layeredPane.add(gamePanel, new Integer(1));
-
-
+        layeredPane.add(endGamePanel, new Integer(2)); // Floating panel
 
         // Start with menu panel
         menuPanel.setVisible(true);
@@ -127,7 +140,7 @@ public class Window extends JFrame {
         this.add(layeredPane);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        device.setFullScreenWindow(this); // Sets fullscreen based on device.
+        this.device.setFullScreenWindow(this); // Sets fullscreen based on device.
 
         /** Dirty quick fix to address the {@code RespawnAction} and {@code PauseAction}
          * from throwing null pointer exception.
@@ -137,8 +150,6 @@ public class Window extends JFrame {
         actionManager.getWizardGameAction("saveAction").gamePanel = gamePanel;
         actionManager.getWizardGameAction("loadAction").gamePanel = gamePanel;
         actionManager.getWizardGameAction("muteAction").gamePanel = gamePanel;
-
-        gamePanel.getCanvas().setFocusable(true);
     }
 
     /**
@@ -153,21 +164,21 @@ public class Window extends JFrame {
         if (isLoadScreen)
             this.showLoadScreen(4000);
 
-        allPanels.get(getCurrOpenPanel()).setVisible(false);
-
-        // Change panel
-        allPanels.get(panelName).requestFocusInWindow();
-        allPanels.get(panelName).setVisible(true);
-
-        // Starts the game only if not already
-        if (panelName.equals("game")) {
+        if (!panelName.equals("endgame")) { // Do not hide current panel if end game
+            // Hide current panel and show next one
+            allPanels.get(getCurrOpenPanel()).setVisible(false);
+            // Update last panel and current panel reference
+            this.lastOpenPanel = getCurrOpenPanel();
+            this.currOpenPanel = panelName;
+        } else if (panelName.equals("game")) {
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
+            gamePanel.getCanvas().requestFocusInWindow();
+            // Starts the game only if not already
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
         }
 
-        this.lastOpenPanel = getCurrOpenPanel();
-        this.currOpenPanel = panelName;
+        allPanels.get(panelName).setVisible(true);
     }
 
     /**
@@ -216,5 +227,5 @@ public class Window extends JFrame {
     public GeneralPanel getPanel(String panelName)  { return this.allPanels.get(panelName); }
     public String getLastOpenPanel()                { if (this.lastOpenPanel != null) { return this.lastOpenPanel; } else { return null; } }
     public String getCurrOpenPanel()                { if (this.currOpenPanel != null) { return this.currOpenPanel; } else { return null; } }
-    public ActionManager getActionManager()         { return actionManager; }
+    public ActionManager getActionManager()         { return this.actionManager; }
 }
