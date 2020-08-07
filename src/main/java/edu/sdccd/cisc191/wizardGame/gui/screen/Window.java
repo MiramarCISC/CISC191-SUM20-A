@@ -1,8 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +18,9 @@ import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
  * @author Mark Lucernas
  *
  * Date: 2020-07-23
+ * Resize for All Displays
+ * @author Tamer Elsawaf
+ * 2020-08-03
  */
 public class Window extends JFrame {
 
@@ -36,7 +37,7 @@ public class Window extends JFrame {
     private JLayeredPane layeredPane;
 
     /** Game panels Map */
-    public Map<String, GeneralPanel> allPanels
+    private Map<String, GeneralPanel> allPanels
         = new HashMap<String, GeneralPanel>();
 
     /** Last opened panel name */
@@ -63,8 +64,18 @@ public class Window extends JFrame {
         frameWidth = width;
         frameHeight = height;
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frameHeight = (int) screenSize.getHeight();
+        frameWidth = (int) screenSize.getWidth();
+
+        // the screen height
+        screenSize.getHeight();
+        // the screen width
+        screenSize.getWidth();
         // Frame configs
-        this.setSize(new Dimension(frameWidth, frameHeight));
+        this.setPreferredSize(new Dimension(frameWidth, frameHeight));
+        this.setMaximumSize(new Dimension(frameWidth, frameHeight));
+        this.setMinimumSize(new Dimension(frameWidth, frameHeight));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable((false));
@@ -144,7 +155,6 @@ public class Window extends JFrame {
         // Change panel
         allPanels.get(panelName).requestFocusInWindow();
         allPanels.get(panelName).setVisible(true);
-
 
         // Starts the game only if not already
         if (panelName.equals("game")) {

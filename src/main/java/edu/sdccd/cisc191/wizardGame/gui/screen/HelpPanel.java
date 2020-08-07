@@ -5,8 +5,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.*;
 
-import javax.swing.JButton;
+import javax.swing.*;
 
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 
@@ -17,12 +18,16 @@ import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
  * @author Mark Lucernas
  *
  * Date: 2020-07-23
+ * Create Help Menu and positioned button in correct spot
+ *
+ * @author Tamer Elsawaf
+ * Date: 2020-08-03
  */
 public class HelpPanel extends GeneralPanel {
 
     /** Panel components */
     protected JButton backBtn;
-    private Dimension buttonSize = new Dimension(400, 50);
+    private Dimension buttonSize = new Dimension(350, 50);
 
     /** Action manager */
     ActionManager am;
@@ -39,7 +44,7 @@ public class HelpPanel extends GeneralPanel {
 
         // Add Buttons
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15); // Button spacing
+        gbc.insets = new Insets(500, 15, 15, 15); // Button spacing
 
         // Back button
         this.backBtn = new JButton("BACK");
@@ -50,8 +55,9 @@ public class HelpPanel extends GeneralPanel {
         gbc.gridy = 0;
         gbc.gridheight = 1;
         this.add(backBtn, gbc);
+        // Back button Position
 
-
+        this.addButtonListeners();
     }
 
 
