@@ -8,6 +8,7 @@ import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
 public class Wizard extends GameObject {
@@ -98,21 +99,25 @@ public class Wizard extends GameObject {
                 if(getBounds().intersects(tempObject.getBounds())) {
                     level.incAmmo(10);
                     handler.removeObject(tempObject);
+                    SoundEffect.CRATE.play();
                 }
             }
 
             if(tempObject.getId() == ID.Totem) {
 
                 if(getBounds().intersects(tempObject.getBounds())) {
+                    // Remove totem and wizard from play.
                     handler.removeObject(tempObject);
-                    // Got to next level
+                    handler.removeObject(this);
+                    // Iterate to next level and play sound effect.
+                    SoundEffect.LEVEL.play();
                     GamePanel gamePanel = (GamePanel) game.getFrame().getPanel("game");
                     game.incLevelNumber();
                     // Show load screen then build next level
                     game.pauseGame();
                     game.getFrame().showLoadScreen(2000);
                     game.resumeGame();
-                    gamePanel.changeLevel(); // Create an incrementing level variable here.
+                    gamePanel.changeLevel();
                 }
             }
 

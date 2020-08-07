@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 import edu.sdccd.cisc191.wizardGame.objects.Bullet;
 import edu.sdccd.cisc191.wizardGame.objects.GameObject;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
@@ -63,6 +64,7 @@ public class MouseInput extends MouseAdapter {
                 // Fire bullet from player location
                 handler.addObject(new Bullet(tempObject.getX() + 16, tempObject.getY() + 24, ID.Bullet, handler, mx, my, ss));
                 game.decAmmo();
+                SoundEffect.BULLET.play();
             }
         }
     }

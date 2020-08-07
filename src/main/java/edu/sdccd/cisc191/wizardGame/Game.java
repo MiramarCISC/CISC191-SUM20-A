@@ -1,6 +1,7 @@
 package edu.sdccd.cisc191.wizardGame;
 
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 
 /**
  * Controller class controls GameObject properties and behaviors.
@@ -20,6 +21,7 @@ public class Game {
     /** Game states */
     private boolean wizardDead = false;
     private boolean gamePaused = false;
+    private boolean gameMuted = false;
 
     /**
      * Game constructor.
@@ -47,6 +49,7 @@ public class Game {
     public int getHp()                    { return this.hp; }
     public boolean isWizardDead()         { return this.wizardDead; }
     public boolean isGamePaused()         { return this.gamePaused; }
+    public boolean gameMuted()            { return this.gameMuted; }
 
     /** Modifiers methods */
     public void setHp(int hp)             { this.hp = hp; }
@@ -57,11 +60,23 @@ public class Game {
     public void incAmmo(int inc)          { this.ammo += inc; }
     public void decAmmo()                 { this.ammo-= 1; }
     public void decHp()                   { this.hp--; }
-    public void decLives()                { this.lives--; }
+    public void decLives()                { this.lives--;
+        SoundEffect.LOSE.play();
+    }
     public void wizardDied()              { this.wizardDead = true; }
     public void wizardRespawn()           { this.wizardDead = false; }
     public void pauseGame()               { this.gamePaused = true;}
     public void resumeGame()              { this.gamePaused = false;}
+    public void muteGame()                  {
+    // Toggles game muted on and off.
+
+        if (gameMuted) {
+            gameMuted = false;
+        }
+        else {
+            gameMuted = true;
+        }
+    }
 
     /**
      * Main method to instantiate and initialize this Game class.

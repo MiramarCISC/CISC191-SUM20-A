@@ -39,6 +39,7 @@ public class Bullet extends GameObject {
         super(x, y, id, ss);
         this.handler = handler;
 
+
         velX = (mx - x) / 10;
         velY = (my - y) / 10;
     }

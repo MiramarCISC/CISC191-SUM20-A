@@ -10,7 +10,6 @@ import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.events.KeyInput;
 import edu.sdccd.cisc191.wizardGame.events.MouseInput;
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
-import edu.sdccd.cisc191.wizardGame.gui.Action.PauseAction;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;

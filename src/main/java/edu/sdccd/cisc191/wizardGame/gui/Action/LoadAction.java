@@ -2,8 +2,6 @@ package edu.sdccd.cisc191.wizardGame.gui.Action;
 
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
-import edu.sdccd.cisc191.wizardGame.save.DataManager;
-import edu.sdccd.cisc191.wizardGame.save.SaveData;
 
 import java.awt.event.ActionEvent;
 

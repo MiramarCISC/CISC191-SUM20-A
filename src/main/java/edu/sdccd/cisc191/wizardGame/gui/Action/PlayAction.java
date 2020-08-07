@@ -2,6 +2,7 @@ package edu.sdccd.cisc191.wizardGame.gui.Action;
 
 import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
+import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 
 import java.awt.event.ActionEvent;
 
@@ -14,6 +15,7 @@ public class PlayAction extends WizardGameAction {
     public PlayAction(Window frame){
         super(frame);
         this.panel = (GamePanel)frame.allPanels.get("game");
+        SoundEffect.THEME.play();
     }
 
     public void actionPerformed(ActionEvent event){

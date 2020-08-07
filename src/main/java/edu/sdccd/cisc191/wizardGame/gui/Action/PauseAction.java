@@ -1,9 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.Action;
 
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class PauseAction extends WizardGameAction {
