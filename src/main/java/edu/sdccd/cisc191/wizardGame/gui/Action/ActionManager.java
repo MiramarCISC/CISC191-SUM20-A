@@ -38,11 +38,13 @@ public class ActionManager extends OptionGroup {
     public void initializeActions(Window frame){
         add(new BackAction(frame));
         add(new HelpAction(frame));
+        add(new LoadAction(frame));
         add(new PauseAction(frame));
         add(new PlayAction(frame));
         add(new QuitAction(frame));
         add(new RespawnAction(frame));
         add(new ResumeAction(frame));
+        add(new SaveAction(frame));
 
     }
 

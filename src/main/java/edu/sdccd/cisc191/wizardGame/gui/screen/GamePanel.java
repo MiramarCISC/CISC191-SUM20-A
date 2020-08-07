@@ -15,6 +15,8 @@ import edu.sdccd.cisc191.wizardGame.gui.anim.Camera;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
+import edu.sdccd.cisc191.wizardGame.save.DataManager;
+import edu.sdccd.cisc191.wizardGame.save.SaveData;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
@@ -55,7 +57,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private SpriteSheet cs; // Character sheet
 
     /** Buttons */
-    private JButton pauseBtn, respawnBtn;
+    private JButton pauseBtn, muteBtn, saveBtn, respawnBtn;
 
     /** Listeners */
     private MouseInput mouseInput;
@@ -90,6 +92,10 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Create buttons
         this.pauseBtn = new JButton("PAUSE");
         this.pauseBtn.addActionListener(am.getWizardGameAction("pauseAction"));
+        this.muteBtn = new JButton("MUTE");
+        this.muteBtn.addActionListener(am.getWizardGameAction("muteAction"));
+        this.saveBtn = new JButton("SAVE");
+        this.saveBtn.addActionListener(am.getWizardGameAction("saveAction"));
         this.respawnBtn = new JButton("TRY AGAIN?");
         this.respawnBtn.addActionListener(am.getWizardGameAction("respawnAction"));
         this.respawnBtn.setVisible(false);
@@ -98,11 +104,15 @@ public class GamePanel extends GeneralPanel implements Runnable {
         layeredPane.add(canvas, new Integer(1));
         // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
         layeredPane.add(pauseBtn, new Integer(2));
+        layeredPane.add(muteBtn, new Integer(2));
+        layeredPane.add(saveBtn, new Integer(2));
         layeredPane.add(respawnBtn, new Integer(2));
 
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
+        muteBtn.setBounds(325, 5, 100, 50);
+        saveBtn.setBounds(425, 5, 100, 50);
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         canvas.setFocusable(true);
@@ -217,6 +227,20 @@ public class GamePanel extends GeneralPanel implements Runnable {
         changeLevel();               // Load level.
     }
 
+    public void loadGame() {
+        try {
+            SaveData data = (SaveData) DataManager.load("1.save");
+            this.game.setAmmo(data.ammo);
+            this.game.setHp(data.hp);
+            this.game.setLives(data.lives);
+            this.game.setLevelNumber(data.level);
+            changeLevel();
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't load save data: " + e.getMessage());
+        }
+    }
+
     public void showRespawn() {
         game.wizardDied();
         respawnBtn.setVisible(true);
@@ -236,6 +260,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public MouseInput getMouseInput()                { return this.mouseInput; }
     public KeyInput getKeyInput()                    { return this.keyInput; }
     public JButton getRespawnBtn()                   { return respawnBtn; }
+    public Game getGame()                              { return this.game; }
 
     /** Modifier methods */
     public void setHandler(Handler handler)          { this.handler = handler; }

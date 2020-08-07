@@ -134,6 +134,8 @@ public class Window extends JFrame {
          */
         actionManager.getWizardGameAction("pauseAction").gamePanel = gamePanel;
         actionManager.getWizardGameAction("respawnAction").gamePanel = gamePanel;
+        actionManager.getWizardGameAction("saveAction").gamePanel = gamePanel;
+        actionManager.getWizardGameAction("loadAction").gamePanel = gamePanel;
 
         gamePanel.getCanvas().setFocusable(true);
     }

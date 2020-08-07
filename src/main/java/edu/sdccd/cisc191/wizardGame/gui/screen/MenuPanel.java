@@ -21,7 +21,7 @@ import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 public class MenuPanel extends GeneralPanel {
 
     /** Menu Buttons */
-    protected JButton playBtn, helpBtn, quitBtn;
+    protected JButton playBtn, loadBtn, helpBtn, quitBtn;
     private Dimension buttonSize = new Dimension(200, 75);
 
     /** Action manager */
@@ -52,13 +52,23 @@ public class MenuPanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(playBtn, gbc);
 
+        // Load button
+        this.loadBtn = new JButton("LOAD");
+        this.loadBtn.addActionListener(am.getWizardGameAction("loadAction"));
+        loadBtn.setPreferredSize(buttonSize);
+        loadBtn.setFont(font);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridheight = 1;
+        this.add(loadBtn, gbc);
+
         // Help button
         this.helpBtn = new JButton("HELP");
         this.helpBtn.addActionListener(am.getWizardGameAction("helpAction"));
         helpBtn.setPreferredSize(buttonSize);
         helpBtn.setFont(font);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridheight = 1;
         this.add(helpBtn, gbc);
 
@@ -68,7 +78,7 @@ public class MenuPanel extends GeneralPanel {
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(font);
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
 
