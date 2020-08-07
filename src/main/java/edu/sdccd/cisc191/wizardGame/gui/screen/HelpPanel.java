@@ -57,7 +57,6 @@ public class HelpPanel extends GeneralPanel {
         this.add(backBtn, gbc);
         // Back button Position
 
-        this.addButtonListeners();
     }
 
 

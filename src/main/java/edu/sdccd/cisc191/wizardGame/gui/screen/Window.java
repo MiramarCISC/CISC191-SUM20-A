@@ -37,7 +37,7 @@ public class Window extends JFrame {
     private JLayeredPane layeredPane;
 
     /** Game panels Map */
-    private Map<String, GeneralPanel> allPanels
+    public Map<String, GeneralPanel> allPanels
         = new HashMap<String, GeneralPanel>();
 
     /** Last opened panel name */
