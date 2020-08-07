@@ -7,4 +7,6 @@ public class SaveData implements java.io.Serializable {
 
     public int level;
     public int lives;
+    public int ammo;
+    public int hp;
 }

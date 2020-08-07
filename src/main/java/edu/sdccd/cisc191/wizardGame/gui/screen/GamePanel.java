@@ -16,6 +16,8 @@ import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.Level;
 import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
 import edu.sdccd.cisc191.wizardGame.objects.Handler;
+import edu.sdccd.cisc191.wizardGame.save.DataManager;
+import edu.sdccd.cisc191.wizardGame.save.SaveData;
 import edu.sdccd.cisc191.wizardGame.utils.images.BufferedImageLoader;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 
@@ -36,6 +38,8 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private Window frame;
     private Canvas canvas;
 
+    public static boolean loaded;
+
     /** Thread variables */
     private boolean isRunning = false;
     private Thread gameThread;
@@ -53,7 +57,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     private SpriteSheet cs; // Character sheet
 
     /** Buttons */
-    private JButton pauseBtn, muteBtn, respawnBtn;
+    private JButton pauseBtn, muteBtn, saveBtn, respawnBtn;
 
     /** Listeners */
     private MouseInput mouseInput;
@@ -90,6 +94,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Create buttons
         this.pauseBtn = new JButton("PAUSE");
         this.muteBtn = new JButton("SOUND");
+        this.saveBtn = new JButton("SAVE");
         this.respawnBtn = new JButton("TRY AGAIN?");
         this.respawnBtn.setVisible(false);
 
@@ -98,11 +103,13 @@ public class GamePanel extends GeneralPanel implements Runnable {
         // Add buttons. Make sure its greater than 1 (the canvas) to stack on top.
         layeredPane.add(pauseBtn, new Integer(2));
         layeredPane.add(muteBtn, new Integer(2));
+        layeredPane.add(saveBtn, new Integer(2));
         layeredPane.add(respawnBtn, new Integer(2));
 
         canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         pauseBtn.setBounds(225, 5, 100, 50);  // Underneath HUD, frame.getWidth() could cause problems due to device type.
         muteBtn.setBounds(325, 5, 100, 50);
+        saveBtn.setBounds(425, 5, 100, 50);
         respawnBtn.setBounds((frame.getWidth() / 2) - 100, (frame.getHeight() / 2) - 25, 200, 50);  // Center
 
         this.add(layeredPane);
@@ -212,7 +219,23 @@ public class GamePanel extends GeneralPanel implements Runnable {
         this.game.setAmmo(50);       // refill ammo
         this.game.setLives(3);       // refill lives
         this.game.setLevelNumber(1); // begin at level 1.
+        this.game.loadGame(false); // Reset the games loaded status. (Play restarts from beginning)
         changeLevel();               // Load level.
+    }
+
+    public void loadGame() {
+        try {
+            //handler.clearHandler();
+            SaveData data = (SaveData) DataManager.load("1.save");
+            this.game.setAmmo(data.ammo);
+            this.game.setHp(data.hp);
+            this.game.setLives(data.lives);
+            this.game.setLevelNumber(data.level);
+            changeLevel();
+        }
+        catch (Exception e) {
+            System.out.println("Couldn't load save data: " + e.getMessage());
+        }
     }
 
     public void showRespawn() {
@@ -284,6 +307,33 @@ public class GamePanel extends GeneralPanel implements Runnable {
                 }
 
                 game.muteGame();
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+
+        /** Save button mouse listener */
+        saveBtn.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {
+                releaseKeys();
+                SaveData data = new SaveData();
+                data.level = game.getLevelNumber();
+                data.lives = game.getLives();
+                data.ammo = game.getAmmo();
+                data.hp = game.getHp();
+                try {
+                    DataManager.save(data, "1.save");
+                }
+                catch (Exception error) {
+                    System.out.println("Couldn't save: " + error.getMessage());
+                }
             }
             @Override
             public void mouseReleased(MouseEvent e) {}

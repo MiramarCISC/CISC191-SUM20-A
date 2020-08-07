@@ -133,6 +133,11 @@ public class Window extends JFrame {
             GamePanel gamePanel = (GamePanel) allPanels.get("game");
             if (!gamePanel.isGameRunning())
                 gamePanel.start();
+
+            // If the game is set to loaded, then load the game from previous state.
+            if (game.gameLoaded()) {
+                gamePanel.loadGame();
+            }
         }
 
         this.lastOpenPanel = getCurrOpenPanel();

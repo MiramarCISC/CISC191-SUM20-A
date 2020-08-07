@@ -1,5 +1,8 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
+import edu.sdccd.cisc191.wizardGame.save.DataManager;
+import edu.sdccd.cisc191.wizardGame.save.SaveData;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -21,7 +24,7 @@ import javax.swing.JButton;
 public class MenuPanel extends GeneralPanel {
 
     /** Menu Buttons */
-    protected JButton playBtn, helpBtn, quitBtn;
+    protected JButton playBtn, helpBtn, loadBtn, quitBtn;
     private Dimension buttonSize = new Dimension(200, 75);
 
     /**
@@ -56,12 +59,21 @@ public class MenuPanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(helpBtn, gbc);
 
+        // Load button
+        loadBtn = new JButton("LOAD");
+        loadBtn.setPreferredSize(buttonSize);
+        loadBtn.setFont(font);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridheight = 1;
+        this.add(loadBtn, gbc);
+
         // Quit button
         quitBtn = new JButton("QUIT");
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(font);
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
 
@@ -95,6 +107,26 @@ public class MenuPanel extends GeneralPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frame.changePanel("help", false);
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+
+        /** Load button mouse listener */
+        loadBtn.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Set the boolean denoting loaded game to true.
+                frame.getGame().loadGame(true);
+
+                // Change panels to game.
+                frame.changePanel("game", true);
             }
             @Override
             public void mousePressed(MouseEvent e) {}
