@@ -25,7 +25,7 @@ public class MuteAction extends WizardGameAction {
      */
     public MuteAction(Window frame){
         super(frame);
-        game = gamePanel.getGame();
+
     }
 
 
@@ -34,6 +34,7 @@ public class MuteAction extends WizardGameAction {
      * @param e Mute button event.
      */
     public void actionPerformed(ActionEvent e){
+        game = gamePanel.getGame();
 
         if (!game.isGameSoundMuted()) {
             SoundEffect.THEME.stop();
