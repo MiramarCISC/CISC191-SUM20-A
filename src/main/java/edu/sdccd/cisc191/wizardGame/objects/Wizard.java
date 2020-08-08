@@ -49,7 +49,7 @@ public class Wizard extends GameObject {
 
         // Check for game over
         if(level.getLives() <= 0) {
-            handler.removeObject(this);
+            this.handler.removeObject(this);
         }
 
         if(level.getHp() <= 0) {

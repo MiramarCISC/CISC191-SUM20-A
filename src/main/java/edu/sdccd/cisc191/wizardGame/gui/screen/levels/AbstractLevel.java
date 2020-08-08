@@ -223,9 +223,10 @@ public abstract class AbstractLevel extends KeyInput {
         if(this.getLives() <= 0) {
             // Handle game over event.
             // Go back to the menu.
-            this.game.getFrame().changePanel("menu", false);
+            // this.game.getFrame().changePanel("menu", false);
+            this.game.gameOver(false);
             // call reset Game();
-            gamePanel.resetGame();
+            // gamePanel.resetGame();
         }
     } // end render
 

@@ -29,7 +29,7 @@ public class HelpPanel extends GeneralPanel {
     private Dimension buttonSize = new Dimension(350, 50);
 
     /** Action manager */
-    ActionManager am;
+    private ActionManager am;
 
     /**
      * HelpPanel constructor.

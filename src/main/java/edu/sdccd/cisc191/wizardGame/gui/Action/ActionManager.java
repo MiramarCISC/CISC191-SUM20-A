@@ -46,7 +46,6 @@ public class ActionManager extends OptionGroup {
         add(new ResumeAction(frame));
         add(new SaveAction(frame));
         add(new MuteAction(frame));
-
     }
 
     public WizardGameAction getWizardGameAction(String id){

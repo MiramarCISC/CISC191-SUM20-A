@@ -28,7 +28,5 @@ public class LoadAction extends WizardGameAction {
 
         // Change panels to game.
         frame.changePanel("game", true);
-
-
     }
 }

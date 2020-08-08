@@ -9,6 +9,7 @@ import java.awt.Insets;
 import javax.swing.JButton;
 
 import edu.sdccd.cisc191.wizardGame.Game;
+import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
 
 /**
  * Floating end game {@link JPanel} that is displayed when the game concludes.
@@ -18,7 +19,7 @@ import edu.sdccd.cisc191.wizardGame.Game;
  *
  * Date: 2020-08-07
  */
-public class EndGamePanel extends GeneralPanel {
+public class EndGameFloatingPanel extends GeneralPanel {
 
     /** Class references */
     private Window frame;
@@ -28,22 +29,26 @@ public class EndGamePanel extends GeneralPanel {
     private JButton restartBtn, mainMenuBtn, quitBtn;
     private Dimension buttonSize = new Dimension(200, 50);
 
+    /** Action manager */
+    private ActionManager am;
+
     /**
      * No args EndGamePanel constructor.
      */
-    public EndGamePanel() { super(); }
+    public EndGameFloatingPanel() { super(); }
 
     /**
      * EndGamePanel constructor.
      * @param frame     {@code Window} to place the panel in.
      */
-    public EndGamePanel(Window frame) {
+    public EndGameFloatingPanel(Window frame) {
         super(frame);
         this.frame = frame;
         this.game = frame.getGame();
-        addBackground("/game_over.png", GeneralPanel.BGOrientation.VERTICAL_STRETCH);
+        this.am = frame.getActionManager();
 
-        this.setSize(new Dimension(800, 600));
+        // Set size for bounds JLayeredPanel setBounds() reference
+        this.setSize(new Dimension(800, 500));
 
         this.setLayout(new GridBagLayout());
 
@@ -53,6 +58,8 @@ public class EndGamePanel extends GeneralPanel {
 
         // Restart button
         this.restartBtn = new JButton("RESTART");
+        // TODO: Create RestartAction
+        // this.restartBtn.addActionListener(am.getWizardGameAction("restartAction"));
         restartBtn.setPreferredSize(buttonSize);
         restartBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
@@ -63,6 +70,8 @@ public class EndGamePanel extends GeneralPanel {
 
         // Main menu button
         this.mainMenuBtn = new JButton("MAIN MENU");
+        // TODO: Create MenuAction
+        // this.mainMenuBtn.addActionListener(am.getWizardGameAction("menuAction"));
         mainMenuBtn.setPreferredSize(buttonSize);
         mainMenuBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
@@ -73,6 +82,7 @@ public class EndGamePanel extends GeneralPanel {
 
         // Quit button
         this.quitBtn = new JButton("QUIT");
+        this.quitBtn.addActionListener(am.getWizardGameAction("quitAction"));
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
@@ -80,5 +90,15 @@ public class EndGamePanel extends GeneralPanel {
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
         // Back button Position
+    }
+
+    // Show winner background
+    public void displayWinner() {
+        addBackground("/game_.jpg", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
+    }
+
+    // Show loser background
+    public void displayLoser() {
+        addBackground("/game_over.png", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
     }
 }

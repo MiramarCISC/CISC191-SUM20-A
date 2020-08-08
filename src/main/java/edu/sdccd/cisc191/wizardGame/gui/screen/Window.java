@@ -103,7 +103,7 @@ public class Window extends JFrame {
         HelpPanel helpPanel = new HelpPanel(this);
         PausePanel pausePanel = new PausePanel(this);
         LoadPanel loadPanel = new LoadPanel(this);
-        EndGamePanel endGamePanel = new EndGamePanel(this);
+        EndGameFloatingPanel endGamePanel = new EndGameFloatingPanel(this);
 
         // Set panel bounds
         menuPanel.setBounds(0, 0, frameWidth, frameHeight);
@@ -215,6 +215,17 @@ public class Window extends JFrame {
 
         // Restore current open panel
         allPanels.get(currOpenPanel).setVisible(true);
+    }
+
+    public void endGame(boolean isWinner) {
+        EndGameFloatingPanel endGamePanel = (EndGameFloatingPanel) this.getAllPanels().get("endgame");
+        if (isWinner)
+            endGamePanel.displayWinner();
+        else
+            endGamePanel.displayLoser();
+
+        // Show endgame floating window
+        this.changePanel("endgame", false);
     }
 
     /** Quit game */

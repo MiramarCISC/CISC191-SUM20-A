@@ -261,7 +261,7 @@ public class GamePanel extends GeneralPanel implements Runnable {
     public Canvas getCanvas()                        { return this.canvas; }
     public MouseInput getMouseInput()                { return this.mouseInput; }
     public KeyInput getKeyInput()                    { return this.keyInput; }
-    public JButton getRespawnBtn()                   { return respawnBtn; }
+    public JButton getRespawnBtn()                   { return this.respawnBtn; }
     public Game getGame()                            { return this.game; }
 
     /** Modifier methods */
