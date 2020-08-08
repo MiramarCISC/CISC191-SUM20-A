@@ -20,7 +20,7 @@ public class MuteAction extends WizardGameAction {
     public void actionPerformed(ActionEvent event){
         game = gamePanel.getGame();
 
-        if (!game.gameMuted()) {
+        if (!game.isGameSoundMuted()) {
             SoundEffect.THEME.stop();
             SoundEffect.volume = SoundEffect.Volume.MUTE;
             gamePanel.getLevel().releaseKeys();
