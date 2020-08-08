@@ -135,11 +135,13 @@ public abstract class AbstractLevel extends KeyInput {
                 if (red == 255 && green == 255 && blue == 0)
                     handler.addObject(new Totem(xx * 32, yy * 32, ID.Totem, ss));                        // pure yellow
                 if (red == 255 && green == 0 && blue == 255)
-                    handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, this, cs));       // pure magenta
+                    handler.addObject(new Knight(xx * 32, yy * 32, ID.Knight, handler, game, this, cs));       // pure magenta
                 if (red == 0 && green == 153 && blue == 102)
                     handler.addObject(new Ent(xx * 32, yy * 32, ID.Ent, handler, this, cs));             // green #009966
                 if (red == 255 && green == 153 && blue == 51)
                     handler.addObject(new Horizontal(xx * 32, yy * 32, ID.Horizontal, handler, cs));     // vivid orange #ff9933
+                if (red == 153 && green == 0 && blue == 255)
+                    handler.addObject(new Vertical(xx * 32, yy * 32, ID.Vertical, handler, cs));     // #9900ff
             }
         }
     }

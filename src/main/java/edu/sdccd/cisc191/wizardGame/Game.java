@@ -8,6 +8,7 @@ import edu.sdccd.cisc191.wizardGame.gui.sound.SoundEffect;
  *
  * @author Jordan Tobin
  * @author Mark Lucernas
+ * @auther Tamer Elsawaf
  * Date: 2020-07-24
  */
 public class Game {

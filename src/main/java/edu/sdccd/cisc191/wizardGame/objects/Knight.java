@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.anim.Animation;
 import edu.sdccd.cisc191.wizardGame.gui.screen.levels.AbstractLevel;
 import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
@@ -12,22 +13,21 @@ import edu.sdccd.cisc191.wizardGame.utils.images.SpriteSheet;
 public class Knight extends GameObject {
 
     private Handler handler;
+    private Game game;
     private AbstractLevel level;
     private BufferedImage[] knight_image = new BufferedImage[8];
     Animation anim;
 
-    // Import random as enemies will roam around randomly.
-    Random r = new Random();
-    int choose = 0;
     int hp = 100;
     int counter = 0; // Counter used to count amount of times block is hit
 
     int px; // players x and y location
     int py;
 
-    public Knight(int x, int y, ID id, Handler handler, AbstractLevel level, SpriteSheet cs) {
+    public Knight(int x, int y, ID id, Handler handler, Game game, AbstractLevel level, SpriteSheet cs) {
         super(x, y, id, cs);
         this.handler = handler;
+        this.game = game;
         this.level = level;
 
         knight_image[0] = cs.grabImage(9, 5, 32, 32);
@@ -55,12 +55,13 @@ public class Knight extends GameObject {
                 py = tempObject.getY();
 
                 if(getBoundsBig().intersects(tempObject.getBounds())) {
+                    // Use large boundary to simulate cushion.
                     x += (velX*25) * -1; // Change velX/Y*int to change bounce level
                     y += (velY*25) * -1; //Invert velocity and shoot it back (ricochet)
                     velX *= -1;
                     velY *= -1;
-
-                    //level.hp--; figure out hp later
+                    // Decrement player HP.
+                    game.decHp();
                 }
             }
 

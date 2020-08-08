@@ -121,10 +121,18 @@ public class Wizard extends GameObject {
                 }
             }
 
-            if(tempObject.getId() == ID.Minion || tempObject.getId() == ID.Ent || tempObject.getId() == ID.Horizontal) {
-                if(getBounds().intersects(tempObject.getBounds())) {
-                   level.decHp(); //Debug line
-                }
+            // Switch statement determines ID of object collision.
+            switch (tempObject.getId()) {
+                case Minion:
+                case Ent:
+                case Horizontal:
+                case Vertical:
+                    if(getBounds().intersects(tempObject.getBounds())) {
+                        // If any of these enemies are contacted, decrement HP.
+                        level.decHp();
+                    }
+                default:
+                    break;
             }
         }
     }
