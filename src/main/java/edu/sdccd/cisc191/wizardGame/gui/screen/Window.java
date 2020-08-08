@@ -88,7 +88,7 @@ public class Window extends JFrame {
         this.setLayout(null);
         this.setResizable((false));
 
-        actionManager = new ActionManager(this);
+        actionManager = new ActionManager();
         actionManager.initializeActions(this);
     }
 

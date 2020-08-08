@@ -10,7 +10,7 @@ import edu.sdccd.cisc191.wizardGame.option.Option;
 
 /**
  * Super class of actions triggered by buttons within the WizardGame GUI. Subclasses
- * that inherit {@code WizardGameAction} are stored within a map in {@code ActionManager}.
+ * that inherit this class are stored within a map in {@link ActionManager}.
  *
  * @author Seth Steen-Fuentes
  *
@@ -26,13 +26,15 @@ public abstract class WizardGameAction extends AbstractAction implements Option<
         this.frame = frame;
     }
 
-
-    protected ActionManager getActionManager() {
-        return frame.getActionManager();
-    }
-
     protected Game getGame()                { return frame.getGame(); }
-    protected Window getWindow()              { return getGame().getFrame(); }
 
+    /**
+     * Method that would serve a role in a more complex object ID system,
+     * possibly for serialization.
+     *</p>
+     * This method is not used in current project structure.
+     *
+     * @return
+     */
     public abstract String getId();
 }

@@ -6,14 +6,12 @@
 
 package edu.sdccd.cisc191.wizardGame.gui.Action;
 
-import edu.sdccd.cisc191.wizardGame.gui.screen.GamePanel;
-import edu.sdccd.cisc191.wizardGame.objects.Handler;
 import edu.sdccd.cisc191.wizardGame.option.OptionGroup;
 import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 /**
  * Action manager for all of the button functionality of the GUI. Panel button trigger action events stored
- * within the map extended from {@code OptionGroup}.
+ * within the map extended from {@link OptionGroup}.
  *
  * @author Seth Steen-Fuentes
  *
@@ -22,17 +20,11 @@ import edu.sdccd.cisc191.wizardGame.gui.screen.Window;
 
 public class ActionManager extends OptionGroup {
 
-    private Window frame;
-    private GamePanel panel;
-
-    private Handler handler;
-
-    public ActionManager(Window frame) {
-        this.frame = frame;
+    public ActionManager() {
     }
 
     /**
-     *
+     * Method to add all game actions to map for access via JButton ActionEvents within panels.
      * @param frame The GUI instance that requires response to actions.
      */
     public void initializeActions(Window frame){
@@ -48,6 +40,11 @@ public class ActionManager extends OptionGroup {
         add(new MuteAction(frame));
     }
 
+    /**
+     * Used to add correct Action to addActionListener call.
+     * @param id Reference string for class
+     * @return The class that handles the actionPerformed method for that JButton's functionality.
+     */
     public WizardGameAction getWizardGameAction(String id){
         return getOption(id, WizardGameAction.class);
     }

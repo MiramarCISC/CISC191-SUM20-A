@@ -9,16 +9,31 @@ import java.awt.event.ActionEvent;
 
 public class MuteAction extends WizardGameAction {
 
+    /**
+     *  Current game controller.
+     */
     Game game;
+
+    /**
+     * String identifier that will be used to reference this class.
+     */
     public static final String id = "muteAction";
 
+    /**
+     * Create this action.
+     * @param frame Window which holds panel that instantiates button.
+     */
     public MuteAction(Window frame){
         super(frame);
+        game = gamePanel.getGame();
     }
 
 
-    public void actionPerformed(ActionEvent event){
-        game = gamePanel.getGame();
+    /**
+     * Button to trigger sound on/off.
+     * @param e Mute button event.
+     */
+    public void actionPerformed(ActionEvent e){
 
         if (!game.isGameSoundMuted()) {
             SoundEffect.THEME.stop();
@@ -33,10 +48,11 @@ public class MuteAction extends WizardGameAction {
 
         game.muteGame();
 
-
-
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public String getId() {
         return id;

@@ -9,17 +9,24 @@ import java.awt.event.ActionEvent;
 
 public class SaveAction extends WizardGameAction {
 
+    /**
+     * String identifier that will be used to reference this class.
+     */
     public static final String id = "saveAction";
 
+    /**
+     * Create this action.
+     * @param frame Window which holds panel that instantiates button.
+     */
     public SaveAction(Window frame){
         super(frame);
     }
 
-    @Override
-    public String getId() {
-        return id;
-    }
 
+    /**
+     * This action triggers saving of game attributes.
+     * @param e Save button event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -37,6 +44,14 @@ public class SaveAction extends WizardGameAction {
         catch (Exception error) {
             System.out.println("Couldn't save: " + error.getMessage());
         }
-
     }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public String getId() {
+        return id;
+    }
+
 }

@@ -7,19 +7,32 @@ import java.awt.event.ActionEvent;
 
 public class LoadAction extends WizardGameAction {
 
-    GamePanel panel;
+    /**
+     * String identifier that will be used to reference this class.
+     */
     public static final String id = "loadAction";
 
+    /**
+     * Create this action.
+     * @param frame Window which holds panel that instantiates button.
+     */
     public LoadAction(Window frame){
         super(frame);
-        this.panel = (GamePanel)frame.allPanels.get("game");
+        this.gamePanel = (GamePanel)frame.allPanels.get("game");
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public String getId() {
         return id;
     }
 
+    /**
+     * Action to trigger game start via load functionality.
+     * @param e Load button event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
