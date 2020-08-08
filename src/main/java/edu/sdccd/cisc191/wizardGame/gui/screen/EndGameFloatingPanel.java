@@ -1,5 +1,6 @@
 package edu.sdccd.cisc191.wizardGame.gui.screen;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -7,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import edu.sdccd.cisc191.wizardGame.Game;
 import edu.sdccd.cisc191.wizardGame.gui.Action.ActionManager;
@@ -28,6 +30,10 @@ public class EndGameFloatingPanel extends GeneralPanel {
     /** Panel components */
     private JButton restartBtn, mainMenuBtn, quitBtn;
     private Dimension buttonSize = new Dimension(200, 50);
+    private JLabel countdownLbl;
+
+    /** Countdown label Thread */
+    private Thread countDownThread;
 
     /** Action manager */
     private ActionManager am;
@@ -54,7 +60,17 @@ public class EndGameFloatingPanel extends GeneralPanel {
 
         // Add Buttons
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15); // Button spacing
+        gbc.insets = new Insets(10, 10, 10, 10); // Button spacing
+
+        this.countdownLbl = new JLabel();
+        this.countdownLbl.setText("10");
+        countdownLbl.setFont(new Font("Arial", Font.BOLD, 120));
+        countdownLbl.setSize(countdownLbl.getPreferredSize());
+        countdownLbl.setForeground(Color.YELLOW);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        this.add(countdownLbl, gbc);
 
         // Restart button
         this.restartBtn = new JButton("RESTART");
@@ -63,7 +79,7 @@ public class EndGameFloatingPanel extends GeneralPanel {
         restartBtn.setPreferredSize(buttonSize);
         restartBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 2;
         gbc.gridheight = 1;
         this.add(restartBtn, gbc);
         // Back button Position
@@ -75,7 +91,7 @@ public class EndGameFloatingPanel extends GeneralPanel {
         mainMenuBtn.setPreferredSize(buttonSize);
         mainMenuBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 3;
         gbc.gridheight = 1;
         this.add(mainMenuBtn, gbc);
         // Back button Position
@@ -86,19 +102,87 @@ public class EndGameFloatingPanel extends GeneralPanel {
         quitBtn.setPreferredSize(buttonSize);
         quitBtn.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 4;
         gbc.gridheight = 1;
         this.add(quitBtn, gbc);
         // Back button Position
     }
 
-    // Show winner background
+    /**
+     * Show winner game over display.
+     */
     public void displayWinner() {
         addBackground("/game_.jpg", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
     }
 
-    // Show loser background
+    /**
+     * Show loser game over display.
+     */
     public void displayLoser() {
         addBackground("/game_over.png", GeneralPanel.BGOrientation.HORIZONTAL_STRETCH);
+        new CountdownLblThread(this.countdownLbl, 10).start();
     }
+
+    /**
+     * Goes back to main menu and reset game.
+     */
+    public void gameOver() {
+        // Back to Main menu
+        this.frame.changePanel("menu", false);
+
+        // Reset game
+        GamePanel gamePanel = (GamePanel) this.frame.getPanel("game");
+        gamePanel.resetGame();
+    }
+
+    /**
+     * Inner class to update countDownLbl integer countdown.
+     */
+    class CountdownLblThread extends Thread {
+
+        private JLabel countdownLbl;
+        private int countdownStart;
+
+        /**
+         * CountdownLblThread constructor.
+         * @param label             {@code JLabel} reference to update countdown
+         * @param countdownStart    Countdown starting point integer
+         */
+        public CountdownLblThread(JLabel label, int countdownStart) {
+            this.countdownLbl = label;
+            this.countdownStart = countdownStart;
+        }
+
+        @Override
+        public void run() {
+            String message = "Continue? ";
+
+            for (int i = countdownStart; i >= 0; i--) {
+                countdownLbl.setText("" + i);
+
+                try {
+                    sleep(1000); // Sleep for 1 second
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Hide all game over buttons
+            restartBtn.setVisible(false);
+            mainMenuBtn.setVisible(false);
+            quitBtn.setVisible(false);
+
+            this.countdownLbl.setText("Game Over");
+
+            try {
+                sleep(2000); // Sleep for 2 second
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Reset game and back to main menu
+            gameOver();
+        }
+    }
+
 }

@@ -217,7 +217,7 @@ public class Window extends JFrame {
         allPanels.get(currOpenPanel).setVisible(true);
     }
 
-    public void endGame(boolean isWinner) {
+    public void showGameOver(boolean isWinner) {
         EndGameFloatingPanel endGamePanel = (EndGameFloatingPanel) this.getAllPanels().get("endgame");
         if (isWinner)
             endGamePanel.displayWinner();
