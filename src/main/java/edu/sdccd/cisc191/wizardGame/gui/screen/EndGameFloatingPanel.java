@@ -167,6 +167,11 @@ public class EndGameFloatingPanel extends GeneralPanel {
                 }
             }
 
+            // Hide all game over buttons
+            restartBtn.setVisible(false);
+            mainMenuBtn.setVisible(false);
+            quitBtn.setVisible(false);
+
             this.countdownLbl.setText("Game Over");
 
             try {

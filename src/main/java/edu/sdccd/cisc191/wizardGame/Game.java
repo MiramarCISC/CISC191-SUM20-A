@@ -36,7 +36,7 @@ public class Game {
         // Initialize Wizard stats
         this.ammo = 50;
         this.hp = 100;
-        this.lives = 1;
+        this.lives = 3;
         this.levelNumber = 1;
         // Initialize frame
         this.frame.init();

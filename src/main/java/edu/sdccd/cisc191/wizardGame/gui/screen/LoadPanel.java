@@ -31,11 +31,14 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     /** Default load screen duration */
     private int duration = 2000;
 
-    /** Random for scene switch */
+    /** Random for scene and terrain switch */
     private Random rand = new Random();
+
+    /** Indexes and boolean for randomization */
     private int sceneIndex;
     private int terrainIndex;
     private boolean changeScene = true;
+    private boolean isImpendingBoss = false; // Special load screen on boss stage
 
     /** Load panel metrics */
     int x = 0;
@@ -53,6 +56,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private JProgressBar progressBar;
     private SpriteSheet charSheet;
     private SpriteSheet mainSheet;
+    private Image evilEmoji;
     private Image[] terrainImages = new Image[5];
     private Image[] wizardImages = new Image[4];
     private Image[] mushroomImages = new Image[8];
@@ -119,6 +123,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         fillSpriteImage(mushroomImages, 1, 11, 100, 100, charSheet);
         fillSpriteImage(knightImages, 9, 5, 80, 100, charSheet);
         fillSpriteImage(rotateFireImages, 52, 37, 80, 80, mainSheet);
+        evilEmoji = mainSheet.grabImage(35, 28, 32, 32).getScaledInstance(80, 80, Image.SCALE_SMOOTH); // Green grass
         terrainImages[0] = mainSheet.grabImage(6, 6, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Green grass
         terrainImages[1] = mainSheet.grabImage(10, 11, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Desert rock
         terrainImages[2] = mainSheet.grabImage(15, 10, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Orange spiral
@@ -168,6 +173,10 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public void setImpendingBoss(boolean isImpendingBoss) {
+        this.isImpendingBoss = isImpendingBoss;
     }
 
     /**
@@ -243,6 +252,9 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
                 g2d.drawImage(knightImages[knightIndex], (int) xCenter - 300, (int) yCenter - 50, null);
                 g2d.drawImage(knightImages[knightIndex], (int) xCenter - 350, (int) yCenter + 50, null);
                 break;
+            case 4:
+                g2d.drawImage(wizardImages[wizardIndex], (int) xCenter - 50, (int) yCenter - 50, null);
+                g2d.drawImage(evilEmoji, (int) xCenter - 40, (int) yCenter + 300, null);
         }
     }
 
@@ -291,8 +303,8 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         g2d.setColor(new Color(20, 20, 20));
         g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        // Draw random terrain
-        drawTerrain(g2d, terrainIndex);
+        if (!isImpendingBoss)
+            drawTerrain(g2d, terrainIndex); // Draw random terrain
 
         // Draw elements
         drawScene(g2d, sceneIndex);
@@ -328,7 +340,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         // }
 
         // Change to unique scene and terrain if true
-        if (this.changeScene) {
+        if (this.changeScene && !this.isImpendingBoss) {
             int oldSceneIndex = this.sceneIndex;
             int oldTerrainIndex = this.terrainIndex;
             sceneIndex = rand.nextInt(3) + 1;
@@ -342,6 +354,10 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
 
             this.changeScene = false;
         }
+
+        // Display scene 4 on boss stage
+        if (isImpendingBoss)
+            sceneIndex = 4;
 
         // Update screen metrics for dynamic resizing
         xCenter = this.getWidth() / 2;
