@@ -26,7 +26,11 @@
 
 A top down shooter by Group A
 
-![Background](path "opt title")
+![Level 1 demo](./demo/level1_demo.png)
+![Level 2 demo](./demo/level2_demo.png)
+![Level 3 demo](./demo/level3_demo.png)
+![Boss loadscreen demo](./demo/boss_loadscreen_demo.gif)
+![Normal loadscreen demo](./demo/normal_loadscreen_demo.gif)
 
 ## Building and Running Project
 
