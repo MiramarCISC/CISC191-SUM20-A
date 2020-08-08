@@ -52,9 +52,9 @@ public class Game {
     public boolean gameMuted()             { return this.gameMuted; }
 
     /** Modifiers methods */
-    public void setHp(int hp)              { this.hp = hp; }
-    public void setAmmo (int ammo)         { this.ammo = ammo; }
-    public void setLives(int lives)        { this.lives = lives; }
+    public void setHp(int hp)              { if (hp >= 0) this.hp = hp; else this.hp = 0; }
+    public void setAmmo(int ammo)          { if (ammo >= 0) this.ammo = ammo; else this.ammo = 0; }
+    public void setLives(int lives)        { if (lives >= 0) this.lives = lives; else this.lives = 0; }
     public void setLevelNumber(int level)  { this.levelNumber = level; }
     public void incLevelNumber()           { this.levelNumber += 1; }
     public void incAmmo(int inc)           { this.ammo += inc; }
