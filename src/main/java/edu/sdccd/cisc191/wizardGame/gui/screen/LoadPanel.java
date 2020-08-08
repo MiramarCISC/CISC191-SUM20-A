@@ -33,7 +33,8 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
 
     /** Random for scene switch */
     private Random rand = new Random();
-    private int scene;
+    private int sceneIndex;
+    private int terrainIndex;
     private boolean changeScene = true;
 
     /** Load panel metrics */
@@ -52,7 +53,7 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
     private JProgressBar progressBar;
     private SpriteSheet charSheet;
     private SpriteSheet mainSheet;
-    private Image terrain;
+    private Image[] terrainImages = new Image[5];
     private Image[] wizardImages = new Image[4];
     private Image[] mushroomImages = new Image[8];
     private Image[] knightImages = new Image[8];
@@ -118,7 +119,11 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         fillSpriteImage(mushroomImages, 1, 11, 100, 100, charSheet);
         fillSpriteImage(knightImages, 9, 5, 80, 100, charSheet);
         fillSpriteImage(rotateFireImages, 52, 37, 80, 80, mainSheet);
-        terrain = mainSheet.grabImage(6, 6, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        terrainImages[0] = mainSheet.grabImage(6, 6, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Green grass
+        terrainImages[1] = mainSheet.grabImage(10, 11, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Desert rock
+        terrainImages[2] = mainSheet.grabImage(15, 10, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Orange spiral
+        terrainImages[3] = mainSheet.grabImage(29, 14, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Water
+        terrainImages[4] = mainSheet.grabImage(1, 9, 32, 32).getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Red rock
         // Add label
         label = new JLabel();
         label.setText("Wizard Game by Group A");
@@ -246,7 +251,10 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
      * @param g2d Graphics 2D
      * @param terrain Image to tile the terrain with
      */
-    public void drawTerrain(Graphics2D g2d, Image terrain) {
+    public void drawTerrain(Graphics2D g2d, int terrainIndex) {
+        // Select terrain
+        Image terrain = terrainImages[terrainIndex];
+
         int terrainWidth = terrain.getWidth(null);
         int terrainHeight = terrain.getHeight(null);
 
@@ -283,15 +291,16 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         g2d.setColor(new Color(20, 20, 20));
         g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        // Draw terrain
-        // drawTerrain(g2d, terrain);
+        // Draw random terrain
+        drawTerrain(g2d, terrainIndex);
 
         // Draw elements
-        drawScene(g2d, scene);
+        drawScene(g2d, sceneIndex);
 
+        // DEPRECATED:
         // vignette(Color.BLACK, g2d, coverage);
 
-        g2d.drawImage(rotateFireImages[rotateFireIndex], this.getWidth() - 200, this.getHeight() - 100, null);
+        g2d.drawImage(rotateFireImages[rotateFireIndex], this.getWidth() - 100, this.getHeight() - 100, null);
     }
 
     @Override
@@ -318,13 +327,18 @@ public class LoadPanel extends GeneralPanel implements ActionListener {
         //     }
         // }
 
-        // Change to unique scene if true
+        // Change to unique scene and terrain if true
         if (this.changeScene) {
-            int oldScene = scene;
-            scene = rand.nextInt(3) + 1;
+            int oldSceneIndex = this.sceneIndex;
+            int oldTerrainIndex = this.terrainIndex;
+            sceneIndex = rand.nextInt(3) + 1;
+            terrainIndex = rand.nextInt(terrainImages.length);
 
-            while (oldScene == scene)
-                scene = rand.nextInt(3) + 1;
+            while (oldTerrainIndex == terrainIndex)
+                terrainIndex = rand.nextInt(terrainImages.length);
+
+            while (oldSceneIndex == sceneIndex)
+                sceneIndex = rand.nextInt(3) + 1;
 
             this.changeScene = false;
         }
