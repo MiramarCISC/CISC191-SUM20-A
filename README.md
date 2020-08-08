@@ -2,6 +2,7 @@
 
 <!-- TOC GFM -->
 
+* [The Wizard](#the-wizard)
 * [Building and Running Project](#building-and-running-project)
   * [Building Using Maven (Recommended. Includes project unit tests)](#building-using-maven-recommended-includes-project-unit-tests)
     * [Tl;dr](#tldr)
@@ -20,6 +21,12 @@
 * [Setting Up Project Folder Structure in IntelliJ IDEA](#setting-up-project-folder-structure-in-intellij-idea)
 
 <!-- /TOC -->
+
+## The Wizard
+
+A top down shooter by Group A
+
+![Background](path "opt title")
 
 ## Building and Running Project
 
