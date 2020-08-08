@@ -43,7 +43,8 @@ public class HelpPanel extends GeneralPanel {
 
         // Add Buttons
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(500, 15, 15, 15); // Button spacing
+        // Back button spacing and position
+        gbc.insets = new Insets(500, 15, 15, 15);
 
         // Back button
         this.backBtn = new JButton("BACK");
@@ -54,6 +55,5 @@ public class HelpPanel extends GeneralPanel {
         gbc.gridy = 0;
         gbc.gridheight = 1;
         this.add(backBtn, gbc);
-        // Back button Position
     }
 }
